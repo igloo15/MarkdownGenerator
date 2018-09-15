@@ -62,8 +62,16 @@ Task("Build")
         });
     });
 
-Task("Pack")
+Task("Publish")
     .IsDependentOn("Build")
+    .Does(() => {
+        DotNetCorePublish("./src/MarkdownGenerator.sln", new DotNetCorePublishSettings {
+            Configuration = "Release"
+        });
+    });
+
+Task("Pack")
+    .IsDependentOn("Publish")
     .Does(() => {
         DotNetCorePack("./src/MarkdownGenerator.sln", new DotNetCorePackSettings {
             NoBuild = true,
@@ -73,7 +81,7 @@ Task("Pack")
         });
     });
 
-Task("Publish")
+Task("Push")
     .IsDependentOn("Pack")
     .Does(() => {
         foreach(var nupkgFile in GetFiles("./packages.local/*.nupkg"))
@@ -95,6 +103,6 @@ Task("Default")
     .IsDependentOn("Build");
 
 Task("Deploy")
-	.IsDependentOn("Publish");
+	.IsDependentOn("Push");
 
 RunTarget(target);
