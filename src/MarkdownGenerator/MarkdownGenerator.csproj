@@ -10,7 +10,7 @@
   <PropertyGroup>
     <PackAsTool>true</PackAsTool>
     <OutputType>Exe</OutputType>
-    <ToolCommandName>markdowngen</ToolCommandName>
+    <ToolCommandName>dotnet-markdownapi</ToolCommandName>
     <IsPackable>true</IsPackable>
     <PackageVersion>$(Version)</PackageVersion>
     <PackageIconUrl>Igloo15.MarkdownGenerator</PackageIconUrl>
@@ -22,4 +22,8 @@
     <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.3.0" />
+  </ItemGroup>
 </Project>

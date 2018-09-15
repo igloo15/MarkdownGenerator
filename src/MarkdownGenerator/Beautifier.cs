@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MarkdownWikiGenerator
+namespace Igloo15.MarkdownGenerator
 {
     public static class Beautifier
     {

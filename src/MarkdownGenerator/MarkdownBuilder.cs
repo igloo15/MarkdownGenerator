@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace MarkdownWikiGenerator
+namespace Igloo15.MarkdownGenerator
 {
     public class MarkdownBuilder
     {
