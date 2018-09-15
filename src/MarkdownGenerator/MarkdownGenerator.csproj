@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>Igloo15.MarkdownGenerator</AssemblyName>
+    <RootNamespace>Igloo15.MarkdownGenerator</RootNamespace>
+    <BaseOutputPath>$(MSBuildProjectFullPath)\..\..\..\dist\MarkdownGenerator</BaseOutputPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackAsTool>true</PackAsTool>
+    <OutputType>Exe</OutputType>
+    <ToolCommandName>markdowngen</ToolCommandName>
+    <IsPackable>true</IsPackable>
+    <PackageVersion>$(Version)</PackageVersion>
+    <PackageIconUrl>Igloo15.MarkdownGenerator</PackageIconUrl>
+    <Title>Igloo15.MarkdownGenerator</Title>
+    <Authors>Igloo15,jyasuu,neuecc</Authors>
+    <Description>Wrapper around the nuget api that allows you to search for nuget packages and return results</Description>
+    <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
+    <PackageTags>wrapper;nuget;search;packages;netstandard</PackageTags>
+    <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+</Project>
