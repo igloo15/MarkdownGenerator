@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MarkdownGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\Development\\Projects\\nugetapiwrapper\\src\\NugetApiRunner\\bin\\Release\\netcoreapp1.1\\publish\\*.dll"
+    }
+  }
+}
