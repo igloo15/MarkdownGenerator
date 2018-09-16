@@ -15,10 +15,10 @@
     <PackageVersion>$(Version)</PackageVersion>
     <PackageIconUrl>Igloo15.MarkdownGenerator</PackageIconUrl>
     <Title>Igloo15.MarkdownGenerator</Title>
-    <Authors>Igloo15,jyasuu,neuecc</Authors>
-    <Description>Wrapper around the nuget api that allows you to search for nuget packages and return results</Description>
+    <Authors>Igloo15, jyasuu, neuecc</Authors>
+    <Description>dotnet cli tool used to generate markdown documentation of the source</Description>
     <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
-    <PackageTags>wrapper;nuget;search;packages;netstandard</PackageTags>
+    <PackageTags>markdown;dotnet;cli;tool;netcore</PackageTags>
     <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <StartupObject>Igloo15.MarkdownGenerator.Program</StartupObject>
