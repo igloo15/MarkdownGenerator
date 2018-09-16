@@ -18,5 +18,50 @@ namespace Igloo15.MarkdownGenerator.Models
             InternalProperty = info;
             IsStatic = isStatic;
         }
+
+        public string GetLink()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetReturn()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetSummary()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDetailed()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetExample()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string BuildPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Build(string destination)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

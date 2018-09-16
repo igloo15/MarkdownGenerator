@@ -6,38 +6,48 @@ using System.Text;
 
 namespace Igloo15.MarkdownGenerator
 {
+    interface IThemePart<T>
+    {
+        string GetName(T value);
+
+        string GetLink(T value);
+
+        string GetReturn(T value);
+
+        string GetSummary(T value);
+
+        string GetCode(T value);
+
+        string GetDetailed(T value);
+
+        string GetExample(T value);
+    }
+
     interface ITheme
     {
-        string GetMethodCode(MethodInfo methodInfo);
+        IThemePart<MarkdownableProject> ProjectPart { get; }
 
-        string GetMethodLink(MethodInfo methodInfo);
+        IThemePart<MarkdownableNamespace> NamespacePart { get; }
 
-        string GetMethodTitle(MethodInfo methodInfo);
+        IThemePart<MarkdownableType> TypePart { get; }
 
-        string GetMethodPage(MethodInfo methodInfo);
+        IThemePart<MarkdownableType> EnumPart { get; }
 
+        IThemePart<MarkdownableMethod> MethodPart { get; }
 
-        string GetTypeCode(MarkdownableType t);
+        IThemePart<MarkdownableMethod> StaticMethodPart { get; }
 
-        string GetTypeLink(MarkdownableType t);
+        IThemePart<MarkdownableProperty> PropertyPart { get; }
 
-        string GetTypeTitle(MarkdownableType t);
+        IThemePart<MarkdownableProperty> StaticPropertyPart { get; }
 
-        string GetTypePage(MarkdownableType t);
+        IThemePart<MarkdownableField> FieldPart { get; }
 
+        IThemePart<MarkdownableField> StaticFieldPart { get; }
 
-        string GetNamespaceTitle(NamespaceGroup group);
+        IThemePart<MarkdownableEvent> EventPart { get; }
 
-        string GetNamespaceLink(NamespaceGroup group);
-
-        string GetNamespacePage(NamespaceGroup group);
-
-        
-
-        string GetEnumLink(Type t);
-
-        string GetEnumTitle(Type t);
-
-        string GetEnumPage(Type t);
+        IThemePart<MarkdownableEvent> StaticEventPart { get; }
     }
+
 }

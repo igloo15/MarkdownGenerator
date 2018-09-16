@@ -10,6 +10,29 @@ namespace Igloo15.MarkdownGenerator
 {
     internal static class Extensions
     {
+        public static IEnumerable<T> Foreach<T>(this IEnumerable<T> array, Action<T> doThis)
+        {
+            foreach(var item in array)
+            {
+                doThis(item);
+            }
+
+            return array;
+        }
+
+        public static IEnumerable<T> Together<T>(this IEnumerable<T> arrayOne, IEnumerable<T> arrayTwo)
+        {
+            foreach(var itemOne in arrayOne)
+            {
+                yield return itemOne;
+            }
+
+            foreach(var itemTwo in arrayTwo)
+            {
+                yield return itemTwo;
+            }
+        }
+
         public static void Empty(this DirectoryInfo directory)
         {
             foreach (FileInfo file in directory.GetFiles()) file.Delete();
@@ -18,7 +41,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableMethod[] GetMethods(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
+            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(mi => new MarkdownableMethod(mi, false))
                 .ToArray();
@@ -26,7 +49,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableMethod[] GetStaticMethods(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
+            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(mi => new MarkdownableMethod(mi, true))
                 .ToArray();
@@ -34,7 +57,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableProperty[] GetProperties(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
+            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Where(y => y.FilterPropertyInfo())
                 .Select(pi => new MarkdownableProperty(pi, false))
@@ -43,7 +66,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableProperty[] GetStaticProperties(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
+            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Where(y => y.FilterPropertyInfo())
                 .Select(pi => new MarkdownableProperty(pi, true))
@@ -52,7 +75,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableField[] GetFields(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
+            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(fi => new MarkdownableField(fi, false))
                 .ToArray();
@@ -60,7 +83,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableField[] GetStaticFields(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
+            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(fi => new MarkdownableField(fi, true))
                 .ToArray();
@@ -68,7 +91,7 @@ namespace Igloo15.MarkdownGenerator
 
         public static MarkdownableEvent[] GetEvents(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
+            return mdType.InternalType.GetEvents(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Select(ei => new MarkdownableEvent(ei, false))
                 .ToArray();
@@ -76,7 +99,7 @@ namespace Igloo15.MarkdownGenerator
         
         public static MarkdownableEvent[] GetStaticEvents(this MarkdownableType mdType)
         {
-            return mdType.InnerType.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
+            return mdType.InternalType.GetEvents(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Select(ei => new MarkdownableEvent(ei, true))
                 .ToArray();

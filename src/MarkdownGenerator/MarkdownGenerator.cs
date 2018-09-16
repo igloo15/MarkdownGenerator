@@ -14,7 +14,7 @@ namespace Igloo15.MarkdownGenerator
     
     internal static class MarkdownGenerator
     {
-        public static NamespaceGroup[] Load(string searchArea, string namespaceMatch)
+        public static MarkdownableProject Load(string searchArea, string namespaceMatch, Options config)
         {
             List<MarkdownableType> types = new List<MarkdownableType>();
 
@@ -33,18 +33,18 @@ namespace Igloo15.MarkdownGenerator
 
                     foreach (FileInfo file in files)
                     {
-                        types.AddRange(LoadInternal(file.FullName, namespaceMatch));
+                        types.AddRange(LoadInternal(file.FullName, namespaceMatch, config));
                     }
                 }
             }
 
-            var result = types.GroupBy(x => x.Namespace).OrderBy(x => x.Key).Select(x => new NamespaceGroup(x.ToList(), x.Key));
+            var result = types.GroupBy(x => x.Namespace).OrderBy(x => x.Key).Select(x => new MarkdownableNamespace(x.ToList(), x.Key, config));
 
-            return result.ToArray();
+            return new MarkdownableProject(config, result.ToArray());
             
         }
 
-        private static MarkdownableType[] LoadInternal(string dllPath, string namespaceMatch)
+        private static MarkdownableType[] LoadInternal(string dllPath, string namespaceMatch, Options config)
         {
             var xmlPath = Path.Combine(Directory.GetParent(dllPath).FullName, Path.GetFileNameWithoutExtension(dllPath) + ".xml");
 
@@ -88,7 +88,7 @@ namespace Igloo15.MarkdownGenerator
 
             MarkdownableType markdownableTypeSelector(Type x)
             {
-                MarkdownableType markdownableType = new MarkdownableType(x, commentsLookup);
+                MarkdownableType markdownableType = new MarkdownableType(x, commentsLookup, config);
                 return markdownableType;
             }
 
