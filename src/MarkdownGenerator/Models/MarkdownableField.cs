@@ -8,13 +8,16 @@ namespace Igloo15.MarkdownGenerator.Models
 {
     internal class MarkdownableField : IMarkdownable
     {
+        public string FolderPath { get; private set; }
+        public string FilePath { get; private set; }
+
         public FieldInfo InternalField { get; private set; }
 
         public bool IsStatic { get; private set; }
 
         public string Name => InternalField.Name;
 
-        private Options _config;
+        public Options Config { get; private set; }
 
         public MarkdownableField(FieldInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
@@ -22,49 +25,11 @@ namespace Igloo15.MarkdownGenerator.Models
             IsStatic = isStatic;
         }
 
-        public string GetLink()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReturnOrType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetSummary()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetDetailed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetExample()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string BuildPage()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Build(string destination, Options config)
         {
-            _config = config;
+            Config = config;
+            FolderPath = destination;
+            FilePath = InternalField.GetFilePath(destination);
             
         }
     }

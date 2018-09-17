@@ -9,128 +9,46 @@ namespace Igloo15.MarkdownGenerator.Models
 {
     internal class MarkdownableMethod : IMarkdownable
     {
+        public string FolderPath { get; private set; }
+        public string FilePath { get; private set; }
+
         public MethodInfo InternalMethod { get; private set; }
 
         public bool IsStatic { get; private set; }
 
+        public bool IsExtension => InternalMethod.GetCustomAttributes<System.Runtime.CompilerServices.ExtensionAttribute>(false).Any();
+
         public string Name => InternalMethod.Name;
 
-        private Options _config;
-        private IEnumerable<XmlDocumentComment> _comments;
+        public Options Config { get; private set; }
+
+        public IEnumerable<XmlDocumentComment> Comments { get; }
 
         public MarkdownableMethod(MethodInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
             InternalMethod = info;
             IsStatic = isStatic;
-            _comments = comments;
+            Comments = comments;
         }
-
-        public string GetLink()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetName()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReturnOrType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetSummary()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetCode()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetDetailed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetExample()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string BuildPage()
-        {
-            var sb = new StringBuilder();
-
-            string generateTypeRelativeLinkPath(Type type)
-            {
-                var RelativeLinkPath = $"{(string.Join("/", type.Namespace.Split('.').Select(a => "..")))}/../{type.Namespace.Replace('.', '/')}/{type.Name}.md";
-                return RelativeLinkPath;
-            }
-            var isExtension = InternalMethod.GetCustomAttributes<System.Runtime.CompilerServices.ExtensionAttribute>(false).Any();
-            var seq = InternalMethod.GetParameters().Select(x =>
-            {
-                var suffix = x.HasDefaultValue ? (" = " + (x.DefaultValue ?? $"null")) : "";
-                return $"{Beautifier.BeautifyTypeWithLink(x.ParameterType, generateTypeRelativeLinkPath)} " + x.Name + suffix;
-            });
-            sb.AppendLine($"#\t{InternalMethod.DeclaringType.Name}.{InternalMethod.Name} Method ({(isExtension ? "this " : "")}{string.Join(", ", seq)})");
-
-            var parameters = InternalMethod.GetParameters();
-
-            var comment = _comments.FirstOrDefault(a =>
-            (a.MemberName == InternalMethod.Name ||
-            a.MemberName.StartsWith(InternalMethod.Name + "`"))
-            &&
-            parameters.All(b => a.Parameters.ContainsKey(b.Name))
-            );
-
-            if (comment != null)
-            {
-
-                if (comment.Parameters != null && comment.Parameters.Count > 0)
-                {
-                    sb.AppendLine($"");
-                    sb.AppendLine("##\tParameters");
-
-
-                    foreach (var parameter in parameters)
-                    {
-                        sb.AppendLine($"");
-                        sb.AppendLine($"###\t{parameter.Name}");
-                        sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(parameter.ParameterType, generateTypeRelativeLinkPath)}");
-                        if (comment.Parameters.ContainsKey(parameter.Name))
-                            sb.AppendLine($"-\t{comment.Parameters[parameter.Name]}");
-                    }
-                }
-                if (!string.IsNullOrEmpty(comment.Returns))
-                {
-                    sb.AppendLine($"");
-                    sb.AppendLine("##\tReturn Value");
-                    sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(InternalMethod.ReturnType, generateTypeRelativeLinkPath)}");
-                    sb.AppendLine($"-\t{comment.Returns}");
-                }
-
-                sb.AppendLine($"");
-                sb.AppendLine("##\tRemarks");
-                sb.AppendLine($"-\t{comment.Summary}");
-            }
-
-            return sb.ToString();
-        }
-
+        
         public void Build(string destination, Options config)
         {
-            _config = config;
-            if(_config.MethodPages)
+            Config = config;
+            FolderPath = destination;
+            FilePath = InternalMethod.GetFilePath(destination);
+
+            if(Config.MethodPages)
             {
                 if (!Directory.Exists(destination))
                     Directory.CreateDirectory(destination);
 
-                var content = BuildPage();
+                string content = string.Empty;
+                if (IsStatic)
+                    content = Config.CurrentTheme.StaticMethodPart.GetPage(this);
+                else
+                    content = Config.CurrentTheme.MethodPart.GetPage(this);
 
-                File.WriteAllText(Path.Combine(destination, $"{InternalMethod.DeclaringType.Name}-{InternalMethod.MetadataToken}.md"), content);
+                File.WriteAllText(FilePath, content);
             }
             
         }

@@ -177,6 +177,124 @@ namespace Igloo15.MarkdownGenerator
             }
         }
 
+        public static string GetFilePath(this MemberInfo mi, string destination)
+        {
+            return Path.Combine(destination, $"{mi.DeclaringType.Name}-{mi.MetadataToken}.md");
+        }
+
+        public static string GenerateTypeRelativeLinkPath(this MarkdownableType value, Type type)
+        {
+            if (type.Name == "void")
+                return string.Empty;
+            if (type.Name == "String")
+                return string.Empty;
+            if (type.Namespace.StartsWith("System"))
+                return string.Empty;
+            var localNamescape = value.Namespace;
+            var linkNamescape = type.Namespace;
+            var RelativeLinkPath = $"{(string.Join("/", localNamescape.Split('.').Select(a => "..")))}/{linkNamescape.Replace('.', '/')}/{type.Name}.md";
+            return RelativeLinkPath;
+        }
+
+        internal static string GetLink(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetLink));
+        }
+
+        public static string GetName(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetName));
+        }
+
+        public static string GetReturnOrType(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetReturnOrType));
+        }
+
+        public static string GetSummary(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetSummary));
+        }
+
+        public static string GetCode(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetCode));
+        }
+
+        public static string GetDetailed(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetDetailed));
+        }
+
+        public static string GetExample(this IMarkdownable item)
+        {
+            return RouteThemeMethod(item, nameof(GetExample));
+        }
+
+        public static Func<T, string> GetThemeFunc<T>(this ITheme theme, String methodName, bool IsStatic, bool IsEnum)
+        {
+            string name = typeof(T).Name;
+            MethodInfo selectedMethod = null;
+
+            foreach (var method in typeof(IThemePart<T>).GetMethods())
+            {
+                if(method.Name == methodName)
+                {
+                    selectedMethod = method;
+                    break;
+                }
+            }
+
+            foreach (var prop in typeof(ITheme).GetProperties())
+            {
+                Type propType = prop.PropertyType;
+                if(propType.IsGenericType && propType.GetGenericArguments()[0] == typeof(T))
+                {
+                    if ((IsStatic && !prop.Name.Contains("Static")) || (!IsStatic && prop.Name.Contains("Static")))
+                        continue;
+
+                    if ((IsEnum && !prop.Name.Contains("Enum")) || (!IsEnum && prop.Name.Contains("Enum")))
+                        continue;
+                    
+                    var result = prop.GetValue(theme) as IThemePart<T>;
+
+                    return (T p) => selectedMethod.Invoke(result, new object[] { p }).ToString();
+                }
+            }
+
+            return (T p) => "Failed to find parsing function";
+        }
+
+        private static string RouteThemeMethod(IMarkdownable item, string functionName)
+        {
+            
+            switch (item)
+            {
+                case MarkdownableProject proj:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableProject>(functionName, item.IsStatic, false)(proj);
+                    
+                case MarkdownableNamespace nameSpace:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableNamespace>(functionName, item.IsStatic, false)(nameSpace);
+                    
+                case MarkdownableType type:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableType>(functionName, item.IsStatic, type.IsEnum)(type);
+                    
+                case MarkdownableMethod method:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableMethod>(functionName, item.IsStatic, false)(method);
+                    
+                case MarkdownableField field:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableField>(functionName, item.IsStatic, false)(field);
+                    
+                case MarkdownableProperty prop:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableProperty>(functionName, item.IsStatic, false)(prop);
+                    
+                case MarkdownableEvent eventItem:
+                    return item.Config.CurrentTheme.GetThemeFunc<MarkdownableEvent>(functionName, item.IsStatic, false)(eventItem);
+                    
+            }
+            return string.Empty;
+        }
+
     }
 
     

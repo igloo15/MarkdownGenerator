@@ -39,6 +39,21 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return value.Name;
         }
 
+        public string GetReturnOrType(MarkdownableProject value)
+        {
+            return "";
+        }
+
+        public string GetSummary(MarkdownableProject value)
+        {
+            return value.Config.Summary;
+        }
+
+        public string[] GetTableHeaders()
+        {
+            return new string[] { "" };
+        }
+
         public string GetPage(MarkdownableProject value)
         {
             var homeBuilder = new MarkdownBuilder();
@@ -77,21 +92,6 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             homeBuilder.AppendLine();
 
             return homeBuilder.ToString();
-        }
-
-        public string GetReturn(MarkdownableProject value)
-        {
-            return "";
-        }
-
-        public string GetSummary(MarkdownableProject value)
-        {
-            return value.Config.Summary;
-        }
-
-        public string[] GetTableHeaders()
-        {
-            return new string[] { "" };
         }
     }
 }

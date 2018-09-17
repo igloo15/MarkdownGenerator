@@ -20,18 +20,18 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public IThemePart<MarkdownableMethod> MethodPart => new DefaultMethodPart(this);
 
-        public IThemePart<MarkdownableMethod> StaticMethodPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableMethod> StaticMethodPart => new DefaultMethodPart(this);
 
-        public IThemePart<MarkdownableProperty> PropertyPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableProperty> PropertyPart => new DefaultPropertyPart(this);
 
-        public IThemePart<MarkdownableProperty> StaticPropertyPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableProperty> StaticPropertyPart => new DefaultPropertyPart(this);
 
-        public IThemePart<MarkdownableField> FieldPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableField> FieldPart => new DefaultFieldPart(this);
 
-        public IThemePart<MarkdownableField> StaticFieldPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableField> StaticFieldPart => new DefaultFieldPart(this);
 
-        public IThemePart<MarkdownableEvent> EventPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableEvent> EventPart => new DefaultEventPart(this);
 
-        public IThemePart<MarkdownableEvent> StaticEventPart => throw new NotImplementedException();
+        public IThemePart<MarkdownableEvent> StaticEventPart => new DefaultEventPart(this);
     }
 }

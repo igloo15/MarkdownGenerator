@@ -14,7 +14,7 @@ namespace Igloo15.MarkdownGenerator
 
         string GetLink(T value);
 
-        string GetReturn(T value);
+        string GetReturnOrType(T value);
 
         string GetSummary(T value);
 

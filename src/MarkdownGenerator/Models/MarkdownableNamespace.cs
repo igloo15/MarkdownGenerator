@@ -12,6 +12,7 @@ namespace Igloo15.MarkdownGenerator.Models
         public string FullName { get; private set; }
 
         public string FolderPath { get; private set; }
+        public string FilePath { get; private set; }
 
         public List<MarkdownableType> Types { get; private set; }
 
@@ -19,96 +20,32 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public bool IsStatic => false;
 
-        private Options _config;
+        public Options Config { get; private set; }
 
         public MarkdownableNamespace(List<MarkdownableType> types, string fullName)
         {
             FullName = fullName;
             Types = types;
-
-            FolderPath = FullName.Replace('.', Path.DirectorySeparatorChar);
         }
-
-        public void Build(string dest, Options config, MarkdownBuilder homeBuilder)
-        {
-            
-        }
-
-        public string GetLink()
-        {
-            return $"[{FullName}]({FolderPath}{Path.DirectorySeparatorChar}{_config.RootFileName}.md)";
-        }
-
-        public string GetName()
-        {
-            return FullName;
-        }
-
-        public string GetReturnOrType()
-        {
-            return "";
-        }
-
-        public string GetSummary()
-        {
-            return "";
-        }
-
-        public string GetCode()
-        {
-            return $"namespace {FullName}";
-        }
-
-        public string GetDetailed()
-        {
-            return GetCode();
-        }
-
-        public string GetExample()
-        {
-            return GetCode();
-        }
-
-        public string BuildPage()
-        {
-            var namespaceBuilder = new MarkdownBuilder();
-            namespaceBuilder.Header(1, FullName);
-            namespaceBuilder.AppendLine();
-            
-            foreach (var item in Types.OrderBy(x => x.Name))
-            {
-                var sb = new StringBuilder();
-                if(_config.TypePages)
-                {
-                    namespaceBuilder.List(item.GetLink());
-                }
-                else
-                {
-                    namespaceBuilder.List(item.GetName());
-                }
-            }
-
-            namespaceBuilder.AppendLine();
-            
-
-            return namespaceBuilder.ToString();
-        }
-
+                
         public void Build(string destination, Options config)
         {
-            _config = config;
-            var namespaceDirectoryPath = Path.Combine(destination, FolderPath);
-            if (!Directory.Exists(namespaceDirectoryPath)) Directory.CreateDirectory(namespaceDirectoryPath);
+            Config = config;
+            FolderPath = destination;
+            FilePath = Path.Combine(FolderPath, $"{Config.RootFileName}.md");
 
-            if (_config.NamespacePages)
+            if (!Directory.Exists(FolderPath))
+                Directory.CreateDirectory(FolderPath);
+
+            if (Config.NamespacePages)
             {
-                var content = BuildPage();
-                File.WriteAllText(Path.Combine(namespaceDirectoryPath, $"{_config.RootFileName}.md"), content);
+                var content = Config.CurrentTheme.NamespacePart.GetPage(this);
+                File.WriteAllText(FilePath, content);
             }
 
             foreach(var item in Types.OrderBy(x => x.Name))
             {
-                item.Build(namespaceDirectoryPath, _config);
+                item.Build(FolderPath, Config);
             }
         }
     }

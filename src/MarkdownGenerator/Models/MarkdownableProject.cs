@@ -9,6 +9,7 @@ namespace Igloo15.MarkdownGenerator.Models
     internal class MarkdownableProject : IMarkdownable
     {
         public string FolderPath { get; private set; }
+        public string FilePath { get; private set; }
 
         public string Name { get; private set; }
 
@@ -26,45 +27,12 @@ namespace Igloo15.MarkdownGenerator.Models
             Namespaces = namespaces;
             Config = config;
         }
-
-        public string GetCode()
-        {
-            return "";
-        }
-
-        public string GetDetailed()
-        {
-            return "";
-        }
-
-        public string GetExample()
-        {
-            return "";
-        }
-
-        public string GetLink()
-        {
-            return $"[{Name}]({Path.Combine(FolderPath, $"{Config.RootFileName}.md")}";
-        }
-
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public string GetReturnOrType()
-        {
-            return "";
-        }
-
-        public string GetSummary()
-        {
-            return "";
-        }
         
         public void Build(string destination, Options config)
         {
             Config = config;
+            FolderPath = destination;
+            FilePath = Path.Combine(FolderPath, $"{Config.RootFileName}.md");
 
             var directInfo = new DirectoryInfo(destination);
 
@@ -76,12 +44,14 @@ namespace Igloo15.MarkdownGenerator.Models
 
             foreach (var namespaceGroup in Namespaces)
             {
-                namespaceGroup.Build(destination, config);
+                var namespaceFolders = namespaceGroup.FullName.Replace('.', Path.DirectorySeparatorChar);
+                var namespacePath = Path.Combine(destination, namespaceFolders);
+                namespaceGroup.Build(namespacePath, config);
             }
 
             var content = Config.CurrentTheme.ProjectPart.GetPage(this);
 
-            File.WriteAllText(Path.Combine(destination, $"{Config.RootFileName}.md"), content);
+            File.WriteAllText(FilePath, content);
         }
     }
 }

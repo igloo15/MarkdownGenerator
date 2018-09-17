@@ -1,4 +1,7 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
+using System.IO;
+using System.Linq;
+using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
 {
@@ -15,47 +18,67 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetCode(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return $"namespace {value.FullName} {{  }}";
         }
 
         public string GetDetailed(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return string.Empty;
         }
 
         public string GetExample(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return string.Empty;
         }
 
         public string GetLink(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return $"[{value.FullName}]({value.FolderPath}{Path.DirectorySeparatorChar}{value.Config.RootFileName}.md)";
         }
 
         public string GetName(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return value.FullName;
         }
 
-        public string GetPage(MarkdownableNamespace value)
+        public string GetReturnOrType(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public string GetReturn(MarkdownableNamespace value)
-        {
-            throw new System.NotImplementedException();
+            return "";
         }
 
         public string GetSummary(MarkdownableNamespace value)
         {
-            throw new System.NotImplementedException();
+            return "";
         }
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { string.Empty };
+        }
+
+        public string GetPage(MarkdownableNamespace value)
+        {
+            var namespaceBuilder = new MarkdownBuilder();
+            namespaceBuilder.Header(1, GetName(value));
+            namespaceBuilder.AppendLine();
+
+            foreach (var item in value.Types.OrderBy(x => x.Name))
+            {
+                var sb = new StringBuilder();
+                if (value.Config.TypePages)
+                {
+                    namespaceBuilder.List(item.GetLink());
+                }
+                else
+                {
+                    namespaceBuilder.List(item.GetName());
+                }
+            }
+
+            namespaceBuilder.AppendLine();
+
+
+            return namespaceBuilder.ToString();
         }
     }
 }
