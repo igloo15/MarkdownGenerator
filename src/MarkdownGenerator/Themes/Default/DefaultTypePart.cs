@@ -108,7 +108,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { "Type", "Name", "Summary" };
         }
 
         

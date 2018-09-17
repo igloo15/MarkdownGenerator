@@ -18,12 +18,12 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetCode(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return "ENUM CODE";
         }
 
         public string GetDetailed(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
 
         public string GetExample(MarkdownableType value)
@@ -43,7 +43,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetReturnOrType(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return Beautifier.BeautifyTypeWithLink(value.InternalType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableType value)
@@ -53,7 +53,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { "Type", "Name", "Summary" };
         }
 
         public string GetPage(MarkdownableType value)

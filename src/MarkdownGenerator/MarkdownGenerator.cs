@@ -33,7 +33,15 @@ namespace Igloo15.MarkdownGenerator
 
                     foreach (FileInfo file in files)
                     {
-                        types.AddRange(LoadInternal(file.FullName, namespaceMatch));
+                        try
+                        {
+                            types.AddRange(LoadInternal(file.FullName, namespaceMatch));
+                        }
+                        catch(Exception e)
+                        {
+                            Console.WriteLine($"Failed to load file {file.FullName}");
+                        }
+                        
                     }
                 }
             }

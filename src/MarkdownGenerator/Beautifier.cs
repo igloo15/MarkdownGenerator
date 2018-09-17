@@ -22,7 +22,7 @@ namespace Igloo15.MarkdownGenerator
             return Regex.Replace(isFull ? t.GetGenericTypeDefinition().FullName : t.GetGenericTypeDefinition().Name, @"`.+$", "") + "<" + innerFormat + ">";
         }
 
-        public static string BeautifyTypeWithLink(Type t,Func<Type,string> generateTypeRelativeLinkPath, bool isFull = false)
+        public static string BeautifyTypeWithLink(Type t, string link, bool isFull = false)
         {
             if (t == null) return "";
             if (t == typeof(void)) return "void";
@@ -30,18 +30,18 @@ namespace Igloo15.MarkdownGenerator
                 if (t.IsArray)
                 {
                     return
-                        $"[`{((isFull) ? t.FullName : t.Name).Replace("[]","")}`]({generateTypeRelativeLinkPath(t).Replace("[]", "")})`[]`"
+                        $"[`{((isFull) ? t.FullName : t.Name).Replace("[]","")}`]({link})`[]`"
                         ;
                 }
                 else
                 {
                     return
-                        $"[`{((isFull) ? t.FullName : t.Name)}`]({generateTypeRelativeLinkPath(t)})"
+                        $"[`{((isFull) ? t.FullName : t.Name)}`]({link})"
                         ;
 
                 }
 
-            var innerFormat = string.Join(", ", t.GetGenericArguments().Select(x => BeautifyTypeWithLink(x, generateTypeRelativeLinkPath)));
+            var innerFormat = string.Join(", ", t.GetGenericArguments().Select(x => BeautifyTypeWithLink(x, link)));
             return Regex.Replace(isFull ? t.GetGenericTypeDefinition().FullName : t.GetGenericTypeDefinition().Name, @"`.+$", "") + "<" + innerFormat + ">";
         }
 
@@ -52,7 +52,7 @@ namespace Igloo15.MarkdownGenerator
             var seq = methodInfo.GetParameters().Select(x =>
             {
                 var suffix = x.HasDefaultValue ? (" = " + (x.DefaultValue ?? $"null")) : "";
-                return $"{BeautifyTypeWithLink(x.ParameterType, generateRelativeLinkPath)} " + x.Name + suffix;
+                return $"{BeautifyTypeWithLink(x.ParameterType, generateRelativeLinkPath(x.ParameterType))} " + x.Name + suffix;
             });
 
             return $"[{methodInfo.Name}]({methodInfo.DeclaringType.Name}/{methodInfo.MetadataToken}.md)" + "(" + (isExtension ? "this " : "") + string.Join(", ", seq) + ")";

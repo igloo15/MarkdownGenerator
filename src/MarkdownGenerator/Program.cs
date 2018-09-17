@@ -56,7 +56,7 @@ namespace Igloo15.MarkdownGenerator
         {
             var collection = new ServiceCollection();
 
-            collection.Scan(scan => scan.FromExecutingAssembly().AddClasses(classes => classes.AssignableTo<ITheme>()).AsImplementedInterfaces().WithSingletonLifetime());
+            collection.Scan(scan => scan.FromAssemblyOf<Program>().AddClasses(classes => classes.AssignableTo<ITheme>()).As<ITheme>().WithSingletonLifetime());
 
             var provider = collection.BuildServiceProvider();
 

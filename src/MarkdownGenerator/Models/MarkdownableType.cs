@@ -21,14 +21,14 @@ namespace Igloo15.MarkdownGenerator.Models
         public bool IsEnum => InternalType.IsEnum;
         public IEnumerable<XmlDocumentComment> Comments => _comments[FullName];
 
-        public MarkdownableMethod[] Methods => this.GetMethods(Comments);
-        public MarkdownableMethod[] StaticMethods => this.GetStaticMethods(Comments);
-        public MarkdownableProperty[] Properties => this.GetProperties(Comments);
-        public MarkdownableProperty[] StaticProperties => this.GetStaticProperties(Comments);
-        public MarkdownableField[] Fields => this.GetFields(Comments);
-        public MarkdownableField[] StaticFields => this.GetStaticFields(Comments);
-        public MarkdownableEvent[] Events => this.GetEvents(Comments);
-        public MarkdownableEvent[] StaticEvents => this.GetStaticEvents(Comments);
+        public MarkdownableMethod[] Methods { get; private set; }
+        public MarkdownableMethod[] StaticMethods { get; private set; }
+        public MarkdownableProperty[] Properties { get; private set; }
+        public MarkdownableProperty[] StaticProperties { get; private set; }
+        public MarkdownableField[] Fields { get; private set; }
+        public MarkdownableField[] StaticFields { get; private set; }
+        public MarkdownableEvent[] Events { get; private set; }
+        public MarkdownableEvent[] StaticEvents { get; private set; }
 
         //public string BeautifyName => Beautifier.BeautifyTypeWithLink(InternalType, GenerateTypeRelativeLinkPath);
 
@@ -40,6 +40,15 @@ namespace Igloo15.MarkdownGenerator.Models
         {
             InternalType = type;
             _comments = commentLookup;
+            Methods = this.GetMethods(Comments);
+            StaticMethods = this.GetStaticMethods(Comments);
+            Properties = this.GetProperties(Comments);
+            StaticProperties = this.GetStaticProperties(Comments);
+            Fields = this.GetFields(Comments);
+            StaticFields = this.GetStaticFields(Comments);
+            Events = this.GetEvents(Comments);
+            StaticEvents = this.GetStaticEvents(Comments);
+
         }
 
         void BuildTable<T>(MarkdownBuilder mb, string label, T[] array, IEnumerable<XmlDocumentComment> docs, Func<T, string> type, Func<T, string> name, Func<T, string> finalName)
@@ -56,6 +65,15 @@ namespace Igloo15.MarkdownGenerator.Models
             Config = config;
             FolderPath = destination;
             FilePath = Path.Combine(destination, Name + ".md");
+
+            Methods.Together(StaticMethods).Foreach(m => m.Build(Path.Combine(destination, Config.MethodFolderName), config));
+
+            Properties.Together(StaticProperties).Foreach(p => p.Build(Path.Combine(destination, Config.PropertyFolderName), config));
+
+            Fields.Together(StaticFields).Foreach(p => p.Build(Path.Combine(destination, Config.FieldFolderName), config));
+
+            Events.Together(StaticEvents).Foreach(p => p.Build(Path.Combine(destination, Config.EventFolderName), config));
+
             if (Config.TypePages)
             {
                 string content = string.Empty;
@@ -67,14 +85,6 @@ namespace Igloo15.MarkdownGenerator.Models
 
                 File.WriteAllText(FilePath, content);
             }
-
-            Methods.Together(StaticMethods).Foreach(m => m.Build(Path.Combine(destination, Config.MethodFolderName), config));
-
-            Properties.Together(StaticProperties).Foreach(p => p.Build(Path.Combine(destination, Config.PropertyFolderName), config));
-
-            Fields.Together(StaticFields).Foreach(p => p.Build(Path.Combine(destination, Config.FieldFolderName), config));
-
-            Events.Together(StaticEvents).Foreach(p => p.Build(Path.Combine(destination, Config.EventFolderName), config));
 
         }
 

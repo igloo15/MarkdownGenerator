@@ -25,7 +25,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetDetailed(MarkdownableMethod value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
 
         public string GetExample(MarkdownableMethod value)
@@ -40,22 +40,22 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetName(MarkdownableMethod value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
         
         public string GetReturnOrType(MarkdownableMethod value)
         {
-            throw new System.NotImplementedException();
+            return Beautifier.BeautifyTypeWithLink(value.InternalMethod.ReturnType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableMethod value)
         {
-            throw new System.NotImplementedException();
+            return value.Comments.FirstOrDefault(x => x.MemberName == value.Name)?.Summary ?? "";
         }
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { "Return", "Name", "Summary" };
         }
 
         public string GetPage(MarkdownableMethod value)
@@ -74,7 +74,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             var seq = InternalMethod.GetParameters().Select(x =>
             {
                 var suffix = x.HasDefaultValue ? (" = " + (x.DefaultValue ?? $"null")) : "";
-                return $"{Beautifier.BeautifyTypeWithLink(x.ParameterType, generateTypeRelativeLinkPath)} " + x.Name + suffix;
+                return $"{Beautifier.BeautifyTypeWithLink(x.ParameterType, generateTypeRelativeLinkPath(x.ParameterType))} " + x.Name + suffix;
             });
 
             sb.AppendLine($"#\t{InternalMethod.DeclaringType.Name}.{InternalMethod.Name} Method ({(value.IsExtension ? "this " : "")}{string.Join(", ", seq)})");
@@ -99,7 +99,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
                     {
                         sb.AppendLine($"");
                         sb.AppendLine($"###\t{parameter.Name}");
-                        sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(parameter.ParameterType, generateTypeRelativeLinkPath)}");
+                        sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(parameter.ParameterType, generateTypeRelativeLinkPath(parameter.ParameterType))}");
                         if (comment.Parameters.ContainsKey(parameter.Name))
                             sb.AppendLine($"-\t{comment.Parameters[parameter.Name]}");
                     }
@@ -108,7 +108,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
                 {
                     sb.AppendLine($"");
                     sb.AppendLine("##\tReturn Value");
-                    sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(InternalMethod.ReturnType, generateTypeRelativeLinkPath)}");
+                    sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(InternalMethod.ReturnType, generateTypeRelativeLinkPath(InternalMethod.ReturnType))}");
                     sb.AppendLine($"-\t{comment.Returns}");
                 }
 

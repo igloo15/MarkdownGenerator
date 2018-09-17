@@ -37,16 +37,18 @@ namespace Igloo15.MarkdownGenerator.Models
             if (!Directory.Exists(FolderPath))
                 Directory.CreateDirectory(FolderPath);
 
+            foreach (var item in Types.OrderBy(x => x.Name))
+            {
+                item.Build(FolderPath, Config);
+            }
+
             if (Config.NamespacePages)
             {
                 var content = Config.CurrentTheme.NamespacePart.GetPage(this);
                 File.WriteAllText(FilePath, content);
             }
 
-            foreach(var item in Types.OrderBy(x => x.Name))
-            {
-                item.Build(FolderPath, Config);
-            }
+            
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetDetailed(MarkdownableEvent value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
 
         public string GetExample(MarkdownableEvent value)
@@ -40,7 +40,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetReturnOrType(MarkdownableEvent value)
         {
-            throw new System.NotImplementedException();
+            return Beautifier.BeautifyTypeWithLink(value.InternalEvent.EventHandlerType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableEvent value)
@@ -50,7 +50,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { "Type", "Name", "Summary" };
         }
 
         public string GetPage(MarkdownableEvent value)

@@ -25,7 +25,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetReturnOrType(MarkdownableProperty value)
         {
-            throw new System.NotImplementedException();
+            return Beautifier.BeautifyTypeWithLink(value.InternalProperty.PropertyType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableProperty value)
@@ -40,7 +40,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetDetailed(MarkdownableProperty value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
 
         public string GetExample(MarkdownableProperty value)
@@ -50,7 +50,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string[] GetTableHeaders()
         {
-            throw new System.NotImplementedException();
+            return new[] { "Type", "Name", "Summary" };
         }
 
         public string GetPage(MarkdownableProperty value)
