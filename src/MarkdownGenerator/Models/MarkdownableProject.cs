@@ -14,111 +14,74 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public bool IsStatic => false;
 
+        public Options Config { get; private set; }
+
         public MarkdownableNamespace[] Namespaces { get; private set; }
 
-        private Options _config;
-
-        public MarkdownableProject(Options config, MarkdownableNamespace[] namespaces)
+        public MarkdownableProject(MarkdownableNamespace[] namespaces, Options config)
         {
+            Config = config;
             Name = config.RootTitle;
             FolderPath = config.Destination;
             Namespaces = namespaces;
-            _config = config;
+            Config = config;
         }
 
         public string GetCode()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public string GetDetailed()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public string GetExample()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public string GetLink()
         {
-            throw new NotImplementedException();
+            return $"[{Name}]({Path.Combine(FolderPath, $"{Config.RootFileName}.md")}";
         }
 
         public string GetName()
         {
-            throw new NotImplementedException();
+            return Name;
         }
 
-        public string GetReturn()
+        public string GetReturnOrType()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public string GetSummary()
         {
-            throw new NotImplementedException();
+            return "";
         }
-
-        public string BuildPage()
+        
+        public void Build(string destination, Options config)
         {
-            var destination = new DirectoryInfo(FolderPath);
-            if (!destination.Exists)
-                Directory.CreateDirectory(FolderPath);
+            Config = config;
 
-            if (_config.CleanDestination)
-                destination.Empty();
+            var directInfo = new DirectoryInfo(destination);
 
-            // Home Markdown Builder
-            var homeBuilder = new MarkdownBuilder();
-            homeBuilder.Header(1, _config.RootTitle);
-            homeBuilder.AppendLine();
+            if (!directInfo.Exists)
+                Directory.CreateDirectory(destination);
 
-            foreach (var g in Namespaces)
+            if (Config.CleanDestination)
+                directInfo.Empty();
+
+            foreach (var namespaceGroup in Namespaces)
             {
-                if (_config.NamespacePages)
-                {
-                    homeBuilder.Header(2, GetLink());
-                }
-                else
-                {
-                    homeBuilder.Header(2, GetName());
-                }
-
-                homeBuilder.AppendLine();
-
-                foreach (var item in g.Types.OrderBy(x => x.Name))
-                {
-                    var sb = new StringBuilder();
-                    
-
-                    if (_config.TypePages)
-                    {
-                        homeBuilder.List(item.GetLink());
-                    }
-                    else
-                    {
-                        homeBuilder.List(item.GetName());
-                    }
-                }
+                namespaceGroup.Build(destination, config);
             }
 
-            homeBuilder.AppendLine();
+            var content = Config.CurrentTheme.ProjectPart.GetPage(this);
 
-            return homeBuilder.ToString();
-        }
-
-        public void Build(string destination)
-        {
-            foreach(var namespaceGroup in Namespaces)
-            {
-                namespaceGroup.Build(destination);
-            }
-
-            var content = BuildPage();
-
-            File.WriteAllText(Path.Combine(destination, $"{_config.RootFileName}.md"), content);
+            File.WriteAllText(Path.Combine(destination, $"{Config.RootFileName}.md"), content);
         }
     }
 }

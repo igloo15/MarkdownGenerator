@@ -21,11 +21,10 @@ namespace Igloo15.MarkdownGenerator.Models
 
         private Options _config;
 
-        public MarkdownableNamespace(List<MarkdownableType> types, string fullName, Options config)
+        public MarkdownableNamespace(List<MarkdownableType> types, string fullName)
         {
             FullName = fullName;
             Types = types;
-            _config = config;
 
             FolderPath = FullName.Replace('.', Path.DirectorySeparatorChar);
         }
@@ -45,7 +44,7 @@ namespace Igloo15.MarkdownGenerator.Models
             return FullName;
         }
 
-        public string GetReturn()
+        public string GetReturnOrType()
         {
             return "";
         }
@@ -95,8 +94,9 @@ namespace Igloo15.MarkdownGenerator.Models
             return namespaceBuilder.ToString();
         }
 
-        public void Build(string destination)
+        public void Build(string destination, Options config)
         {
+            _config = config;
             var namespaceDirectoryPath = Path.Combine(destination, FolderPath);
             if (!Directory.Exists(namespaceDirectoryPath)) Directory.CreateDirectory(namespaceDirectoryPath);
 
@@ -108,7 +108,7 @@ namespace Igloo15.MarkdownGenerator.Models
 
             foreach(var item in Types.OrderBy(x => x.Name))
             {
-                item.Build(namespaceDirectoryPath);
+                item.Build(namespaceDirectoryPath, _config);
             }
         }
     }

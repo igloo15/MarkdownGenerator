@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>Igloo15.MarkdownGenerator</AssemblyName>
+    <AssemblyTitle>markdownapi</AssemblyTitle>
     <RootNamespace>Igloo15.MarkdownGenerator</RootNamespace>
     <BaseOutputPath>$(MSBuildProjectFullPath)\..\..\..\dist\MarkdownGenerator</BaseOutputPath>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -26,9 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Themes\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="Scrutor" Version="3.0.1" />
   </ItemGroup>
 </Project>

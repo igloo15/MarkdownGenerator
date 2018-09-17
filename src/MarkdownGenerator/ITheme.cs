@@ -8,6 +8,8 @@ namespace Igloo15.MarkdownGenerator
 {
     interface IThemePart<T>
     {
+        ITheme RootTheme { get; }
+
         string GetName(T value);
 
         string GetLink(T value);
@@ -21,10 +23,16 @@ namespace Igloo15.MarkdownGenerator
         string GetDetailed(T value);
 
         string GetExample(T value);
+
+        string[] GetTableHeaders();
+
+        string GetPage(T value);
     }
 
     interface ITheme
     {
+        string Name { get; }
+
         IThemePart<MarkdownableProject> ProjectPart { get; }
 
         IThemePart<MarkdownableNamespace> NamespacePart { get; }

@@ -16,11 +16,13 @@ namespace Igloo15.MarkdownGenerator.Models
         public string Name => InternalMethod.Name;
 
         private Options _config;
+        private IEnumerable<XmlDocumentComment> _comments;
 
-        public MarkdownableMethod(MethodInfo info, bool isStatic)
+        public MarkdownableMethod(MethodInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
             InternalMethod = info;
             IsStatic = isStatic;
+            _comments = comments;
         }
 
         public string GetLink()
@@ -33,7 +35,7 @@ namespace Igloo15.MarkdownGenerator.Models
             throw new NotImplementedException();
         }
 
-        public string GetReturn()
+        public string GetReturnOrType()
         {
             throw new NotImplementedException();
         }
@@ -77,7 +79,7 @@ namespace Igloo15.MarkdownGenerator.Models
 
             var parameters = InternalMethod.GetParameters();
 
-            var comment = comments.FirstOrDefault(a =>
+            var comment = _comments.FirstOrDefault(a =>
             (a.MemberName == InternalMethod.Name ||
             a.MemberName.StartsWith(InternalMethod.Name + "`"))
             &&
@@ -106,7 +108,7 @@ namespace Igloo15.MarkdownGenerator.Models
                 {
                     sb.AppendLine($"");
                     sb.AppendLine("##\tReturn Value");
-                    sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(method.ReturnType, generateTypeRelativeLinkPath)}");
+                    sb.AppendLine($"-\tType: {Beautifier.BeautifyTypeWithLink(InternalMethod.ReturnType, generateTypeRelativeLinkPath)}");
                     sb.AppendLine($"-\t{comment.Returns}");
                 }
 
@@ -118,8 +120,9 @@ namespace Igloo15.MarkdownGenerator.Models
             return sb.ToString();
         }
 
-        public void Build(string destination)
+        public void Build(string destination, Options config)
         {
+            _config = config;
             if(_config.MethodPages)
             {
                 if (!Directory.Exists(destination))

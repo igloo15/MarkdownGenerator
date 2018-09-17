@@ -14,7 +14,7 @@ namespace Igloo15.MarkdownGenerator
 
         string GetName();
 
-        string GetReturn();
+        string GetReturnOrType();
 
         string GetSummary();
 
@@ -24,8 +24,6 @@ namespace Igloo15.MarkdownGenerator
 
         string GetExample();
 
-        string BuildPage();
-
-        void Build(string destination);
+        void Build(string destination, Options config);
     }
 }

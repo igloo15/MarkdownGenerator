@@ -1,0 +1,79 @@
+﻿using CommandLine;
+using CommandLine.Text;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Igloo15.MarkdownGenerator
+{
+    internal class Options
+    {
+        [Value(0, Required = true, MetaName = "Dll Path", HelpText = "The path to the dll to create documentation for. May include wildcards on file name. Use ';' to search multiple areas")]
+        public string DllPath { get; set; }
+
+        [Value(1, Required = false, Default = "md", MetaName = "Output Directory", HelpText = "The root folder to put documentation in")]
+        public string Destination { get; set; }
+
+        [Option("root-filename", HelpText = "The name of the markdown file at the root of your documentation", Default = "Home")]
+        public string RootFileName { get; set; }
+
+        [Option("title", Default = "Api", HelpText = "Title of the root home page")]
+        public string RootTitle { get; set; }
+
+        [Option("summary", Default = "", HelpText = "A summary you want to appear on root page")]
+        public string Summary { get; set; }
+
+        [Option("clean-destination", Default = false, HelpText = "Deletes all content in destination before generating new content")]
+        public bool CleanDestination { get; set; }
+
+        [Option("namespace-page", Default = false, HelpText = "Create pages for each namespace")]
+        public bool NamespacePages { get; set; }
+
+        [Option("type-page", Default = true, HelpText = "Create pages for each type")]
+        public bool TypePages { get; set; }
+
+        [Option("method-page", Default = false, HelpText = "Create pages for each method")]
+        public bool MethodPages { get; set; }
+
+        [Option("property-page", Default = false, HelpText = "Create pages for each property")]
+        public bool PropertyPages { get; set; }
+
+        [Option("field-page", Default = false, HelpText = "Create pages for each field")]
+        public bool FieldPages { get; set; }
+
+        [Option("event-page", Default = false, HelpText = "Create pages for each event")]
+        public bool EventPages { get; set; }
+
+        [Option("method-folder", Default = "Methods", HelpText = "The folder to store method pages in")]
+        public string MethodFolderName { get; set; }
+
+        [Option("property-folder", Default = "Properties", HelpText = "The folder to store property pages in")]
+        public string PropertyFolderName { get; set; }
+
+        [Option("field-folder", Default = "Fields", HelpText = "The folder to store field pages in")]
+        public string FieldFolderName { get; set; }
+
+        [Option("event-folder", Default = "Events", HelpText = "The folder to store event pages in")]
+        public string EventFolderName { get; set; }
+
+        [Option("theme", Default = "Default", HelpText = "The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined")]
+        public string ThemeName { get; set; }
+
+        public ITheme CurrentTheme
+        {
+            get
+            {
+                return Program.SearchThemes(ThemeName);
+            }
+        }
+
+        [Usage(ApplicationAlias = "markdowngen")]
+        public static IEnumerable<Example> Examples
+        {
+            get
+            {
+                yield return new Example("Normal Usage", new Options { DllPath = "./MyDll.dll", Destination = "./Api" });
+            }
+        }
+    }
+}

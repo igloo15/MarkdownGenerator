@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -13,7 +14,9 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public string Name => InternalProperty.Name;
 
-        public MarkdownableProperty(PropertyInfo info, bool isStatic)
+        private Options _config;
+
+        public MarkdownableProperty(PropertyInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
             InternalProperty = info;
             IsStatic = isStatic;
@@ -29,7 +32,7 @@ namespace Igloo15.MarkdownGenerator.Models
             throw new NotImplementedException();
         }
 
-        public string GetReturn()
+        public string GetReturnOrType()
         {
             throw new NotImplementedException();
         }
@@ -59,9 +62,10 @@ namespace Igloo15.MarkdownGenerator.Models
             throw new NotImplementedException();
         }
 
-        public void Build(string destination)
+        public void Build(string destination, Options config)
         {
-            throw new NotImplementedException();
+            _config = config;
+            
         }
     }
 }
