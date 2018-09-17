@@ -64,11 +64,11 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             {
                 if (value.Config.NamespacePages)
                 {
-                    homeBuilder.Header(2, RootTheme.NamespacePart.GetLink(g));
+                    homeBuilder.Header(2, g.GetLink());
                 }
                 else
                 {
-                    homeBuilder.Header(2, RootTheme.NamespacePart.GetName(g));
+                    homeBuilder.Header(2, g.GetName());
                 }
 
                 homeBuilder.AppendLine();
@@ -80,11 +80,11 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
                     if (value.Config.TypePages)
                     {
-                        homeBuilder.List(RootTheme.TypePart.GetLink(item));
+                        homeBuilder.List(item.GetLink());
                     }
                     else
                     {
-                        homeBuilder.List(RootTheme.TypePart.GetName(item));
+                        homeBuilder.List(item.GetName());
                     }
                 }
             }

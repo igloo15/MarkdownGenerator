@@ -77,7 +77,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
                 return $"{Beautifier.BeautifyTypeWithLink(x.ParameterType, generateTypeRelativeLinkPath(x.ParameterType))} " + x.Name + suffix;
             });
 
-            sb.AppendLine($"#\t{InternalMethod.DeclaringType.Name}.{InternalMethod.Name} Method ({(value.IsExtension ? "this " : "")}{string.Join(", ", seq)})");
+            sb.AppendLine($"#\t{InternalMethod.Name} Method ({(value.IsExtension ? "this " : "")}{string.Join(", ", seq)})");
 
             var parameters = InternalMethod.GetParameters();
 

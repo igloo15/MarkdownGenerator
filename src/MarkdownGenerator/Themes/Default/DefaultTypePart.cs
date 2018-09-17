@@ -50,12 +50,14 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetLink(MarkdownableType value)
         {
-            return value.GenerateTypeRelativeLinkPath(value.InternalType);
+            var mb = new MarkdownBuilder();
+            mb.Link(GetName(value), value.GenerateTypeRelativeLinkPath(value.InternalType));
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return value.Name;
         }
 
         public string GetPage(MarkdownableType value)
