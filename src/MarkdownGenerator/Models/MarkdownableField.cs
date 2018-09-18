@@ -9,6 +9,7 @@ namespace Igloo15.MarkdownGenerator.Models
     internal class MarkdownableField : IMarkdownable
     {
         public string FolderPath { get; private set; }
+
         public string FilePath { get; private set; }
 
         public FieldInfo InternalField { get; private set; }
@@ -19,10 +20,17 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public Options Config { get; private set; }
 
+        public string Summary { get; private set; }
+
+        public MemberInfo Info => InternalField;
+
         public MarkdownableField(FieldInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
             InternalField = info;
             IsStatic = isStatic;
+
+            Summary = comments.FirstOrDefault(x => x.MemberName == Name
+                    || x.MemberName.StartsWith(Name + "`"))?.Summary ?? "";
         }
 
         public void Build(string destination, Options config)
@@ -32,5 +40,7 @@ namespace Igloo15.MarkdownGenerator.Models
             FilePath = InternalField.GetFilePath(destination);
             
         }
+
+        
     }
 }

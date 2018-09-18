@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
 {
@@ -31,10 +32,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableType value)
+        public string GetLink(MarkdownableType value, MemberInfo from)
         {
             var mb = new MarkdownBuilder();
-            mb.Link(GetName(value), value.GenerateTypeRelativeLinkPath(value.InternalType));
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalType.RelativeLink(from));
+
             return mb.ToString();
         }
 
@@ -43,14 +49,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return value.Name;
         }
 
-        public string GetReturnOrType(MarkdownableType value)
+        public MemberInfo GetReturnOrType(MarkdownableType value)
         {
-            return Beautifier.BeautifyTypeWithLink(value.InternalType, value.FilePath);
+            return value.InternalType;
+            //return Beautifier.BeautifyTypeWithLink(value.InternalType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return value.Summary;
         }
 
         public string[] GetTableHeaders()

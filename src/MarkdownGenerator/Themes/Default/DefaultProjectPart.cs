@@ -1,6 +1,7 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
@@ -29,9 +30,18 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return "";
         }
 
-        public string GetLink(MarkdownableProject value)
+        public string GetLink(MarkdownableProject value, MemberInfo from)
         {
-            return $"[{value.Name}]({Path.Combine(value.FolderPath, $"{value.Config.RootFileName}.md")}";
+            var mb = new MarkdownBuilder();
+            var toPath = $"{value.FolderPath}";
+            var folder = Extensions.RelativePath(from.GetMemberInfoFolder(), toPath);
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), Path.Combine(folder, $"{value.Config.RootFileName}.md"));
+
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableProject value)
@@ -39,9 +49,9 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return value.Name;
         }
 
-        public string GetReturnOrType(MarkdownableProject value)
+        public MemberInfo GetReturnOrType(MarkdownableProject value)
         {
-            return "";
+            return null;
         }
 
         public string GetSummary(MarkdownableProject value)
@@ -64,7 +74,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             {
                 if (value.Config.NamespacePages)
                 {
-                    homeBuilder.Header(2, g.GetLink());
+                    homeBuilder.Header(2, g.Config.CurrentTheme.NamespacePart.GetLink(g, g.Types.FirstOrDefault().InternalType));
                 }
                 else
                 {
@@ -80,7 +90,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
                     if (value.Config.TypePages)
                     {
-                        homeBuilder.List(item.GetLink());
+                        homeBuilder.List(item.Config.CurrentTheme.TypePart.GetLink(item, null));
                     }
                     else
                     {

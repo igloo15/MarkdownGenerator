@@ -1,4 +1,5 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
+using System.Reflection;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
 {
@@ -28,9 +29,16 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableEvent value)
+        public string GetLink(MarkdownableEvent value, MemberInfo from)
         {
-            throw new System.NotImplementedException();
+            var mb = new MarkdownBuilder();
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalEvent.RelativeLink(from));
+
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableEvent value)
@@ -38,14 +46,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetReturnOrType(MarkdownableEvent value)
+        public MemberInfo GetReturnOrType(MarkdownableEvent value)
         {
-            return Beautifier.BeautifyTypeWithLink(value.InternalEvent.EventHandlerType, value.FilePath);
+            return value.InternalEvent.EventHandlerType;
+            //return Beautifier.BeautifyTypeWithLink(value.InternalEvent.EventHandlerType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableEvent value)
         {
-            throw new System.NotImplementedException();
+            return value.Summary;
         }
 
         public string[] GetTableHeaders()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Models
@@ -9,6 +10,7 @@ namespace Igloo15.MarkdownGenerator.Models
     internal class MarkdownableProject : IMarkdownable
     {
         public string FolderPath { get; private set; }
+
         public string FilePath { get; private set; }
 
         public string Name { get; private set; }
@@ -18,6 +20,8 @@ namespace Igloo15.MarkdownGenerator.Models
         public Options Config { get; private set; }
 
         public MarkdownableNamespace[] Namespaces { get; private set; }
+
+        public MemberInfo Info => null;
 
         public MarkdownableProject(MarkdownableNamespace[] namespaces, Options config)
         {

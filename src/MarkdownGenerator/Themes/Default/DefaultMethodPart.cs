@@ -25,7 +25,13 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         public string GetDetailed(MarkdownableMethod value)
         {
-            return value.Name;
+            var seq = value.InternalMethod.GetParameters().Select(x =>
+            {
+                var suffix = x.HasDefaultValue ? (" = " + (x.DefaultValue ?? $"null")) : "";
+                return $"[{x.ParameterType.Name}]({x.ParameterType.RelativeLink(value.InternalMethod)}) " + x.Name + suffix;
+            });
+
+            return $"{value.InternalMethod.Name} Method ({(value.IsExtension ? "this " : "")}{string.Join(", ", seq)})";
         }
 
         public string GetExample(MarkdownableMethod value)
@@ -33,9 +39,16 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableMethod value)
+        public string GetLink(MarkdownableMethod value, MemberInfo from)
         {
-            throw new System.NotImplementedException();
+            var mb = new MarkdownBuilder();
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalMethod.RelativeLink(from));
+
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableMethod value)
@@ -43,14 +56,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return value.Name;
         }
         
-        public string GetReturnOrType(MarkdownableMethod value)
+        public MemberInfo GetReturnOrType(MarkdownableMethod value)
         {
-            return Beautifier.BeautifyTypeWithLink(value.InternalMethod.ReturnType, value.FilePath);
+            return value.InternalMethod.ReturnType;
+            //return Beautifier.BeautifyTypeWithLink(value.InternalMethod.ReturnType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableMethod value)
         {
-            return value.Comments.FirstOrDefault(x => x.MemberName == value.Name)?.Summary ?? "";
+            return value.Summary;
         }
 
         public string[] GetTableHeaders()
@@ -70,14 +84,8 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
                 var RelativeLinkPath = $"{(string.Join("/", type.Namespace.Split('.').Select(a => "..")))}/../{type.Namespace.Replace('.', '/')}/{type.Name}.md";
                 return RelativeLinkPath;
             }
-
-            var seq = InternalMethod.GetParameters().Select(x =>
-            {
-                var suffix = x.HasDefaultValue ? (" = " + (x.DefaultValue ?? $"null")) : "";
-                return $"{Beautifier.BeautifyTypeWithLink(x.ParameterType, generateTypeRelativeLinkPath(x.ParameterType))} " + x.Name + suffix;
-            });
-
-            sb.AppendLine($"#\t{InternalMethod.Name} Method ({(value.IsExtension ? "this " : "")}{string.Join(", ", seq)})");
+            
+            sb.AppendLine(GetDetailed(value));
 
             var parameters = InternalMethod.GetParameters();
 

@@ -12,9 +12,9 @@ namespace Igloo15.MarkdownGenerator
 
         string GetName(T value);
 
-        string GetLink(T value);
+        string GetLink(T value, MemberInfo from);
 
-        string GetReturnOrType(T value);
+        MemberInfo GetReturnOrType(T value);
 
         string GetSummary(T value);
 

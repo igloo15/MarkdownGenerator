@@ -1,4 +1,5 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
+using System.Reflection;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
 {
@@ -18,19 +19,27 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableProperty value)
+        public string GetLink(MarkdownableProperty value, MemberInfo from)
         {
-            throw new System.NotImplementedException();
+            var mb = new MarkdownBuilder();
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalProperty.RelativeLink(from));
+
+            return mb.ToString();
         }
 
-        public string GetReturnOrType(MarkdownableProperty value)
+        public MemberInfo GetReturnOrType(MarkdownableProperty value)
         {
-            return Beautifier.BeautifyTypeWithLink(value.InternalProperty.PropertyType, value.FilePath);
+            return value.InternalProperty.PropertyType;
+            //return Beautifier.BeautifyTypeWithLink(value.InternalProperty.PropertyType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableProperty value)
         {
-            throw new System.NotImplementedException();
+            return value.Summary;
         }
 
         public string GetCode(MarkdownableProperty value)

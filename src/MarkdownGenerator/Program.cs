@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using Igloo15.MarkdownGenerator.Themes.Default;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Igloo15.MarkdownGenerator
             string target = file.DllPath;
             string dest = file.Destination;
             string namespaceMatch = string.Empty;
+            
             try
             {
                 

@@ -1,6 +1,7 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
@@ -31,9 +32,17 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return string.Empty;
         }
 
-        public string GetLink(MarkdownableNamespace value)
+        public string GetLink(MarkdownableNamespace value, MemberInfo from)
         {
-            return $"[{value.FullName}]({value.FolderPath}{Path.DirectorySeparatorChar}{value.Config.RootFileName}.md)";
+            var mb = new MarkdownBuilder();
+            var toPath = $"{value.FolderPath}";
+            var folder = Extensions.RelativePath(from.GetMemberInfoFolder(), toPath);
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), Path.Combine(folder, value.Config.RootFileName + ".md"));
+
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableNamespace value)
@@ -41,9 +50,9 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             return value.FullName;
         }
 
-        public string GetReturnOrType(MarkdownableNamespace value)
+        public MemberInfo GetReturnOrType(MarkdownableNamespace value)
         {
-            return "";
+            return null;
         }
 
         public string GetSummary(MarkdownableNamespace value)
@@ -67,7 +76,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
                 var sb = new StringBuilder();
                 if (value.Config.TypePages)
                 {
-                    namespaceBuilder.List(item.GetLink());
+                    namespaceBuilder.List(item.Config.CurrentTheme.TypePart.GetLink(item, item.InternalType));
                 }
                 else
                 {

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Models
@@ -12,6 +13,7 @@ namespace Igloo15.MarkdownGenerator.Models
         public string FullName { get; private set; }
 
         public string FolderPath { get; private set; }
+
         public string FilePath { get; private set; }
 
         public List<MarkdownableType> Types { get; private set; }
@@ -21,6 +23,8 @@ namespace Igloo15.MarkdownGenerator.Models
         public bool IsStatic => false;
 
         public Options Config { get; private set; }
+
+        public MemberInfo Info => null;
 
         public MarkdownableNamespace(List<MarkdownableType> types, string fullName)
         {

@@ -13,22 +13,28 @@ namespace Igloo15.MarkdownGenerator
 
         StringBuilder sb = new StringBuilder();
 
-        public void Append(string text)
+        public MarkdownBuilder Append(string text)
         {
             sb.Append(text);
+
+            return this;
         }
 
-        public void AppendLine()
+        public MarkdownBuilder AppendLine()
         {
             sb.AppendLine();
+
+            return this;
         }
 
-        public void AppendLine(string text)
+        public MarkdownBuilder AppendLine(string text)
         {
             sb.AppendLine(text);
+
+            return this;
         }
 
-        public void Header(int level, string text)
+        public MarkdownBuilder Header(int level, string text)
         {
             for (int i = 0; i < level; i++)
             {
@@ -36,9 +42,11 @@ namespace Igloo15.MarkdownGenerator
             }
             sb.Append(" ");
             sb.AppendLine(text);
+
+            return this;
         }
 
-        public void HeaderWithCode(int level, string code)
+        public MarkdownBuilder HeaderWithCode(int level, string code)
         {
             for (int i = 0; i < level; i++)
             {
@@ -47,9 +55,11 @@ namespace Igloo15.MarkdownGenerator
             sb.Append(" ");
             sb.Append(code);
             sb.AppendLine();
+
+            return this;
         }
 
-        public void HeaderWithLink(int level, string text, string url)
+        public MarkdownBuilder HeaderWithLink(int level, string text, string url)
         {
             for (int i = 0; i < level; i++)
             {
@@ -58,9 +68,11 @@ namespace Igloo15.MarkdownGenerator
             sb.Append(" ");
             Link(text, url);
             sb.AppendLine();
+
+            return this;
         }
 
-        public void Link(string text, string url)
+        public MarkdownBuilder Link(string text, string url)
         {
             sb.Append("[");
             sb.Append(text);
@@ -68,30 +80,43 @@ namespace Igloo15.MarkdownGenerator
             sb.Append("(");
             sb.Append(url);
             sb.Append(")");
+
+            return this;
         }
 
-        public void Image(string altText, string imageUrl)
+        public MarkdownBuilder Image(string altText, string imageUrl)
         {
             sb.Append("!");
             Link(altText, imageUrl);
+
+            return this;
         }
 
-        public void Code(string language, string code)
+        public MarkdownBuilder Code(string language, string code)
         {
             sb.Append("```");
             sb.AppendLine(language);
             sb.AppendLine(code);
             sb.AppendLine("```");
+
+            return this;
         }
 
-        public void CodeQuote(string code)
+        public MarkdownBuilder CodeQuote(string code)
         {
             sb.Append("`");
             sb.Append(code);
             sb.Append("`");
+
+            return this;
         }
 
-        public void Table(string[] headers, IEnumerable<string[]> items)
+        /// <summary>
+        /// Create a table with the header and given items
+        /// </summary>
+        /// <param name="headers">The header of table</param>
+        /// <param name="items">The items on each row</param>
+        public MarkdownBuilder Table(string[] headers, IEnumerable<string[]> items)
         {
             sb.Append("| ");
             foreach (var item in headers)
@@ -121,19 +146,25 @@ namespace Igloo15.MarkdownGenerator
                 sb.AppendLine();
             }
             sb.AppendLine();
+
+            return this;
         }
 
-        public void List(string text) // nest zero
+        public MarkdownBuilder List(string text) // nest zero
         {
             sb.Append("- ");
             sb.AppendLine(text);
+
+            return this;
         }
 
-        public void ListLink(string text, string url) // nest zero
+        public MarkdownBuilder ListLink(string text, string url) // nest zero
         {
             sb.Append("- ");
             Link(text, url);
             sb.AppendLine();
+
+            return this;
         }
 
         public override string ToString()

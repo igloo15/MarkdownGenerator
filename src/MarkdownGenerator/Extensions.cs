@@ -196,19 +196,48 @@ namespace Igloo15.MarkdownGenerator
             return RelativeLinkPath;
         }
 
-        internal static string GetLink(this IMarkdownable item)
-        {
-            return RouteThemeMethod(item, nameof(GetLink));
-        }
-
         public static string GetName(this IMarkdownable item)
         {
             return RouteThemeMethod(item, nameof(GetName));
         }
 
-        public static string GetReturnOrType(this IMarkdownable item)
+        public static MemberInfo GetReturnOrType(this IMarkdownable item)
         {
-            return RouteThemeMethod(item, nameof(GetReturnOrType));
+            var theme = item.Config.CurrentTheme;
+
+            switch (item)
+            {
+                case MarkdownableProject proj:
+                    return theme.ProjectPart.GetReturnOrType(proj);
+
+                case MarkdownableNamespace nameSpace:
+                    return theme.NamespacePart.GetReturnOrType(nameSpace);
+
+                case MarkdownableType type:
+                    return theme.TypePart.GetReturnOrType(type);
+
+                case MarkdownableMethod method:
+                    if(item.IsStatic)
+                        return theme.StaticMethodPart.GetReturnOrType(method);
+                    return theme.MethodPart.GetReturnOrType(method);
+
+                case MarkdownableField field:
+                    if (item.IsStatic)
+                        return theme.StaticFieldPart.GetReturnOrType(field);
+                    return theme.FieldPart.GetReturnOrType(field);
+
+                case MarkdownableProperty prop:
+                    if (item.IsStatic)
+                        return theme.StaticPropertyPart.GetReturnOrType(prop);
+                    return theme.PropertyPart.GetReturnOrType(prop);
+
+                case MarkdownableEvent eventItem:
+                    if (item.IsStatic)
+                        return theme.StaticEventPart.GetReturnOrType(eventItem);
+                    return theme.EventPart.GetReturnOrType(eventItem);
+            }
+
+            return null;
         }
 
         public static string GetSummary(this IMarkdownable item)
@@ -245,6 +274,10 @@ namespace Igloo15.MarkdownGenerator
                 }
             }
 
+            IEnumerable<string> test;
+
+            
+
             foreach (var prop in typeof(ITheme).GetProperties())
             {
                 Type propType = prop.PropertyType;
@@ -264,6 +297,9 @@ namespace Igloo15.MarkdownGenerator
 
             return (T p) => "Failed to find parsing function";
         }
+
+        
+
 
         private static string RouteThemeMethod(IMarkdownable item, string functionName)
         {
@@ -293,6 +329,70 @@ namespace Igloo15.MarkdownGenerator
                     
             }
             return string.Empty;
+        }
+
+        public static string RelativeLink(this MemberInfo infoTo, MemberInfo infoFrom)
+        {
+            return Path.Combine(RelativePath(infoFrom.GetMemberInfoFolder(), infoTo.GetMemberInfoFolder()), infoTo.GetMemberInfoFileName());            
+        }
+
+        public static string GetMemberInfoFolder(this MemberInfo info)
+        {
+            string path = string.Empty;
+            if (info.MemberType == MemberTypes.TypeInfo)
+            {
+                Type myType = info as Type;
+                path = $".{Path.DirectorySeparatorChar}{myType.Namespace.Replace('.', Path.DirectorySeparatorChar).CleanName()}{Path.DirectorySeparatorChar}";
+            }
+            else
+            {
+                string typeFolder = string.Empty;
+                switch (info.MemberType)
+                {
+                    case MemberTypes.Field:
+                        typeFolder = "Fields";
+                        break;
+                    case MemberTypes.Method:
+                        typeFolder = "Methods";
+                        break;
+                    case MemberTypes.Property:
+                        typeFolder = "Properties";
+                        break;
+                    case MemberTypes.Event:
+                        typeFolder = "Events";
+                        break;
+                }
+
+                path = $".{Path.DirectorySeparatorChar}{info.DeclaringType.Namespace.Replace('.', Path.DirectorySeparatorChar).CleanName()}{Path.DirectorySeparatorChar}{typeFolder}{Path.DirectorySeparatorChar}";
+            }
+
+            return path;
+        }
+
+        public static string GetMemberInfoFileName(this MemberInfo info)
+        {
+            string path = string.Empty;
+            if (info.MemberType == MemberTypes.TypeInfo)
+            {
+                Type myType = info as Type;
+                path = $"{myType.Name.CleanName()}.md";
+            }
+            else
+            {
+                path = $"{info.DeclaringType.Name.CleanName()}-{info.MetadataToken}.md";
+            }
+
+            return path;
+        }
+
+        public static string GetMemberInfoLocation(this MemberInfo info)
+        {
+            return Path.Combine(info.GetMemberInfoFolder(), info.GetMemberInfoFileName());
+        }
+
+        public static string CleanName(this string name)
+        {
+            return name.Replace("`", "");
         }
 
     }

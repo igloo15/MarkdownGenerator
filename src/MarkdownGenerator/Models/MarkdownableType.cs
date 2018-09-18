@@ -34,6 +34,10 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public Options Config { get; private set; }
 
+        public string Summary { get; private set; }
+
+        public MemberInfo Info => InternalType;
+
         private readonly ILookup<string, XmlDocumentComment> _comments;
 
         public MarkdownableType(Type type, ILookup<string, XmlDocumentComment> commentLookup)
@@ -49,16 +53,10 @@ namespace Igloo15.MarkdownGenerator.Models
             Events = this.GetEvents(Comments);
             StaticEvents = this.GetStaticEvents(Comments);
 
-        }
+            Summary = Comments.FirstOrDefault(x => x.MemberName == Name
+                    || x.MemberName.StartsWith(Name + "`"))?.Summary ?? "";
 
-        void BuildTable<T>(MarkdownBuilder mb, string label, T[] array, IEnumerable<XmlDocumentComment> docs, Func<T, string> type, Func<T, string> name, Func<T, string> finalName)
-        {
-            
-        }     
-
-        
-
-        
+        }       
 
         public void Build(string destination, Options config)
         {

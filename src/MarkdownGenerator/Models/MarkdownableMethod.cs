@@ -10,6 +10,7 @@ namespace Igloo15.MarkdownGenerator.Models
     internal class MarkdownableMethod : IMarkdownable
     {
         public string FolderPath { get; private set; }
+
         public string FilePath { get; private set; }
 
         public MethodInfo InternalMethod { get; private set; }
@@ -24,11 +25,19 @@ namespace Igloo15.MarkdownGenerator.Models
 
         public IEnumerable<XmlDocumentComment> Comments { get; }
 
+        public string Summary { get; private set; }
+
+        public MemberInfo Info => InternalMethod;
+
         public MarkdownableMethod(MethodInfo info, bool isStatic, IEnumerable<XmlDocumentComment> comments)
         {
             InternalMethod = info;
             IsStatic = isStatic;
             Comments = comments;
+
+            Summary = Comments.FirstOrDefault(a => (a.MemberName == InternalMethod.Name || a.MemberName.StartsWith(InternalMethod.Name + "`"))
+                && info.GetParameters().All(b => a.Parameters.ContainsKey(b.Name))
+            )?.Summary ?? "";
         }
         
         public void Build(string destination, Options config)

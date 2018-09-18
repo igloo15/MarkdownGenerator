@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
@@ -48,10 +49,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableType value)
+        public string GetLink(MarkdownableType value, MemberInfo from)
         {
             var mb = new MarkdownBuilder();
-            mb.Link(GetName(value), value.GenerateTypeRelativeLinkPath(value.InternalType));
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalType.RelativeLink(from));
+
             return mb.ToString();
         }
 
@@ -81,8 +87,13 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
             mb.AppendLine();
 
-            BuildTable(mb, "Fields", comments, value.Fields, RootTheme.FieldPart.GetTableHeaders());
-            BuildTable(mb, "Properties", comments, value.Properties, new[] { "Type", "Name", "Summary" });
+            BuildTable(mb, "Fields", value.Fields, RootTheme.FieldPart.GetTableHeaders(), value);
+            BuildTable(mb, "Properties", value.Properties, RootTheme.PropertyPart.GetTableHeaders(), value);
+            BuildTable(mb, "Methods", value.Methods, RootTheme.MethodPart.GetTableHeaders(), value);
+
+            BuildTable(mb, "Static Fields", value.StaticFields, RootTheme.StaticFieldPart.GetTableHeaders(), value);
+            BuildTable(mb, "Static Properties", value.StaticProperties, RootTheme.StaticPropertyPart.GetTableHeaders(), value);
+            BuildTable(mb, "Static Methods", value.StaticMethods, RootTheme.StaticMethodPart.GetTableHeaders(), value);
 
             //1 -Type 2-Name 3-finalName
             //BuildTable(mb, "Fields", value.Fields, comments, x => Beautifier.BeautifyTypeWithLink(x.InternalField.FieldType, GenerateTypeRelativeLinkPath), x => x.Name, x => x.Name);
@@ -93,19 +104,19 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             //BuildTable(mb, "Static Properties", value.StaticProperties, comments, x => Beautifier.BeautifyTypeWithLink(x.InternalProperty.PropertyType, GenerateTypeRelativeLinkPath), x => x.Name, x => x.Name);
             //BuildTable(mb, "Static Methods", value.StaticMethods, comments, x => Beautifier.BeautifyTypeWithLink(x.InternalMethod.ReturnType, GenerateTypeRelativeLinkPath), x => x.Name, x => Beautifier.ToMarkdownMethodInfo(x.InternalMethod, GenerateTypeRelativeLinkPath));
             //BuildTable(mb, "Static Events", value.StaticEvents, comments, x => Beautifier.BeautifyTypeWithLink(x.InternalEvent.EventHandlerType, GenerateTypeRelativeLinkPath), x => x.Name, x => x.Name);
-            
+
 
             return mb.ToString();
         }
 
-        public string GetReturnOrType(MarkdownableType value)
+        public MemberInfo GetReturnOrType(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return value.InternalType;
         }
 
         public string GetSummary(MarkdownableType value)
         {
-            throw new System.NotImplementedException();
+            return value.Summary;
         }
 
         public string[] GetTableHeaders()
@@ -115,7 +126,7 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
         
 
-        private void BuildTable(MarkdownBuilder mb, string label, IEnumerable<XmlDocumentComment> comments, IMarkdownable[] items, string[] headers)
+        private void BuildTable(MarkdownBuilder mb, string label, IMarkdownable[] items, string[] headers, MarkdownableType mdType)
         {
             if (items.Any())
             {
@@ -125,15 +136,12 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
 
                 var seq = items.OrderBy(x => x.Name);
 
-                var data = seq.Select(item2 =>
+                var data = seq.Select(item =>
                 {
-                    var summary = comments.FirstOrDefault(x => x.MemberName == item2.GetName()
-                        || x.MemberName.StartsWith(item2.GetName() + "`"))?.Summary ?? "";
-
                     return new[] {
-                        item2.GetReturnOrType(),
-                        item2.GetDetailed(),
-                        summary
+                        $"[{item.GetReturnOrType().Name}]({item.GetReturnOrType().RelativeLink(mdType.InternalType)})",
+                        item.GetDetailed(),
+                        item.GetSummary()
                     };
                 });
 

@@ -1,4 +1,5 @@
 ﻿using Igloo15.MarkdownGenerator.Models;
+using System.Reflection;
 
 namespace Igloo15.MarkdownGenerator.Themes.Default
 {
@@ -28,9 +29,16 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetLink(MarkdownableField value)
+        public string GetLink(MarkdownableField value, MemberInfo from)
         {
-            throw new System.NotImplementedException();
+            var mb = new MarkdownBuilder();
+
+            if (from == null)
+                mb.Link(GetName(value), value.FilePath);
+            else
+                mb.Link(GetName(value), value.InternalField.RelativeLink(from));
+
+            return mb.ToString();
         }
 
         public string GetName(MarkdownableField value)
@@ -38,14 +46,15 @@ namespace Igloo15.MarkdownGenerator.Themes.Default
             throw new System.NotImplementedException();
         }
 
-        public string GetReturnOrType(MarkdownableField value)
+        public MemberInfo GetReturnOrType(MarkdownableField value)
         {
-            return Beautifier.BeautifyTypeWithLink(value.InternalField.FieldType, value.FilePath);
+            return value.InternalField.FieldType;
+            //return Beautifier.BeautifyTypeWithLink(value.InternalField.FieldType, value.FilePath);
         }
 
         public string GetSummary(MarkdownableField value)
         {
-            throw new System.NotImplementedException();
+            return value.Summary;
         }
 
         public string[] GetTableHeaders()
