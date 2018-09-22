@@ -9,14 +9,17 @@ namespace Igloo15.MarkdownApi.Core.Themes
 {
     public class DefaultTheme : ITheme
     {
+        public string RootFileName { get; set; }
+
         public string RootName { get; set; }
 
-        public DefaultTheme(string rootName)
+        public DefaultTheme(string rootFileName, string rootName)
         {
+            RootFileName = rootFileName;
             RootName = rootName;
         }
 
-        public IResolver Resolver => new DefaultResolver(RootName);
+        public IResolver Resolver => new DefaultResolver(RootFileName, RootName);
 
         public string BuildPage(MarkdownNamespace item)
         {

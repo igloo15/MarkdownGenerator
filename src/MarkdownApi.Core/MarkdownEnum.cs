@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Igloo15.MarkdownApi.Core.Builders;
+using Igloo15.MarkdownApi.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Igloo15.MarkdownApi.Core
 {
-    public class MarkdownEnum : IMarkdownItem
+    public class MarkdownEnum : IMarkdownItem, IInternalMarkdownItem
     {
         public MarkdownItemTypes ItemType => MarkdownItemTypes.Enum;
 
@@ -32,7 +34,28 @@ namespace Igloo15.MarkdownApi.Core
 
         public string Summary { get; internal set; }
 
+        public IEnumerable<XmlDocumentComment> Comments { get; internal set; }
+
         public List<string> EnumNames => InternalType.GetEnumNames().ToList();
 
+        public string GetId()
+        {
+            return $"{FullName}";
+        }
+
+        public string BuildPage(ITheme theme)
+        {
+            return theme.BuildPage(this);
+        }
+
+        void IInternalMarkdownItem.SetLocation(string location)
+        {
+            Location = location;
+        }
+
+        void IInternalMarkdownItem.SetFilename(string filename)
+        {
+            FileName = filename;
+        }
     }
 }

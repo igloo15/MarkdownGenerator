@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using System;
+using System.Reflection;
 
 namespace Igloo15.MarkdownApi.Core.TypeParts
 {
-    public class MarkdownField : AbstractTypePart
+    public class MarkdownField : AbstractTypePart, IMarkdownTypePartValue
     {
         public override MarkdownItemTypes ItemType => MarkdownItemTypes.Field;
         
@@ -18,6 +20,18 @@ namespace Igloo15.MarkdownApi.Core.TypeParts
         {
             InternalItem = info;
             IsStatic = isStatic;
+        }
+
+        public Type Type => InternalItem.FieldType;
+
+        public override string GetId()
+        {
+            return $"{ParentType.FullName}-{InternalItem.MetadataToken}";
+        }
+
+        public override string BuildPage(ITheme theme)
+        {
+            return theme.BuildPage(this);
         }
     }
 }

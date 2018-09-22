@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -27,8 +28,13 @@ namespace Igloo15.MarkdownApi.Core
             return Items;
         }
 
-        public static MarkdownNamespace TryGet(string name)
+        public static MarkdownNamespace TryGetOrAdd(string name, IMarkdownItem item)
         {
+            if(!Items.ContainsKey(name))
+            {
+                TryAdd(name, item);
+            }
+
             return Items[name] as MarkdownNamespace;
         }
 

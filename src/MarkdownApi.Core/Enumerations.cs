@@ -15,7 +15,8 @@ namespace Igloo15.MarkdownApi.Core
         Field,
         Event,
         Parameter,
-        Return
+        Return, 
+        Project
     }
 
 }

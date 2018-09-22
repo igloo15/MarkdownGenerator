@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace Igloo15.MarkdownApi.Core.Builders
 {
-    internal enum MemberType
+    public enum MemberType
     {
         Field = 'F',
         Property = 'P',
@@ -18,15 +18,15 @@ namespace Igloo15.MarkdownApi.Core.Builders
         None = 0
     }
 
-    internal class XmlDocumentComment
+    public class XmlDocumentComment
     {
-        public MemberType MemberType { get; set; }
-        public string ClassName { get; set; }
-        public string MemberName { get; set; }
-        public string Summary { get; set; }
-        public string Remarks { get; set; }
-        public Dictionary<string, string> Parameters { get; set; }
-        public string Returns { get; set; }
+        public MemberType MemberType { get; internal set; }
+        public string ClassName { get; internal set; }
+        public string MemberName { get; internal set; }
+        public string Summary { get; internal set; }
+        public string Remarks { get; internal set; }
+        public Dictionary<string, string> Parameters { get; internal set; }
+        public string Returns { get; internal set; }
 
         public override string ToString()
         {

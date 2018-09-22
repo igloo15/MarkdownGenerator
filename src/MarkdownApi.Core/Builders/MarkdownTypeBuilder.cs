@@ -12,19 +12,14 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public List<MarkdownNamespace> BuildTypes(MarkdownType[] types, ILookup<string, XmlDocumentComment> comments)
         {
-            Dictionary<string, MarkdownNamespace> namespaceLookup = new Dictionary<string, MarkdownNamespace>();
+            List<MarkdownNamespace> namespaces = new List<MarkdownNamespace>();
 
             foreach(var type in types)
             {
-                if (!namespaceLookup.ContainsKey(type.InternalType.Namespace))
-                {
-                    var tempNamespace = new MarkdownNamespace() { FullName = type.InternalType.Namespace };
-                    namespaceLookup[type.InternalType.Namespace] = tempNamespace;
+                
+                var tempNamespace = new MarkdownNamespace() { FullName = type.InternalType.Namespace };
 
-                    MarkdownRepo.TryAdd(tempNamespace.GetId(), tempNamespace);
-                }
-
-                var myNamespace = MarkdownRepo.TryGet(type.InternalType.Namespace);
+                var myNamespace = MarkdownRepo.TryGetOrAdd(type.InternalType.Namespace, tempNamespace);
 
                 var typeComments = comments[type.FullName];
 
@@ -41,11 +36,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
                     myNamespace.Enums.Add(enumType);
                 }
-                
+
+                namespaces.Add(myNamespace);
             }
             
 
-            return namespaceLookup.Values.ToList();
+            return namespaces;
         }
 
         public MarkdownType BuildType(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)
@@ -123,6 +119,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
             me.NamespaceItem = namespaceItem;
             me.InternalType = type.InternalType;
+            me.Comments = comments;
 
             me.Summary = comments.FirstOrDefault(x => x.MemberName == me.Name
                     || x.MemberName.StartsWith(me.Name + "`"))?.Summary ?? "";

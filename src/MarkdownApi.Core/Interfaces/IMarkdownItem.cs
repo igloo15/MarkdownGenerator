@@ -1,4 +1,4 @@
-﻿namespace Igloo15.MarkdownApi.Core
+﻿namespace Igloo15.MarkdownApi.Core.Interfaces
 {
     public interface IMarkdownItem
     {
@@ -11,5 +11,11 @@
         string Name { get; }
 
         string FullName { get; }
+
+        string Summary { get; }
+
+        string GetId();
+
+        string BuildPage(ITheme theme);
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using System;
+using System.Reflection;
 
 namespace Igloo15.MarkdownApi.Core.TypeParts
 {
@@ -12,12 +14,24 @@ namespace Igloo15.MarkdownApi.Core.TypeParts
 
         public override string FullName => InternalItem.Name;
 
-        public string ReturnType => InternalItem.ReturnType.Name;
+        public string ReturnTypeName => ReturnType.Name;
+
+        public Type ReturnType => InternalItem.ReturnType;
         
         public MarkdownMethod(MethodInfo info, bool isStatic)
         {
             InternalItem = info;
             IsStatic = isStatic;
+        }
+
+        public override string GetId()
+        {
+            return $"{ParentType.FullName}-{InternalItem.MetadataToken}";
+        }
+
+        public override string BuildPage(ITheme theme)
+        {
+            return theme.BuildPage(this);
         }
     }
 }

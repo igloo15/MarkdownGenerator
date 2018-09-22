@@ -15,11 +15,11 @@ namespace Igloo15.MarkdownApi.Core.Builders
     
     internal static class MarkdownItemBuilder
     {
-        public static MarkdownProject Load(string searchArea, string namespaceMatch, string root)
+        public static MarkdownProject Load(string searchArea, string namespaceMatch, string name)
         {
             List<MarkdownType> types = new List<MarkdownType>();
 
-            MarkdownProject project = new MarkdownProject(root);
+            MarkdownProject project = new MarkdownProject(name);
 
             var dllPaths = searchArea.Split(';');
             foreach(var dllPath in dllPaths)
