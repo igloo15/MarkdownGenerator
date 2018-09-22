@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownGenerator", "MarkdownGenerator\MarkdownGenerator.csproj", "{2058B4FD-7008-4213-A2A5-9C730446CCE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownApi.Tool", "MarkdownApi.Tool\MarkdownApi.Tool.csproj", "{2058B4FD-7008-4213-A2A5-9C730446CCE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownApi.Interfaces", "MarkdownApi.Interfaces\MarkdownApi.Interfaces.csproj", "{F9114920-BDD7-48C5-9E79-4885E53AE0F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarkdownApi.Core", "MarkdownApi.Core\MarkdownApi.Core.csproj", "{F9114920-BDD7-48C5-9E79-4885E53AE0F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownApi.Tester", "MarkdownApi.Tester\MarkdownApi.Tester.csproj", "{F4604827-62E5-466D-A6A0-51FB53EFB070}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F9114920-BDD7-48C5-9E79-4885E53AE0F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9114920-BDD7-48C5-9E79-4885E53AE0F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9114920-BDD7-48C5-9E79-4885E53AE0F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4604827-62E5-466D-A6A0-51FB53EFB070}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4604827-62E5-466D-A6A0-51FB53EFB070}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4604827-62E5-466D-A6A0-51FB53EFB070}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4604827-62E5-466D-A6A0-51FB53EFB070}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Igloo15.MarkdownApi.Core</AssemblyName>
+    <RootNamespace>Igloo15.MarkdownApi.Core</RootNamespace>
+    <BaseOutputPath>$(MSBuildProjectFullPath)\..\..\..\dist\MarkdownApi.Core</BaseOutputPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageVersion>$(Version)</PackageVersion>
+    <PackageIconUrl>Igloo15.MarkdownApi.Core</PackageIconUrl>
+    <Title>Igloo15.MarkdownApi.Core</Title>
+    <Authors>Igloo15, jyasuu, neuecc</Authors>
+    <Description>Core library for the MarkdownApi.Tool cli packages</Description>
+    <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
+    <PackageTags>markdown;dotnet;cli;tool;netcore</PackageTags>
+    <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+</Project>
