@@ -23,7 +23,7 @@ namespace Igloo15.MarkdownApi.Tester
 
             Console.WriteLine(project);
 
-            Console.ReadLine();
+            //Console.ReadLine();
 
         }
     }

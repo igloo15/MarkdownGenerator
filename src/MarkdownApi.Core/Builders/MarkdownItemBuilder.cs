@@ -59,7 +59,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             var namespaceRegex = 
                 !string.IsNullOrEmpty(namespaceMatch) ? new Regex(namespaceMatch) : null;
 
-            IEnumerable< Type> AssemblyTypesSelector(Assembly x) {
+            IEnumerable<Type> AssemblyTypesSelector(Assembly x) {
 
                 try
                 {

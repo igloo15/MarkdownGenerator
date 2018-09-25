@@ -53,9 +53,9 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     return null;
                     return $"{prop.ParentType.Name}-{prop.InternalItem.MetadataToken}.md";
                 case MarkdownType type:
-                    return $"{type.Name}.md";
+                    return $"{Cleaner.CleanName(type.Name, true)}.md";
                 case MarkdownEnum enumItem:
-                    return $"{enumItem.Name}.md";
+                    return $"{Cleaner.CleanName(enumItem.Name, true)}.md";
                 case MarkdownEvent eventItem:
                     return null;
                     return $"{eventItem.ParentType.Name}-{eventItem.InternalItem.MetadataToken}.md";
@@ -66,7 +66,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     return null;
                     return $"{method.ParentType.Name}-{method.InternalItem.MetadataToken}.md";
                 default:
-                    return $"{item.FullName}.md";
+                    return $"{Cleaner.CleanName(item.FullName, true)}.md";
             }
         }
     }

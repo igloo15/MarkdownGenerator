@@ -66,7 +66,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public string GetId()
         {
-            return $"{FullName}";
+            return $"{InternalType.ToString()}";
         }
 
         public string BuildPage(ITheme theme)
@@ -83,5 +83,7 @@ namespace Igloo15.MarkdownApi.Core
         {
             FileName = filename;
         }
+
+        public Dictionary<string, IMarkdownItem> AllItems => NamespaceItem.Project.AllItems;
     }
 }

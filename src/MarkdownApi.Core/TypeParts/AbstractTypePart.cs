@@ -38,6 +38,7 @@ namespace Igloo15.MarkdownApi.Core.TypeParts
         public abstract string GetId();
 
         public abstract string BuildPage(ITheme theme);
-        
+
+        public Dictionary<string, IMarkdownItem> AllItems => ParentType.NamespaceItem.Project.AllItems;
     }
 }

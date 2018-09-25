@@ -42,6 +42,9 @@ namespace Igloo15.MarkdownApi.Core
 
         public static string CombinePath(this string item1, params string[] items)
         {
+            if (String.IsNullOrEmpty(item1))
+                return String.Join(Constants.PathSeparator.ToString(), items);
+
             return item1 + Constants.PathSeparator + String.Join(Constants.PathSeparator.ToString(), items);
         }
 
@@ -62,6 +65,9 @@ namespace Igloo15.MarkdownApi.Core
 
         public static string RelativePath(this string absPath, string relTo)
         {
+            if (absPath == relTo)
+                return "";
+
             string[] absDirs = absPath.Split(Constants.PathSeparator, Path.DirectorySeparatorChar);
             string[] relDirs = relTo.Split(Constants.PathSeparator, Path.DirectorySeparatorChar);
 

@@ -1,7 +1,11 @@
-﻿namespace Igloo15.MarkdownApi.Core.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Igloo15.MarkdownApi.Core.Interfaces
 {
     public interface IMarkdownItem
     {
+        Dictionary<string, IMarkdownItem> AllItems { get; }
+
         MarkdownItemTypes ItemType { get; }
 
         string Location { get; }

@@ -12,7 +12,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         {
 
             var namespaceBuilder = new MarkdownBuilder();
-            namespaceBuilder.Header(1, item.Name);
+            namespaceBuilder.HeaderWithLink(1, item.FullName, item.To(item));
             namespaceBuilder.AppendLine();
 
             foreach (var type in item.Types.OrderBy(x => x.Name))
@@ -20,7 +20,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 var sb = new StringBuilder();
                 if (!String.IsNullOrEmpty(type.FileName))
                 {
-                    namespaceBuilder.ListLink(type.Name, item.To(type));
+                    namespaceBuilder.List(Cleaner.CreateFullTypeWithLinks(item, type.InternalType, false));
                 }
                 else
                 {

@@ -44,5 +44,7 @@ namespace Igloo15.MarkdownApi.Core
         {
             FileName = filename;
         }
+
+        public Dictionary<string, IMarkdownItem> AllItems => Project.AllItems;
     }
 }

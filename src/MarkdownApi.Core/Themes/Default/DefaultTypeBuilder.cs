@@ -14,7 +14,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         {
             var mb = new MarkdownBuilder();
 
-            mb.HeaderWithCode(1, item.Name);
+            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, true));
             mb.AppendLine();
             
             if (!String.IsNullOrEmpty(item.Summary))
@@ -69,22 +69,9 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     else
                         lookUpType = item.As<IMarkdownTypePartValue>().Type;
 
-                    if(lookUpType.FullName != null && mdType.NamespaceItem.Project.AllItems.TryGetValue(lookUpType.FullName, out IMarkdownItem lookupItem))
-                    {
-                        MarkdownBuilder tempMB = new MarkdownBuilder();
-                        tempMB.Link(lookUpType.Name, mdType.To(lookupItem));
-                        dataValues[0] = tempMB.ToString();
-                    }
-                    else if(lookUpType.FullName != null && lookUpType.FullName.StartsWith("System"))
-                    {
-                        MarkdownBuilder tempMB = new MarkdownBuilder();
-                        tempMB.Link(lookUpType.Name, "https://docs.microsoft.com/en-us/dotnet/api/"+lookUpType.FullName.ToLower());
-                        dataValues[0] = tempMB.ToString();
-                    }
-                    else
-                    {
-                        dataValues[0] = lookUpType.Name;
-                    }
+
+
+                    dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false);
 
                     dataValues[1] = item.FullName;
 
