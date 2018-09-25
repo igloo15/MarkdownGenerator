@@ -14,7 +14,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         {
             var mb = new MarkdownBuilder();
 
-            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, true));
+            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, true, false));
             mb.AppendLine();
             
             if (!String.IsNullOrEmpty(item.Summary))
@@ -71,9 +71,21 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
 
-                    dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false);
+                    dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
 
-                    dataValues[1] = item.FullName;
+
+                    string name = item.FullName;
+                    if (item.ItemType == MarkdownItemTypes.Method)
+                    {
+                        name = Cleaner.CreateFullMethodWithLinks(mdType, item.As<MarkdownMethod>(), false, false);
+                    }
+                    else if(item.ItemType == MarkdownItemTypes.Property)
+                    {
+                        name = Cleaner.CreateFullParameterWithLinks(mdType, item.As<MarkdownProperty>(), false, false);
+                    }
+
+
+                    dataValues[1] = name;
 
                     dataValues[2] = item.Summary;
 

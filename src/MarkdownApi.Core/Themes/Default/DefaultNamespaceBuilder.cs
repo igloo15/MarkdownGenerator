@@ -20,7 +20,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 var sb = new StringBuilder();
                 if (!String.IsNullOrEmpty(type.FileName))
                 {
-                    namespaceBuilder.List(Cleaner.CreateFullTypeWithLinks(item, type.InternalType, false));
+                    namespaceBuilder.List(Cleaner.CreateFullTypeWithLinks(item, type.InternalType, false, true));
                 }
                 else
                 {

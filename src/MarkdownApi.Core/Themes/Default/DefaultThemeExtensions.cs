@@ -9,7 +9,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     public static class DefaultThemeExtensions
     {
-        public static string GetNameOrNameLink(this IMarkdownItem currentType, Type targetType, bool useFullName)
+        public static string GetNameOrNameLink(this IMarkdownItem currentType, Type targetType, bool useFullName, bool specialText)
         {
             MarkdownBuilder tempMB = new MarkdownBuilder();
 
@@ -28,26 +28,46 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
             if (useFullName)
-                name = Cleaner.CleanName(fullName, false);
+                name = Cleaner.CleanName(fullName, false, specialText);
             else
-                name = Cleaner.CleanName(targetType.Name.Split('.').Last(), false);
+                name = Cleaner.CleanName(targetType.Name.GetBaseName(), false, specialText);
 
 
-            if (AllItems.TryGetValue(fullName, out IMarkdownItem lookupItem))
+            var link = currentType.GetLink(fullName);
+
+            if(link != null)
             {
-                tempMB.Link(name, currentType.To(lookupItem));
-            }
-            else if (fullName.StartsWith("System"))
-            {
-
-                tempMB.Link(name, "https://docs.microsoft.com/en-us/dotnet/api/" + Cleaner.CleanName(fullName, true));
+                tempMB.Link(name, link);
             }
             else
             {
                 tempMB.Append(name);
             }
-
+            
             return tempMB.ToString();
+        }
+
+        public static string GetLink(this IMarkdownItem currentItem, string targetTypeFullName)
+        {
+            if (currentItem.AllItems.TryGetValue(targetTypeFullName, out IMarkdownItem lookupItem))
+            {
+                return currentItem.To(lookupItem);
+            }
+            else if (targetTypeFullName.StartsWith("System"))
+            {
+                return "https://docs.microsoft.com/en-us/dotnet/api/" + Cleaner.CleanName(targetTypeFullName, true, false);
+            }
+            return null;
+        }
+
+        public static string WrapSpecial(this string text)
+        {
+            return $"`{text}`";
+        }
+
+        public static string GetBaseName(this string text)
+        {
+            return text.Split('.').Last();
         }
 
     }

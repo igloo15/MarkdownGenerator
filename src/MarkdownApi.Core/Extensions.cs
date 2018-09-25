@@ -58,10 +58,7 @@ namespace Igloo15.MarkdownApi.Core
             return prependValue + item;
         }
 
-        public static string To(this IMarkdownItem item, IMarkdownItem dest)
-        {
-            return item.Location.AddRoot().RelativePath(dest.Location.AddRoot()).CombinePath(dest.FileName).AddRoot();
-        }
+        
 
         public static string RelativePath(this string absPath, string relTo)
         {

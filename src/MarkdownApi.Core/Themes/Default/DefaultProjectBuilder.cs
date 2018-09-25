@@ -12,14 +12,14 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         public static string BuildPage(MarkdownProject project)
         {
             var homeBuilder = new MarkdownBuilder();
-            homeBuilder.Header(1, project.Name);
+            homeBuilder.HeaderWithLink(1, project.Name, project.To(project));
             homeBuilder.AppendLine();
 
             foreach (var g in project.Namespaces)
             {
                 if (!String.IsNullOrEmpty(g.FileName))
                 {
-                    homeBuilder.HeaderWithLink(2, g.Name, g.Location.CombinePath(g.FileName).AddRoot());
+                    homeBuilder.HeaderWithLink(2, g.FullName, project.To(g));
                 }
                 else
                 {
@@ -32,7 +32,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 {
                     if (!String.IsNullOrEmpty(item.FileName))
                     {
-                        homeBuilder.ListLink(item.Name, project.To(item));
+                        homeBuilder.List(Cleaner.CreateFullTypeWithLinks(project, item.InternalType, false, true));
                     }
                     else
                     {
