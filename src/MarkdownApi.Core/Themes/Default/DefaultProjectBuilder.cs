@@ -1,15 +1,20 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
-    internal static class DefaultProjectBuilder
+    public class DefaultProjectBuilder
     {
-        public static string BuildPage(MarkdownProject project)
+        private DefaultOptions _options;
+
+        public DefaultProjectBuilder(DefaultOptions options)
+        {
+            _options = options;
+        }
+
+        public string BuildPage(MarkdownProject project)
         {
             var homeBuilder = new MarkdownBuilder();
             homeBuilder.HeaderWithLink(1, project.Name, project.To(project));

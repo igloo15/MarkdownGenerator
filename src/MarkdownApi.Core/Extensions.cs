@@ -1,6 +1,6 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -108,8 +108,22 @@ namespace Igloo15.MarkdownApi.Core
             return relativePath.ToString();
         }
 
+
+        public static string GetId(this MemberInfo info)
+        {
+            return $"{info.Module.MetadataToken}-{info.MetadataToken}";
+        }
+
         #region GetTypeParts
 
+        public static MarkdownConstructor[] GetConstructors(this MarkdownType mdType)
+        {
+            return mdType.InternalType.GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance)
+                .Where(x => x.FilterMemberInfo() && !x.IsPrivate)
+                .Select(mi => new MarkdownConstructor(mi, mi.IsStatic))
+                .ToArray();
+        }
+        
         public static MarkdownMethod[] GetMethods(this MarkdownType mdType)
         {
             return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)

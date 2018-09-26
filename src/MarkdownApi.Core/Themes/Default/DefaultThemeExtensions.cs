@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Reflection;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
@@ -21,8 +22,6 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             if (targetType.FullName == null && targetType.Name == null) 
                 return "";
             
-            var AllItems = currentType.AllItems;
-
             string name = targetType.Name;
             string fullName = targetType.ToString();
 
@@ -33,7 +32,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 name = Cleaner.CleanName(targetType.Name.GetBaseName(), false, specialText);
 
 
-            var link = currentType.GetLink(fullName);
+            var link = currentType.GetLink(new TypeWrapper(targetType));
 
             if(link != null)
             {
@@ -41,21 +40,24 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             }
             else
             {
-                tempMB.Append(name);
+                tempMB.Link(name, "");
             }
+
+            if (targetType.IsArray)
+                tempMB.Append("[]");
             
             return tempMB.ToString();
         }
 
-        public static string GetLink(this IMarkdownItem currentItem, string targetTypeFullName)
+        public static string GetLink(this IMarkdownItem currentItem, TypeWrapper info)
         {
-            if (currentItem.AllItems.TryGetValue(targetTypeFullName, out IMarkdownItem lookupItem))
+            if (currentItem.Project.TryGetValue(info, out IMarkdownItem lookupItem))
             {
                 return currentItem.To(lookupItem);
             }
-            else if (targetTypeFullName.StartsWith("System"))
+            else if (info.FullName.StartsWith("System"))
             {
-                return "https://docs.microsoft.com/en-us/dotnet/api/" + Cleaner.CleanName(targetTypeFullName, true, false);
+                return "https://docs.microsoft.com/en-us/dotnet/api/" + Cleaner.CleanName(info.FullName, true, false);
             }
             return null;
         }

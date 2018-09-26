@@ -1,16 +1,23 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
 using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
-    internal static class DefaultTypeBuilder
+    public class DefaultTypeBuilder
     {
-        internal static string BuildPage(MarkdownType item)
+        private DefaultOptions _options;
+
+        public DefaultTypeBuilder(DefaultOptions options)
+        {
+            _options = options;
+        }
+
+        public string BuildPage(MarkdownType item)
         {
             var mb = new MarkdownBuilder();
 
@@ -26,9 +33,12 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
             mb.AppendLine();
-
+            var typeZeroHeaders = new[] { "", "Name", "Summary" };
             var typeOneHeaders = new[] { "Type", "Name", "Summary" };
             var typeTwoHeaders = new[] { "Return", "Name", "Summary" };
+
+            BuildTable(mb, "Static Constructors", item.GetConstructors(true), typeZeroHeaders, item);
+            BuildTable(mb, "Constructors", item.GetConstructors(false), typeZeroHeaders, item);
 
             BuildTable(mb, "Fields", item.GetFields(false), typeOneHeaders, item);
             BuildTable(mb, "Properties", item.GetProperties(false), typeOneHeaders, item);
@@ -66,12 +76,17 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
                     if (item.ItemType == MarkdownItemTypes.Method)
                         lookUpType = item.As<MarkdownMethod>().ReturnType;
+                    else if (item.ItemType == MarkdownItemTypes.Constructor)
+                        lookUpType = null;
                     else
                         lookUpType = item.As<IMarkdownTypePartValue>().Type;
 
 
 
-                    dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
+                    if (item.ItemType == MarkdownItemTypes.Constructor)
+                        dataValues[0] = "";
+                    else
+                        dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
 
 
                     string name = item.FullName;
@@ -82,6 +97,10 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     else if(item.ItemType == MarkdownItemTypes.Property)
                     {
                         name = Cleaner.CreateFullParameterWithLinks(mdType, item.As<MarkdownProperty>(), false, false);
+                    }
+                    else if(item.ItemType == MarkdownItemTypes.Constructor)
+                    {
+                        name = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, false);
                     }
 
 

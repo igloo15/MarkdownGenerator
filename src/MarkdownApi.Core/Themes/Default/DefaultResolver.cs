@@ -1,18 +1,17 @@
 ﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System.IO;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
-    internal class DefaultResolver : IResolver
+    public class DefaultResolver : IResolver
     {
-        private string _rootFileName;
-        private string _rootName;
+        private DefaultOptions _options;
 
-        public DefaultResolver(string rootFileName, string rootName)
+        public DefaultResolver(DefaultOptions options)
         {
-            _rootFileName = rootFileName;
-            _rootName = rootName;
+            _options = options;
         }
 
 
@@ -21,7 +20,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             switch (item)
             {
                 case MarkdownProject proj:
-                    return _rootName;
+                    return _options.RootFolderName;
                 case MarkdownNamespace nameItem:
                     return nameItem.FullName.Replace('.', Path.DirectorySeparatorChar);
                 case MarkdownProperty prop:
@@ -46,28 +45,30 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             switch (item)
             {
                 case MarkdownProject proj:
-                    return _rootFileName;
+                    return _options.RootFileName;
                 case MarkdownNamespace nameItem:
-                    return _rootFileName;
-                case MarkdownProperty prop:
+                    if(_options.BuildNamespacePages)
+                        return _options.RootFileName;
                     return null;
-                    return $"{prop.ParentType.Name}-{prop.InternalItem.MetadataToken}.md";
                 case MarkdownType type:
-                    return $"{Cleaner.CleanName(type.Name, true, false)}.md";
+                    if(_options.BuildTypePages)
+                        return $"{Cleaner.CleanName(type.Name, true, false)}.md";
+                    return null;
                 case MarkdownEnum enumItem:
-                    return $"{Cleaner.CleanName(enumItem.Name, true, false)}.md";
-                case MarkdownEvent eventItem:
+                    if(_options.BuildTypePages)
+                        return $"{Cleaner.CleanName(enumItem.Name, true, false)}.md";
                     return null;
-                    return $"{eventItem.ParentType.Name}-{eventItem.InternalItem.MetadataToken}.md";
-                case MarkdownField field:
+                case MarkdownConstructor constructor:
+                    if(_options.BuildConstructorPages)
+                        return $"{constructor.ParentType.Name}-{constructor.InternalItem.MetadataToken}.md";
                     return null;
-                    return $"{field.ParentType.Name}-{field.InternalItem.MetadataToken}.md";
                 case MarkdownMethod method:
+                    if(_options.BuildMethodPages)
+                        return $"{method.ParentType.Name}-{method.InternalItem.MetadataToken}.md";
                     return null;
-                    return $"{method.ParentType.Name}-{method.InternalItem.MetadataToken}.md";
-                default:
-                    return $"{Cleaner.CleanName(item.FullName, true, false)}.md";
             }
+
+            return null;
         }
     }
 }

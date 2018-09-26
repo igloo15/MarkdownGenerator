@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace Igloo15.MarkdownApi.Core.TypeParts
+namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 {
     public class MarkdownProperty : AbstractTypePart, IMarkdownTypePartValue
     {
@@ -23,15 +23,12 @@ namespace Igloo15.MarkdownApi.Core.TypeParts
         }
 
         public Type Type => InternalItem.PropertyType;
-
-        public override string GetId()
-        {
-            return $"{ParentType.FullName}-{InternalItem.MetadataToken}";
-        }
-
+        
         public override string BuildPage(ITheme theme)
         {
             return theme.BuildPage(this);
         }
+
+        public override TypeWrapper TypeInfo => new TypeWrapper(InternalItem);
     }
 }

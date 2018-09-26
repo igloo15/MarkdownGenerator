@@ -1,8 +1,7 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
 using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -28,6 +27,40 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             if(genericArray.Length > 0)
                 return $"{actualName}\\<{sb.ToString()}>";
             return actualName;
+        }
+
+        public static string CreateFullConstructorsWithLinks(IMarkdownItem currentItem, MarkdownConstructor constructor, bool useFullName, bool useParameterNames)
+        {
+            var parameters = constructor.InternalItem.GetParameters();
+            MarkdownBuilder mb = new MarkdownBuilder();
+
+            string name = useFullName ? CleanFullName(constructor.ParentType.InternalType, false, false) : CleanName(constructor.ParentType.Name, false, false);
+
+            if (constructor.FileName != null)
+                mb.Link(name, currentItem.To(constructor));
+            else
+                mb.Append(name);
+            mb.Append(" ( ");
+            if (parameters.Length > 0)
+            {
+
+                StringBuilder sb = new StringBuilder();
+                for (var i = 0; i < parameters.Length; i++)
+                {
+                    var type = parameters[i].ParameterType;
+                    var link = CreateFullTypeWithLinks(currentItem, type, useFullName, true);
+                    sb.Append(link);
+
+                    if (useParameterNames)
+                        sb.Append($" {parameters[i].Name}");
+
+                    if (i + 1 != parameters.Length)
+                        sb.Append(", ");
+                }
+                mb.Append(sb.ToString());
+            }
+            mb.Append(" )");
+            return mb.ToString();
         }
 
         public static string CreateFullMethodWithLinks(IMarkdownItem currentItem, MarkdownMethod method, bool useFullName, bool useParameterNames)
@@ -72,21 +105,42 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
             var parts = fullParameterName.Split('[', ']');
 
-            if (parts.Length > 1)
+            var index = property.InternalItem.GetPropertyKeyType();
+
+            if (index.Key != null)
             {
                 mb.Append(" [ ");
 
-                var link = currentItem.GetLink(parts[1]);
+                var link = CreateFullTypeWithLinks(currentItem, index.Key, useFullName, true);
 
-                if (link == null)
-                    mb.Append(parts[1].GetBaseName());
-                else
-                    mb.Link(parts[1].GetBaseName().WrapSpecial(), link);
+                mb.Append(link);
+
+                if (useParameterNames)
+                    mb.Append($" {index.Name}");
 
                 mb.Append(" ]");
             }
             
             return mb.ToString();
+        }
+
+        private static (Type Key, String Name) GetPropertyKeyType(this PropertyInfo info)
+        {
+            var methodInfo = info.GetSetMethod();
+            if (methodInfo != null)
+            {
+                foreach (var param in methodInfo.GetParameters())
+                {
+                    if (param.ParameterType != info.PropertyType)
+                    {
+                        return (param.ParameterType, param.Name);
+                    }
+                        
+                }
+
+            }
+
+            return (null, null);
         }
 
         public static string CleanFullName(Type t, bool keepGenericNumber, bool specialText)

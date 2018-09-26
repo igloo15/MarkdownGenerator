@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
+using System.Collections.Generic;
 
 namespace Igloo15.MarkdownApi.Core.Interfaces
 {
     public interface IMarkdownItem
     {
-        Dictionary<string, IMarkdownItem> AllItems { get; }
+        MarkdownProject Project { get; }
 
         MarkdownItemTypes ItemType { get; }
+
+        TypeWrapper TypeInfo { get; }
 
         string Location { get; }
 
@@ -17,8 +20,6 @@ namespace Igloo15.MarkdownApi.Core.Interfaces
         string FullName { get; }
 
         string Summary { get; }
-
-        string GetId();
 
         string BuildPage(ITheme theme);
     }

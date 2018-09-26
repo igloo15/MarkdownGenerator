@@ -1,4 +1,5 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,16 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
-    internal static class DefaultEnumBuilder
+    public class DefaultEnumBuilder
     {
-        internal static string BuildPage(MarkdownEnum item)
+        private DefaultOptions _options;
+
+        public DefaultEnumBuilder(DefaultOptions options)
+        {
+            _options = options;
+        }
+
+        public string BuildPage(MarkdownEnum item)
         {
             var mb = new MarkdownBuilder();
 
@@ -16,8 +24,6 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             mb.AppendLine();
 
             var comments = item.Comments;
-
-            
 
             if (!String.IsNullOrEmpty(item.Summary))
             {

@@ -4,19 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core
+namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
-    public class MarkdownEnum : IMarkdownItem, IInternalMarkdownItem
+    public class MarkdownEnum : AbstractMarkdownItem, IInternalMarkdownItem
     {
-        public MarkdownItemTypes ItemType => MarkdownItemTypes.Enum;
+        public override MarkdownItemTypes ItemType => MarkdownItemTypes.Enum;
+                
+        public override string Name => InternalType.Name;
 
-        public string Location { get; internal set; }
-
-        public string FileName { get; internal set; }
-
-        public string Name => InternalType.Name;
-
-        public string FullName => InternalType.FullName;
+        public override string FullName => InternalType.FullName;
 
         public MarkdownNamespace NamespaceItem { get; internal set; }
 
@@ -32,18 +28,11 @@ namespace Igloo15.MarkdownApi.Core
 
         public bool IsGeneric => InternalType.ContainsGenericParameters;
 
-        public string Summary { get; internal set; }
-
         public IEnumerable<XmlDocumentComment> Comments { get; internal set; }
 
         public List<string> EnumNames => InternalType.GetEnumNames().ToList();
-
-        public string GetId()
-        {
-            return $"{FullName}";
-        }
-
-        public string BuildPage(ITheme theme)
+        
+        public override string BuildPage(ITheme theme)
         {
             return theme.BuildPage(this);
         }
@@ -57,7 +46,9 @@ namespace Igloo15.MarkdownApi.Core
         {
             FileName = filename;
         }
+        
+        public override MarkdownProject Project => NamespaceItem.Project;
 
-        public Dictionary<string, IMarkdownItem> AllItems => NamespaceItem.Project.AllItems;
+        public override TypeWrapper TypeInfo => new TypeWrapper(InternalType);
     }
 }

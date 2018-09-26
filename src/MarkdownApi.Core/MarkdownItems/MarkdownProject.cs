@@ -4,25 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
-    public class MarkdownProject : IMarkdownItem
+    public class MarkdownProject : AbstractMarkdownItem
     {
         public Dictionary<string, IMarkdownItem> AllItems { get; internal set; } = new Dictionary<string, IMarkdownItem>();
 
         public List<MarkdownNamespace> Namespaces { get; } = new List<MarkdownNamespace>();
 
-        public MarkdownItemTypes ItemType => MarkdownItemTypes.Project;
+        public override MarkdownItemTypes ItemType => MarkdownItemTypes.Project;
 
-        public string Location { get; internal set; }
+        public override string Name { get; }
 
-        public string FileName { get; internal set; }
-
-        public string Name { get; internal set; }
-
-        public string FullName { get; internal set; }
-
-        public string Summary { get; internal set; }
+        public override string FullName { get; }
 
         public MarkdownProject(string name)
         {
@@ -34,7 +28,7 @@ namespace Igloo15.MarkdownApi.Core
         {
             foreach (var namespaceItem in namespaces)
             {
-                namespaceItem.Project = this;
+                namespaceItem.InternalProject = this;
                 Namespaces.Add(namespaceItem);
             }
         }
@@ -89,16 +83,18 @@ namespace Igloo15.MarkdownApi.Core
             Create(theme);
         }
 
-        public string GetId()
-        {
-            return $"{FullName}";
-        }
-
-        public string BuildPage(ITheme theme)
+        public override string BuildPage(ITheme theme)
         {
             return theme.BuildPage(this);
         }
 
-        
+        public override MarkdownProject Project => this;
+
+        public override TypeWrapper TypeInfo => new TypeWrapper(FullName);
+
+        public bool TryGetValue(TypeWrapper wrapper, out IMarkdownItem value)
+        {
+            return AllItems.TryGetValue(wrapper.GetId(), out value);  
+        }
     }
 }

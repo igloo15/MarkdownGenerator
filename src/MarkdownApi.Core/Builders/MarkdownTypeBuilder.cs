@@ -1,9 +1,7 @@
-﻿using Igloo15.MarkdownApi.Core.TypeParts;
-using System;
+﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Builders
 {
@@ -16,8 +14,8 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
             foreach(var type in types)
             {
-                
-                var tempNamespace = new MarkdownNamespace() { FullName = type.InternalType.Namespace };
+
+                var tempNamespace = new MarkdownNamespace(type.InternalType.Namespace);
 
                 var myNamespace = MarkdownRepo.TryGetOrAdd(type.InternalType.Namespace, tempNamespace);
 
@@ -46,7 +44,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public MarkdownType BuildType(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)
         {
-            MarkdownRepo.TryAdd(type.GetId(), type);
+            MarkdownRepo.TryAdd(type);
 
             type.NamespaceItem = namespaceItem;
 
@@ -58,6 +56,8 @@ namespace Igloo15.MarkdownApi.Core.Builders
             BuildProperties(type, comments, type.GetProperties().Together(type.GetStaticProperties()).ToArray());
             BuildMethods(type, comments, type.GetMethods().Together(type.GetStaticMethods()).ToArray());
             BuildEvents(type, comments, type.GetEvents().Together(type.GetStaticEvents()).ToArray());
+            var constructors = type.GetConstructors();
+            BuildConstructors(type, comments, type.GetConstructors().ToArray());
 
             return type;
         }
@@ -68,7 +68,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 item.ParentType = type;
                 type.Fields.Add(item);
-                MarkdownRepo.TryAdd(item.GetId(), item);
+                MarkdownRepo.TryAdd(item);
                 item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
                     || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
 
@@ -81,7 +81,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 item.ParentType = type;
                 type.Properties.Add(item);
-                MarkdownRepo.TryAdd(item.GetId(), item);
+                MarkdownRepo.TryAdd(item);
                 item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
                     || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
             }
@@ -93,7 +93,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 item.ParentType = type;
                 type.Methods.Add(item);
-                MarkdownRepo.TryAdd(item.GetId(), item);
+                MarkdownRepo.TryAdd(item);
 
                 item.Summary = comments.FirstOrDefault(a => (a.MemberName == item.Name || a.MemberName.StartsWith(item.Name + "`"))
                 && item.InternalItem.GetParameters().All(b => a.Parameters.ContainsKey(b.Name))
@@ -107,7 +107,19 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 item.ParentType = type;
                 type.Events.Add(item);
-                MarkdownRepo.TryAdd(item.GetId(), item);
+                MarkdownRepo.TryAdd(item);
+                item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
+                    || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
+            }
+        }
+
+        public void BuildConstructors(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownConstructor[] infos)
+        {
+            foreach (var item in infos)
+            {
+                item.ParentType = type;
+                type.Constructors.Add(item);
+                MarkdownRepo.TryAdd(item);
                 item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
                     || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
             }
@@ -124,7 +136,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             me.Summary = comments.FirstOrDefault(x => x.MemberName == me.Name
                     || x.MemberName.StartsWith(me.Name + "`"))?.Summary ?? "";
 
-            MarkdownRepo.TryAdd(me.GetId(), me);
+            MarkdownRepo.TryAdd(me);
 
             return me;
         }

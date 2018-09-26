@@ -1,13 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.TypeParts;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 
 namespace Igloo15.MarkdownApi.Core.Interfaces
 {
     public interface ITheme
     {
-        string RootName { get; }
+        string Name { get; }
 
         IResolver Resolver { get; }
 
@@ -26,5 +24,7 @@ namespace Igloo15.MarkdownApi.Core.Interfaces
         string BuildPage(MarkdownMethod item);
 
         string BuildPage(MarkdownEvent item);
+
+        string BuildPage(MarkdownConstructor item);
     }
 }

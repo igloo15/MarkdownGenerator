@@ -1,44 +1,57 @@
 ﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using Igloo15.MarkdownApi.Core.Themes.Default;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes
 {
     public class DefaultTheme : ITheme
     {
-        public string RootFileName { get; set; }
+        private DefaultOptions _options;
 
-        public string RootName { get; set; }
+        private DefaultEnumBuilder _enumBuilder;
+        private DefaultNamespaceBuilder _namespaceBuilder;
+        private DefaultProjectBuilder _projectBuilder;
+        private DefaultTypeBuilder _typeBuilder;
 
-        public DefaultTheme(string rootFileName, string rootName)
+        public DefaultTheme(DefaultOptions options)
         {
-            RootFileName = rootFileName;
-            RootName = rootName;
+            _options = options;
+            _enumBuilder = new DefaultEnumBuilder(_options);
+            _namespaceBuilder = new DefaultNamespaceBuilder(_options);
+            _projectBuilder = new DefaultProjectBuilder(_options);
+            _typeBuilder = new DefaultTypeBuilder(_options);
         }
 
-        public IResolver Resolver => new DefaultResolver(RootFileName, RootName);
+        public string Name => "Default";
+
+        public IResolver Resolver => new DefaultResolver(_options);
 
         public string BuildPage(MarkdownNamespace item)
         {
-            return DefaultNamespaceBuilder.BuildPage(item);
+            if (!_options.BuildNamespacePages)
+                return "";
+
+            return _namespaceBuilder.BuildPage(item);
         }
 
         public string BuildPage(MarkdownProject item)
         {
-            return DefaultProjectBuilder.BuildPage(item);
+            return _projectBuilder.BuildPage(item);
         }
 
         public string BuildPage(MarkdownType item)
         {
-            return DefaultTypeBuilder.BuildPage(item);
+            if (!_options.BuildTypePages)
+                return "";
+            return _typeBuilder.BuildPage(item);
         }
 
         public string BuildPage(MarkdownEnum item)
         {
-            return DefaultEnumBuilder.BuildPage(item);
+            if (!_options.BuildTypePages)
+                return "";
+            return _enumBuilder.BuildPage(item);
         }
 
         public string BuildPage(MarkdownField item)
@@ -57,6 +70,11 @@ namespace Igloo15.MarkdownApi.Core.Themes
         }
 
         public string BuildPage(MarkdownEvent item)
+        {
+            return "";
+        }
+
+        public string BuildPage(MarkdownConstructor item)
         {
             return "";
         }

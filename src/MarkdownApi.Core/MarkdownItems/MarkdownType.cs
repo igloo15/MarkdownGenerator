@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.TypeParts;
+using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 
-namespace Igloo15.MarkdownApi.Core
+namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
-    public class MarkdownType : IMarkdownItem, IInternalMarkdownItem
+    public class MarkdownType : AbstractMarkdownItem, IInternalMarkdownItem
     {
-        public MarkdownItemTypes ItemType => MarkdownItemTypes.Type;
+        public override MarkdownItemTypes ItemType => MarkdownItemTypes.Type;
+                
+        public override string Name => InternalType.Name;
 
-        public string Location { get; internal set; }
-
-        public string FileName { get; internal set; }
-
-        public string Name => InternalType.Name;
-
-        public string FullName => InternalType.FullName;
+        public override string FullName => InternalType.FullName;
 
         public MarkdownNamespace NamespaceItem { get; internal set; }
 
@@ -40,7 +36,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public List<MarkdownMethod> Methods { get; } = new List<MarkdownMethod>();
 
-        public string Summary { get; internal set; }
+        public List<MarkdownConstructor> Constructors { get; } = new List<MarkdownConstructor>();
 
         public List<MarkdownType> GenericProperties => new List<MarkdownType>();
 
@@ -64,12 +60,12 @@ namespace Igloo15.MarkdownApi.Core
             return Events.Where(f => f.IsStatic == isStatic).ToArray();
         }
 
-        public string GetId()
+        public MarkdownConstructor[] GetConstructors(bool isStatic)
         {
-            return $"{InternalType.ToString()}";
+            return Constructors.Where(c => c.IsStatic == isStatic).ToArray();
         }
 
-        public string BuildPage(ITheme theme)
+        public override string BuildPage(ITheme theme)
         {
             return theme.BuildPage(this);
         }
@@ -83,7 +79,9 @@ namespace Igloo15.MarkdownApi.Core
         {
             FileName = filename;
         }
+        
+        public override MarkdownProject Project => NamespaceItem.Project;
 
-        public Dictionary<string, IMarkdownItem> AllItems => NamespaceItem.Project.AllItems;
+        public override TypeWrapper TypeInfo => new TypeWrapper(InternalType);
     }
 }

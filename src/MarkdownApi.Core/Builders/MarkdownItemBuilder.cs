@@ -1,5 +1,6 @@
 ﻿
 using Igloo15.MarkdownApi.Core;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
 using System;
 using System.Collections.Generic;
 using System.IO;

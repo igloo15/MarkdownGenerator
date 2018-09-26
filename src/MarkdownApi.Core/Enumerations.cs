@@ -10,6 +10,7 @@ namespace Igloo15.MarkdownApi.Core
         Namespace,
         Type,
         Enum,
+        Constructor,
         Method,
         Property,
         Field,

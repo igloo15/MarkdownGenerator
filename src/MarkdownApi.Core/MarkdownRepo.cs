@@ -1,6 +1,8 @@
 ﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using Igloo15.MarkdownApi.Core.MarkdownItems;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Igloo15.MarkdownApi.Core
@@ -11,15 +13,20 @@ namespace Igloo15.MarkdownApi.Core
         private static Dictionary<string, IMarkdownItem> Items { get; } = new Dictionary<string, IMarkdownItem>();
 
 
-        public static bool TryAdd(string key, IMarkdownItem item)
+        public static bool TryAdd(IMarkdownItem item)
         {
-            if(!Items.ContainsKey(key))
+            return TryAdd(item.TypeInfo.GetId(), item);
+        }
+
+        private static bool TryAdd(string name, IMarkdownItem item)
+        {
+            if (!Items.ContainsKey(name))
             {
-                Items.Add(key, item);
+                Items.Add(name, item);
                 return true;
             }
 
-            Console.WriteLine($"Item {key} already exists");
+            Console.WriteLine($"Item {name} already exists");
             return false;
         }
 
