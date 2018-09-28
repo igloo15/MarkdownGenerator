@@ -20,20 +20,54 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         public string BuildPage(MarkdownType item)
         {
             var mb = new MarkdownBuilder();
-
-            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, true, false));
+            
+            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, false, false));
+            
             mb.AppendLine();
             
+            item.BuildNamespaceLinks(item.Namespace, mb);
+
+            if (_options.ShowAssembly)
+                mb.Append("Assembly: ").AppendLine(item.InternalType.Module.Name).AppendLine();
+
+            
+            bool firstInterface = true;
+            foreach(var interfaceItem in item.InternalType.GetInterfaces())
+            {
+                if (firstInterface)
+                {
+                    firstInterface = false;
+                    mb.Append("Implements ");
+                }
+                else
+                    mb.Append(", ");
+
+                var link = Cleaner.CreateFullTypeWithLinks(item, interfaceItem, false, false);
+                if (string.IsNullOrEmpty(link))
+                {
+                    mb.Link(Cleaner.CleanName(interfaceItem.Name, false, false), "");
+                }
+                else
+                {
+                    mb.Append(link);
+                }
+            }
+
+            if(!firstInterface)
+                mb.AppendLine().AppendLine();
+
             if (!String.IsNullOrEmpty(item.Summary))
             {
                 mb.AppendLine(item.Summary);
             }
 
+            
+
             //mb.Append(GetCode(value));
 
 
             mb.AppendLine();
-            var typeZeroHeaders = new[] { "", "Name", "Summary" };
+            var typeZeroHeaders = new[] { "Name", "Summary" };
             var typeOneHeaders = new[] { "Type", "Name", "Summary" };
             var typeTwoHeaders = new[] { "Return", "Name", "Summary" };
 
@@ -54,6 +88,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return mb.ToString();
         }
 
+
         
 
         private static void BuildTable(MarkdownBuilder mb, string label, IMarkdownItem[] items, string[] headers, MarkdownType mdType)
@@ -69,7 +104,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
                 foreach(var item in seq)
                 {
-                    string[] dataValues = new string[3];
+                    string[] dataValues = new string[headers.Length];
 
 
                     Type lookUpType = null;
@@ -84,7 +119,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
                     if (item.ItemType == MarkdownItemTypes.Constructor)
-                        dataValues[0] = "";
+                        dataValues[0] = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, false);
                     else
                         dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
 
@@ -100,13 +135,14 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     }
                     else if(item.ItemType == MarkdownItemTypes.Constructor)
                     {
-                        name = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, false);
+                        name = item.Summary;
                     }
 
 
                     dataValues[1] = name;
 
-                    dataValues[2] = item.Summary;
+                    if(headers.Length > 2)
+                        dataValues[2] = item.Summary;
 
                     data.Add(dataValues);
                 }

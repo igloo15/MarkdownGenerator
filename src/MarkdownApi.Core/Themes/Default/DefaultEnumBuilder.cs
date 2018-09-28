@@ -20,7 +20,13 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         {
             var mb = new MarkdownBuilder();
 
-            mb.HeaderWithCode(1, item.Name);
+            mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, false, false));
+
+            item.BuildNamespaceLinks(item.Namespace, mb);
+
+            if (_options.ShowAssembly)
+                mb.Append("Assembly: ").AppendLine(item.InternalType.Module.Name).AppendLine();
+            
             mb.AppendLine();
 
             var comments = item.Comments;
@@ -38,6 +44,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
             return mb.ToString();
         }
+
 
         private static void BuildEnumTable(MarkdownBuilder mb, IEnumerable<XmlDocumentComment> comments, MarkdownEnum value)
         {

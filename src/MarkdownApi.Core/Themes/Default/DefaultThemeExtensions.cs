@@ -10,6 +10,37 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     public static class DefaultThemeExtensions
     {
+        public static void BuildNamespaceLinks(this IMarkdownItem item, string namespaceValue, MarkdownBuilder mb)
+        {
+            var namespaceItems = namespaceValue.Split('.');
+
+            string globalNamespace = "";
+
+            mb.Append("Namespace: ");
+
+            foreach (var namespaceItem in namespaceItems)
+            {
+                if (!String.IsNullOrEmpty(globalNamespace))
+                {
+                    globalNamespace += ".";
+                    mb.Append(" > ");
+                }
+
+                globalNamespace = globalNamespace + namespaceItem;
+
+                if (item.Project.TryGetValue(new TypeWrapper(globalNamespace), out IMarkdownItem foundItem))
+                {
+                    mb.Link(namespaceItem, item.To(foundItem));
+                }
+                else
+                {
+                    mb.Link(namespaceItem, "");
+                }
+            }
+
+            mb.AppendLine().AppendLine();
+        }
+
         public static string GetNameOrNameLink(this IMarkdownItem currentType, Type targetType, bool useFullName, bool specialText)
         {
             MarkdownBuilder tempMB = new MarkdownBuilder();

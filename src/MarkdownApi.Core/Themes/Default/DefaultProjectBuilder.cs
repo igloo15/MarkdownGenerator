@@ -33,6 +33,9 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
                 homeBuilder.AppendLine();
 
+                if (!_options.ShowTypesOnRootPage)
+                    continue;
+
                 foreach (var item in g.Types.OrderBy(x => x.Name))
                 {
                     if (!String.IsNullOrEmpty(item.FileName))

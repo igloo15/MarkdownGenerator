@@ -6,26 +6,30 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     public class DefaultOptions
     {
-        public bool BuildNamespacePages { get; set; }
+        public bool BuildNamespacePages { get; set; } = true;
 
-        public bool BuildTypePages { get; set; }
+        public bool BuildTypePages { get; set; } = true;
 
-        public bool BuildMethodPages { get; set; }
+        public bool BuildMethodPages { get; set; } = false;
 
-        public bool BuildConstructorPages { get; set; }
+        public bool BuildConstructorPages { get; set; } = false;
 
-        public bool ShowTypesOnRootPage { get; set; }
+        public bool ShowTypesOnRootPage { get; set; } = true;
 
-        public string MethodFolderName { get; set; }
+        public string MethodFolderName { get; set; } = "Methods";
 
-        public string ConstructorFolderName { get; set; }
+        public string ConstructorFolderName { get; set; } = "Constructors";
 
-        public string RootFolderName { get; set; }
+        public string RootFolderName { get; set; } = "md";
 
-        public string RootFileName { get; set; }
+        public string RootFileName { get; set; } = "Home.md";
 
-        public string RootTitle { get; set; }
+        public string RootTitle { get; set; } = "API";
 
         public string RootSummary { get; set; }
+
+        public bool ShowAssembly { get; set; } = true;
+
+        public bool ShowParameterNames { get; set; } = false;
     }
 }
