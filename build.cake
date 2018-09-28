@@ -6,6 +6,8 @@ var target = Argument<string>("target", "Default");
 
 GitVersion result;
 DotNetCoreMSBuildSettings MSBuildSettings;
+string SolutionLocation = "./src/MarkdownApi.sln";
+string PackagesLocation = "./packages.local";
 
 Setup((c) =>
 {
@@ -47,16 +49,21 @@ Task("Update-Version")
         Information(result.Dump());
 	});
 
+Task("Clean-Packages-Local")
+    .Does(() => {
+        CleanDirectories(PackagesLocation);
+    });
+
 Task("Restore")
     .Does(() => {
-        DotNetCoreRestore("./src/MarkdownApi.sln");
+        DotNetCoreRestore(SolutionLocation);
     });
 
 Task("Build")
     .IsDependentOn("Restore")
     .IsDependentOn("Update-Version")
 	.Does(() => {
-        DotNetCoreBuild("./src/MarkdownApi.sln", new DotNetCoreBuildSettings {
+        DotNetCoreBuild(SolutionLocation, new DotNetCoreBuildSettings {
             Configuration = "Release",
             MSBuildSettings = MSBuildSettings
         });
@@ -65,15 +72,17 @@ Task("Build")
 Task("Publish")
     .IsDependentOn("Build")
     .Does(() => {
-        DotNetCorePublish("./src/MarkdownApi.sln", new DotNetCorePublishSettings {
-            Configuration = "Release"
+        DotNetCorePublish(SolutionLocation, new DotNetCorePublishSettings {
+            Configuration = "Release",
+            MSBuildSettings = MSBuildSettings
         });
     });
 
 Task("Pack")
+    .IsDependentOn("Clean-Packages-Local")
     .IsDependentOn("Publish")
     .Does(() => {
-        DotNetCorePack("./src/MarkdownApi.sln", new DotNetCorePackSettings {
+        DotNetCorePack(SolutionLocation, new DotNetCorePackSettings {
             NoBuild = true,
             Configuration = "Release",
             OutputDirectory = "./packages.local",

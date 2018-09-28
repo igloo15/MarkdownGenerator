@@ -2,7 +2,7 @@
 
 Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [Builders](./README.md)
 
-Assembly: Igloo15.MarkdownApi.Core.dll
+Assembly: igloo15.MarkdownApi.Core.dll
 
 
 ## Constructors

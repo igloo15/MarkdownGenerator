@@ -2,7 +2,7 @@
 
 Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](./../README.md) > [Default](./README.md)
 
-Assembly: Igloo15.MarkdownApi.Core.dll
+Assembly: igloo15.MarkdownApi.Core.dll
 
 Implements [IResolver](./../../Interfaces/IResolver.md)
 

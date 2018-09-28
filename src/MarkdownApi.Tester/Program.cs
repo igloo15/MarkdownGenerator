@@ -13,7 +13,7 @@ namespace Igloo15.MarkdownApi.Tester
 
 
             //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
-            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "", "Api");
+            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "");
 
 
 

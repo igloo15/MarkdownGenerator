@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <AssemblyName>Igloo15.MarkdownApi.Tool</AssemblyName>
+    <AssemblyName>igloo15.MarkdownApi.Tool</AssemblyName>
     <AssemblyTitle>markdownapi</AssemblyTitle>
     <RootNamespace>Igloo15.MarkdownApi.Tool</RootNamespace>
     <BaseOutputPath>$(MSBuildProjectFullPath)\..\..\..\dist\MarkdownApi.Tool</BaseOutputPath>
@@ -14,20 +14,17 @@
     <ToolCommandName>markdownapi</ToolCommandName>
     <IsPackable>true</IsPackable>
     <PackageVersion>$(Version)</PackageVersion>
-    <Title>Igloo15.MarkdownGenerator</Title>
+    <Title>igloo15.MarkdownApi.Tool</Title>
     <Authors>Igloo15, jyasuu, neuecc</Authors>
     <Description>dotnet cli tool used to generate markdown documentation of the source</Description>
     <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
     <PackageTags>markdown;dotnet;cli;tool;netcore</PackageTags>
     <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <StartupObject>Igloo15.MarkdownGenerator.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.3.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
-    <PackageReference Include="Scrutor" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>

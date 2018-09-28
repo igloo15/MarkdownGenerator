@@ -1,10 +1,11 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using Igloo15.MarkdownApi.Core.Themes.Default;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownGenerator
+namespace Igloo15.MarkdownApi.Tool
 {
     internal class Options
     {
@@ -22,15 +23,15 @@ namespace Igloo15.MarkdownGenerator
 
         [Option("summary", Default = "", HelpText = "A summary you want to appear on root page")]
         public string Summary { get; set; }
-
-        [Option("clean-destination", Default = false, HelpText = "Deletes all content in destination before generating new content")]
-        public bool CleanDestination { get; set; }
-
+        
         [Option("namespace-page", Default = false, HelpText = "Create pages for each namespace")]
         public bool NamespacePages { get; set; }
 
         [Option("type-page", Default = true, HelpText = "Create pages for each type")]
         public bool TypePages { get; set; }
+
+        [Option("constructor-page", Default = false, HelpText = "Create pages for each constructor")]
+        public bool ConstructorPages { get; set; }
 
         [Option("method-page", Default = false, HelpText = "Create pages for each method")]
         public bool MethodPages { get; set; }
@@ -47,6 +48,9 @@ namespace Igloo15.MarkdownGenerator
         [Option("method-folder", Default = "Methods", HelpText = "The folder to store method pages in")]
         public string MethodFolderName { get; set; }
 
+        [Option("constructors-folder", Default = "Constructors", HelpText = "The folder to store constructor pages in")]
+        public string ConstructorsFolderName { get; set; }
+
         [Option("property-folder", Default = "Properties", HelpText = "The folder to store property pages in")]
         public string PropertyFolderName { get; set; }
 
@@ -58,15 +62,7 @@ namespace Igloo15.MarkdownGenerator
 
         [Option("theme", Default = "Default", HelpText = "The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined")]
         public string ThemeName { get; set; }
-
-        public ITheme CurrentTheme
-        {
-            get
-            {
-                return Program.SearchThemes(ThemeName);
-            }
-        }
-
+        
         [Usage(ApplicationAlias = "markdowngen")]
         public static IEnumerable<Example> Examples
         {
@@ -74,6 +70,24 @@ namespace Igloo15.MarkdownGenerator
             {
                 yield return new Example("Normal Usage", new Options { DllPath = "./MyDll.dll", Destination = "./Api" });
             }
+        }
+
+        public DefaultOptions GenerateOptions()
+        {
+            DefaultOptions options = new DefaultOptions();
+
+
+            options.RootTitle = RootTitle;
+            options.RootFileName = RootFileName;
+            options.RootSummary = Summary;
+            options.BuildTypePages = TypePages;
+            options.BuildNamespacePages = NamespacePages;
+            options.BuildConstructorPages = ConstructorPages;
+            options.BuildMethodPages = MethodPages;
+            options.MethodFolderName = MethodFolderName;
+            options.ConstructorFolderName = ConstructorsFolderName;
+
+            return options;
         }
     }
 }

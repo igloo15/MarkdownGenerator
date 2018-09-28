@@ -2,7 +2,7 @@
 
 Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [MarkdownItems](./../README.md) > [TypeParts](./README.md)
 
-Assembly: Igloo15.MarkdownApi.Core.dll
+Assembly: igloo15.MarkdownApi.Core.dll
 
 Implements [IMarkdownItem](./../../Interfaces/IMarkdownItem.md), [IInternalMarkdownItem](), [IMarkdownTypePartValue](./../../Interfaces/IMarkdownTypePartValue.md)
 

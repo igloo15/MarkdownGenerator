@@ -1,4 +1,4 @@
-# [Api](./README.md)
+# [API](./README.md)
 
 ## [Igloo15.MarkdownApi.Core](./Igloo15/MarkdownApi/Core/README.md)
 

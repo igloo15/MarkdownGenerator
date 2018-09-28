@@ -2,7 +2,7 @@
 
 Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./README.md)
 
-Assembly: Igloo15.MarkdownApi.Core.dll
+Assembly: igloo15.MarkdownApi.Core.dll
 
 ## Summary
 Public Extensions are extension methods meant to be used by anyone with dependency on the MarkdownApi.Core

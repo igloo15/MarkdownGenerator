@@ -16,10 +16,10 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
 
         public override string FullName { get; }
 
-        public MarkdownProject(string name)
+        public MarkdownProject()
         {
-            Name = name;
-            FullName = name;
+            Name = null;
+            FullName = null;
         }
         
         public MarkdownProject Resolve(ITheme theme)

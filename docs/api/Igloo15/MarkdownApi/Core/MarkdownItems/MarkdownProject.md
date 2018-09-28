@@ -2,7 +2,7 @@
 
 Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [MarkdownItems](./README.md)
 
-Assembly: Igloo15.MarkdownApi.Core.dll
+Assembly: igloo15.MarkdownApi.Core.dll
 
 Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md)
 
@@ -11,7 +11,7 @@ Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md)
 
 | Name | Summary | 
 | --- | --- | 
-| MarkdownProject ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) name ) |  | 
+| MarkdownProject (  ) |  | 
 
 
 ## Properties

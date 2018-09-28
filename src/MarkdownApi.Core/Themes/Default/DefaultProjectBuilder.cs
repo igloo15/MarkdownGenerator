@@ -17,7 +17,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         public string BuildPage(MarkdownProject project)
         {
             var homeBuilder = new MarkdownBuilder();
-            homeBuilder.HeaderWithLink(1, project.Name, project.To(project));
+            homeBuilder.HeaderWithLink(1, _options.RootTitle, project.To(project));
             homeBuilder.AppendLine();
 
             foreach (var tempItem in project.AllItems.Values.Where(i => i.ItemType == MarkdownItemTypes.Namespace))

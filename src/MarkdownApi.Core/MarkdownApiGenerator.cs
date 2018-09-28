@@ -8,9 +8,9 @@ namespace Igloo15.MarkdownApi.Core
 {
     public static class MarkdownApiGenerator
     {
-        public static MarkdownProject GenerateProject(string searchArea, string namespaceMatch, string name)
+        public static MarkdownProject GenerateProject(string searchArea, string namespaceMatch)
         {
-            var project = MarkdownItemBuilder.Load(searchArea, namespaceMatch, name);
+            var project = MarkdownItemBuilder.Load(searchArea, namespaceMatch);
 
             project.AllItems = MarkdownRepo.GetLookup();
 
