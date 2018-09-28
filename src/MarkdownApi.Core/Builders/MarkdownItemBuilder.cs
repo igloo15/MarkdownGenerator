@@ -39,7 +39,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
                     {
                         try
                         {
-                            project.AddNamespaces(LoadDll(file.FullName, namespaceMatch));
+                            LoadDll(file.FullName, namespaceMatch);
                         }
                         catch(Exception e)
                         {

@@ -58,6 +58,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
             if (!String.IsNullOrEmpty(item.Summary))
             {
+                mb.Header(2, "Summary");
                 mb.AppendLine(item.Summary);
             }
 
@@ -91,7 +92,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         
 
-        private static void BuildTable(MarkdownBuilder mb, string label, IMarkdownItem[] items, string[] headers, MarkdownType mdType)
+        private void BuildTable(MarkdownBuilder mb, string label, IMarkdownItem[] items, string[] headers, MarkdownType mdType)
         {
             if (items.Any())
             {
@@ -119,7 +120,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
                     if (item.ItemType == MarkdownItemTypes.Constructor)
-                        dataValues[0] = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, false);
+                        dataValues[0] = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, _options.ShowParameterNames);
                     else
                         dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
 
@@ -127,11 +128,11 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     string name = item.FullName;
                     if (item.ItemType == MarkdownItemTypes.Method)
                     {
-                        name = Cleaner.CreateFullMethodWithLinks(mdType, item.As<MarkdownMethod>(), false, false);
+                        name = Cleaner.CreateFullMethodWithLinks(mdType, item.As<MarkdownMethod>(), false, _options.ShowParameterNames);
                     }
                     else if(item.ItemType == MarkdownItemTypes.Property)
                     {
-                        name = Cleaner.CreateFullParameterWithLinks(mdType, item.As<MarkdownProperty>(), false, false);
+                        name = Cleaner.CreateFullParameterWithLinks(mdType, item.As<MarkdownProperty>(), false, _options.ShowParameterNames);
                     }
                     else if(item.ItemType == MarkdownItemTypes.Constructor)
                     {

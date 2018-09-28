@@ -23,7 +23,7 @@ namespace Igloo15.MarkdownApi.Core
             if (dest.FileName == null)
                 throw new FileNotFoundException("Specified markdown item does not have a file to link to", dest.FileName);
 
-            return from.Location.AddRoot().RelativePath(dest.Location.AddRoot()).CombinePath(dest.FileName).AddRoot();
+            return from.Location.AddRoot().UpdatedRelativePath(dest.Location.AddRoot()).CombinePath(dest.FileName).AddRoot();
         }
     }
 }

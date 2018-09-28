@@ -10,8 +10,6 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
     {
         public Dictionary<string, IMarkdownItem> AllItems { get; internal set; } = new Dictionary<string, IMarkdownItem>();
 
-        public List<MarkdownNamespace> Namespaces { get; } = new List<MarkdownNamespace>();
-
         public override MarkdownItemTypes ItemType => MarkdownItemTypes.Project;
 
         public override string Name { get; }
@@ -23,20 +21,14 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             Name = name;
             FullName = name;
         }
-
-        internal void AddNamespaces(MarkdownNamespace[] namespaces)
-        {
-            foreach (var namespaceItem in namespaces)
-            {
-                namespaceItem.InternalProject = this;
-                Namespaces.Add(namespaceItem);
-            }
-        }
-
+        
         public MarkdownProject Resolve(ITheme theme)
         {
             foreach (var item in AllItems.Values)
             {
+                if (item.ItemType == MarkdownItemTypes.Namespace)
+                    item.As<MarkdownNamespace>().InternalProject = this;
+
                 item.As<IInternalMarkdownItem>().SetFilename(theme.Resolver.GetFileName(item));
 
                 item.As<IInternalMarkdownItem>().SetLocation(theme.Resolver.GetPath(item));
@@ -48,22 +40,24 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             return this;
         }
 
-        public MarkdownProject Create(ITheme theme)
+        public MarkdownProject Create(ITheme theme, string outputLocation)
         {
-
+            var rootLocation = Path.Combine(outputLocation, Location);
             var projectContent = theme.BuildPage(this);
 
+            if (!Directory.Exists(rootLocation))
+                Directory.CreateDirectory(rootLocation);
+
             if (!String.IsNullOrEmpty(projectContent))
-                File.WriteAllText(Path.Combine(Location, FileName), projectContent);
-
-
-            foreach(var item in AllItems.Values)
+                File.WriteAllText(Path.Combine(rootLocation, FileName), projectContent);
+            
+            foreach (var item in AllItems.Values)
             {
                 var content = item.BuildPage(theme);
 
                 if(!String.IsNullOrEmpty(content))
                 {
-                    var place = Path.Combine(Location, item.Location);
+                    var place = Path.Combine(rootLocation, item.Location);
                     var filePath = Path.Combine(place, item.FileName);
 
                     if (!Directory.Exists(place))
@@ -76,11 +70,11 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             return this;
         }
 
-        public void Build(ITheme theme)
+        public void Build(ITheme theme, string outputLocation)
         {
             Resolve(theme);
 
-            Create(theme);
+            Create(theme, outputLocation);
         }
 
         public override string BuildPage(ITheme theme)

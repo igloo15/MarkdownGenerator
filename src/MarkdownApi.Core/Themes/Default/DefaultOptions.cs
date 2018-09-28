@@ -20,8 +20,6 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         public string ConstructorFolderName { get; set; } = "Constructors";
 
-        public string RootFolderName { get; set; } = "md";
-
         public string RootFileName { get; set; } = "Home.md";
 
         public string RootTitle { get; set; } = "API";

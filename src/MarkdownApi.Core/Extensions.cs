@@ -45,7 +45,7 @@ namespace Igloo15.MarkdownApi.Core
             if (String.IsNullOrEmpty(item1))
                 return String.Join(Constants.PathSeparator.ToString(), items);
 
-            return item1 + Constants.PathSeparator + String.Join(Constants.PathSeparator.ToString(), items);
+            return item1 + String.Join(Constants.PathSeparator.ToString(), items);
         }
 
         public static string AddRoot(this string item)
@@ -58,7 +58,47 @@ namespace Igloo15.MarkdownApi.Core
             return prependValue + item;
         }
 
-        
+        public static string UpdatedRelativePath(this string fromPath, string toPath)
+        {
+            if (fromPath == toPath)
+                return "";
+
+            string[] fromDirs = fromPath.Split(new[] { Constants.PathSeparator, Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+            string[] toDirs = toPath.Split(new[] { Constants.PathSeparator, Path.DirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries);
+
+            int len = Math.Min(fromDirs.Length, toDirs.Length);
+
+            int index = 0;
+            int lastCommonRoot = -1;
+
+            for(index = 0; index < len; index++)
+            {
+                if (fromDirs[index] == toDirs[index]) lastCommonRoot = index;
+                else break;
+            }
+
+            if (lastCommonRoot == -1)
+            {
+                throw new ArgumentException("Paths do not have a common base");
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            var fromDelta = fromDirs.Length - lastCommonRoot;
+            var toDelta = toDirs.Length - lastCommonRoot;
+
+            for(var i = 1; i < fromDelta; i++)
+            {
+                sb.Append($"..{Constants.PathSeparator}");
+            }
+
+            for(var i = 1; i < toDelta; i++)
+            {
+                sb.Append(toDirs[lastCommonRoot + i]).Append(Constants.PathSeparator);
+            }
+
+            return sb.ToString();
+        }
 
         public static string RelativePath(this string absPath, string relTo)
         {
@@ -79,6 +119,8 @@ namespace Igloo15.MarkdownApi.Core
             // Find common root
             for (index = 0; index < len; index++)
             {
+                
+
                 if (absDirs[index] == relDirs[index]) lastCommonRoot = index;
                 else break;
             }
@@ -103,7 +145,7 @@ namespace Igloo15.MarkdownApi.Core
             {
                 relativePath.Append(relDirs[index] + Constants.PathSeparator);
             }
-            relativePath.Append(relDirs[relDirs.Length - 1]);
+            //relativePath.Append(relDirs[relDirs.Length - 1]);
 
             return relativePath.ToString();
         }

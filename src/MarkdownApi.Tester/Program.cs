@@ -12,18 +12,21 @@ namespace Igloo15.MarkdownApi.Tester
             Console.WriteLine("Hello World!");
 
 
-            var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
+            //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
+            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "", "Api");
 
-           
+
 
             project.Build(new DefaultTheme(new DefaultOptions
                     {
                         BuildNamespacePages = true,
                         BuildTypePages = true,
-                        RootFolderName = "./md",
-                        RootFileName = "Home.md"
+                        RootFileName = "README.md",
+                        RootTitle = "API",
+                        ShowParameterNames = true
                     }
-                )
+                ),
+                @"..\..\..\..\docs\api"
             );
 
 

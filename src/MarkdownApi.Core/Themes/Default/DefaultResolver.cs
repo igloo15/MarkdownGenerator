@@ -20,7 +20,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             switch (item)
             {
                 case MarkdownProject proj:
-                    return _options.RootFolderName;
+                    return "";
                 case MarkdownNamespace nameItem:
                     return nameItem.FullName.Replace('.', Path.DirectorySeparatorChar);
                 case MarkdownProperty prop:

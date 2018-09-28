@@ -20,8 +20,10 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             homeBuilder.HeaderWithLink(1, project.Name, project.To(project));
             homeBuilder.AppendLine();
 
-            foreach (var g in project.Namespaces)
+            foreach (var tempItem in project.AllItems.Values.Where(i => i.ItemType == MarkdownItemTypes.Namespace))
             {
+                var g = tempItem.As<MarkdownNamespace>();
+
                 if (!String.IsNullOrEmpty(g.FileName))
                 {
                     homeBuilder.HeaderWithLink(2, g.FullName, project.To(g));
