@@ -17,8 +17,14 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
         public string ReturnTypeName => ReturnType.Name;
 
         public Type ReturnType => InternalItem.ReturnType;
-        
-        public MarkdownMethod(MethodInfo info, bool isStatic)
+
+        public bool IsAbstract => InternalItem.IsAbstract;
+
+        public Type BaseDefinition => InternalItem.GetBaseDefinition()?.DeclaringType;
+
+        public bool IsOverriden => BaseDefinition != InternalItem.DeclaringType;
+
+        internal MarkdownMethod(MethodInfo info, bool isStatic)
         {
             InternalItem = info;
             IsStatic = isStatic;

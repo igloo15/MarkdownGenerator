@@ -21,21 +21,10 @@ Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md), [IInternalMarkdown
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownConstructor](./TypeParts/MarkdownConstructor.md)> | Constructors |  | 
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownEvent](./TypeParts/MarkdownEvent.md)> | Events |  | 
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownField](./TypeParts/MarkdownField.md)> | Fields |  | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | FullName |  | 
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownType](./MarkdownType.md)> | GenericProperties |  | 
-| [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[String](https://docs.microsoft.com/en-us/dotnet/api/System.String)> | Interfaces |  | 
-| [Type](https://docs.microsoft.com/en-us/dotnet/api/System.Type) | InternalType |  | 
-| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsAbstract |  | 
-| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsGeneric |  | 
-| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsInterface |  | 
 | [MarkdownItemTypes](./../MarkdownItemTypes.md) | ItemType |  | 
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownMethod](./TypeParts/MarkdownMethod.md)> | Methods |  | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | Name |  | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | Namespace |  | 
-| [MarkdownNamespace](./MarkdownNamespace.md) | NamespaceItem |  | 
-| [MarkdownProject](./MarkdownProject.md) | Project |  | 
 | [List](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.List-1)\<[MarkdownProperty](./TypeParts/MarkdownProperty.md)> | Properties |  | 
-| [TypeWrapper](./../TypeWrapper.md) | TypeInfo |  | 
 
 
 ## Methods

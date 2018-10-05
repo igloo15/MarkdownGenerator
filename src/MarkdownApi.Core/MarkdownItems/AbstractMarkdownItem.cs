@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
-    public abstract class AbstractMarkdownItem : IMarkdownItem
+    public abstract class AbstractMarkdownItem : IMarkdownItem, IInternalMarkdownItem
     {
         public abstract MarkdownProject Project { get; }
 
@@ -25,6 +25,14 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
 
         public abstract string BuildPage(ITheme theme);
 
-        
+        void IInternalMarkdownItem.SetLocation(string location)
+        {
+            Location = location;
+        }
+
+        void IInternalMarkdownItem.SetFilename(string filename)
+        {
+            FileName = filename;
+        }
     }
 }

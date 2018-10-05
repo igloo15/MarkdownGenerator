@@ -23,6 +23,7 @@
 ## [Igloo15.MarkdownApi.Core.MarkdownItems](./Igloo15/MarkdownApi/Core/MarkdownItems/README.md)
 
 - [`AbstractMarkdownItem`](./Igloo15/MarkdownApi/Core/MarkdownItems/AbstractMarkdownItem.md)
+- [`AbstractType`](./Igloo15/MarkdownApi/Core/MarkdownItems/AbstractType.md)
 - [`MarkdownEnum`](./Igloo15/MarkdownApi/Core/MarkdownItems/MarkdownEnum.md)
 - [`MarkdownNamespace`](./Igloo15/MarkdownApi/Core/MarkdownItems/MarkdownNamespace.md)
 - [`MarkdownProject`](./Igloo15/MarkdownApi/Core/MarkdownItems/MarkdownProject.md)

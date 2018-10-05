@@ -80,10 +80,20 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 {
                     var type = parameters[i].ParameterType;
                     var link = CreateFullTypeWithLinks(currentItem, type, useFullName, true);
+
+                    if (link.IndexOf('&') > 0)
+                    {
+                        link = link.Replace("&", "");
+                        sb.Append("out ");
+                    }
+
                     sb.Append(link);
 
                     if(useParameterNames)
                         sb.Append($" {parameters[i].Name}");
+
+                    
+                        
 
                     if (i + 1 != parameters.Length)
                         sb.Append(", ");

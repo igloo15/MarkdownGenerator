@@ -18,8 +18,11 @@ Implements [IMarkdownItem](./../../Interfaces/IMarkdownItem.md), [IInternalMarkd
 
 | Type | Name | Summary | 
 | --- | --- | --- | 
+| [Type](https://docs.microsoft.com/en-us/dotnet/api/System.Type) | BaseDefinition |  | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | FullName |  | 
 | [MethodInfo](https://docs.microsoft.com/en-us/dotnet/api/System.Reflection.MethodInfo) | InternalItem |  | 
+| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsAbstract |  | 
+| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsOverriden |  | 
 | [MarkdownItemTypes](./../../MarkdownItemTypes.md) | ItemType |  | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | Name |  | 
 | [Type](https://docs.microsoft.com/en-us/dotnet/api/System.Type) | ReturnType |  | 

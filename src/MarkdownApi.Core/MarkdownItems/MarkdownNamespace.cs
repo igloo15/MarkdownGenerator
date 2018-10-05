@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
-    public class MarkdownNamespace : AbstractMarkdownItem, IInternalMarkdownItem
+    public class MarkdownNamespace : AbstractMarkdownItem
     {
         public override string Name => FullName.Split('.').Last();
 
@@ -21,7 +21,7 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
 
         internal MarkdownProject InternalProject { get; set; }
 
-        public MarkdownNamespace(string fullName)
+        internal MarkdownNamespace(string fullName)
         {
             FullName = fullName;
             Summary = "";
@@ -32,15 +32,6 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             return theme.BuildPage(this);
         }
 
-        void IInternalMarkdownItem.SetLocation(string location)
-        {
-            Location = location;
-        }
-
-        void IInternalMarkdownItem.SetFilename(string filename)
-        {
-            FileName = filename;
-        }
 
         public Dictionary<string, IMarkdownItem> AllItems => Project.AllItems;
 

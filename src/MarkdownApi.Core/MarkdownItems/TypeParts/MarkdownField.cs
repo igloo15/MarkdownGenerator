@@ -16,7 +16,7 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 
         public string TypeName => InternalItem.FieldType.FullName;
         
-        public MarkdownField(FieldInfo info, bool isStatic)
+        internal MarkdownField(FieldInfo info, bool isStatic)
         {
             InternalItem = info;
             IsStatic = isStatic;

@@ -16,7 +16,7 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 
         public string TypeName => InternalItem.PropertyType.FullName;
         
-        public MarkdownProperty(PropertyInfo info, bool isStatic)
+        internal MarkdownProperty(PropertyInfo info, bool isStatic)
         {
             InternalItem = info;
             IsStatic = isStatic;

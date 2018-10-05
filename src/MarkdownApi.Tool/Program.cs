@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Igloo15.MarkdownApi.Core;
 using Igloo15.MarkdownApi.Core.Themes;
+using Microsoft.Extensions.Logging;
 
 namespace Igloo15.MarkdownApi.Tool
 {
@@ -26,12 +27,23 @@ namespace Igloo15.MarkdownApi.Tool
             string target = file.DllPath;
             string dest = file.Destination;
             string namespaceMatch = string.Empty;
-            
+
+            var factory = new LoggerFactory();
+
+            factory.AddConsole();
+
+            ILogger logger = factory.CreateLogger("MarkdownApi");
+
+            AppDomain.CurrentDomain.ProcessExit += (e, s) =>
+            {
+                factory.Dispose();
+            };
+
             try
             {
-                
 
-                var project = MarkdownApiGenerator.GenerateProject(target, namespaceMatch);
+                logger.LogInformation("Beginning operation with {searchArea} search area and {namespaceMatch} filter \n outputing to {destination}", target, namespaceMatch, dest);
+                var project = MarkdownApiGenerator.GenerateProject(target, namespaceMatch, factory);
 
 
                 project.Build(new DefaultTheme(file.GenerateOptions()), dest);
@@ -40,13 +52,12 @@ namespace Igloo15.MarkdownApi.Tool
             }
             catch (Exception e)
             {
-                Console.Error.WriteLine(e);
-
+                logger.LogError(e, "Failed to Create Documentation");
+                factory.Dispose();
                 var result = Parser.Default.ParseArguments<Options>(new string[] { });
 
                 return 1;
             }
-            
 
             return 0;
         }

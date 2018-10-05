@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.Interfaces;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -39,6 +40,7 @@ namespace Igloo15.MarkdownApi.Core
         {
             if(!Items.ContainsKey(name))
             {
+                Constants.Logger?.LogTrace("Add Markdown Namespace {namespaceName}", name);
                 TryAdd(name, item);
             }
 

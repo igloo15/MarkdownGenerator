@@ -4,7 +4,7 @@ Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [MarkdownIte
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
-Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md)
+Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md), [IInternalMarkdownItem]()
 
 
 ## Constructors
@@ -32,8 +32,8 @@ Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md)
 | --- | --- | --- | 
 | void | Build ( [`ITheme`](./../Interfaces/ITheme.md) theme, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) outputLocation ) |  | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`ITheme`](./../Interfaces/ITheme.md) theme ) |  | 
-| [MarkdownProject](./MarkdownProject.md) | Create ( [`ITheme`](./../Interfaces/ITheme.md) theme, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) outputLocation ) |  | 
-| [MarkdownProject](./MarkdownProject.md) | Resolve ( [`ITheme`](./../Interfaces/ITheme.md) theme ) |  | 
-| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | TryGetValue ( [`TypeWrapper`](./../TypeWrapper.md) wrapper, [`IMarkdownItem&`]() value ) |  | 
+| [MarkdownProject](./MarkdownProject.md) | Create ( [`ITheme`](./../Interfaces/ITheme.md) theme, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) outputLocation ) | Create the Markdown Api Pages based on the ITheme provided and put all files in the given location | 
+| [MarkdownProject](./MarkdownProject.md) | Resolve ( [`ITheme`](./../Interfaces/ITheme.md) theme ) | Resolve the file names and locations based on the ITheme provided | 
+| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | TryGetValue ( [`TypeWrapper`](./../TypeWrapper.md) wrapper, out [`IMarkdownItem`]() value ) |  | 
 
 

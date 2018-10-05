@@ -15,6 +15,9 @@ namespace Igloo15.MarkdownApi.Tool
         [Value(1, Required = false, Default = "md", MetaName = "Output Directory", HelpText = "The root folder to put documentation in")]
         public string Destination { get; set; }
 
+        [Option("namespace-filter", HelpText = "A regex used to generate documentation only for namespaces that match", Default = "")]
+        public string NamespaceFilter { get; set; }
+
         [Option("root-filename", HelpText = "The name of the markdown file at the root of your documentation", Default = "Home")]
         public string RootFileName { get; set; }
 

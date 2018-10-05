@@ -2,6 +2,7 @@
 using Igloo15.MarkdownApi.Core.Interfaces;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
 using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         public string BuildPage(MarkdownType item)
         {
+            DefaultTheme.ThemeLogger?.LogDebug("Building Type Page");
             var mb = new MarkdownBuilder();
             
             mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, false, false));

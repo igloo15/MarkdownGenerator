@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         public string BuildPage(MarkdownNamespace item)
         {
-
+            DefaultTheme.ThemeLogger?.LogDebug("Building Namespace Page");
             var namespaceBuilder = new MarkdownBuilder();
             namespaceBuilder.HeaderWithLink(1, item.FullName, item.To(item));
             namespaceBuilder.AppendLine();

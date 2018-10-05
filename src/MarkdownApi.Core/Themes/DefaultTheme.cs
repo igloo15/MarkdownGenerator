@@ -2,6 +2,7 @@
 using Igloo15.MarkdownApi.Core.MarkdownItems;
 using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using Igloo15.MarkdownApi.Core.Themes.Default;
+using Microsoft.Extensions.Logging;
 
 namespace Igloo15.MarkdownApi.Core.Themes
 {
@@ -16,6 +17,7 @@ namespace Igloo15.MarkdownApi.Core.Themes
         private DefaultNamespaceBuilder _namespaceBuilder;
         private DefaultProjectBuilder _projectBuilder;
         private DefaultTypeBuilder _typeBuilder;
+        internal static ILogger ThemeLogger;
 
         /// <summary>
         /// Constructs a default theme with the given options
@@ -40,6 +42,11 @@ namespace Igloo15.MarkdownApi.Core.Themes
         /// </summary>
         public IResolver Resolver => new DefaultResolver(_options);
 
+        public void SetLogger(ILogger logger)
+        {
+            ThemeLogger = logger;
+        }
+        
         /// <summary>
         /// Builds Namespace Pages with the given MarkdownNamespace Item
         /// </summary>

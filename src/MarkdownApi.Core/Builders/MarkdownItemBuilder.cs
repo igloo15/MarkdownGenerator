@@ -1,6 +1,7 @@
 ﻿
 using Igloo15.MarkdownApi.Core;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,9 @@ namespace Igloo15.MarkdownApi.Core.Builders
             var dllPaths = searchArea.Split(';');
             foreach(var dllPath in dllPaths)
             {
+                Constants.Logger?.LogInformation("Searching {searchArea} for dlls", dllPath);
+
+                
                 var index = dllPath.LastIndexOf(Path.DirectorySeparatorChar);
 
                 var directoryPath = dllPath.Substring(0, index);
@@ -35,18 +39,24 @@ namespace Igloo15.MarkdownApi.Core.Builders
                 {
                     FileInfo[] files = folder.GetFiles(filePath);
 
+                    Constants.Logger?.LogInformation("Found {dllCount} dlls in {folderPath}", files.Length, directoryPath);
+
                     foreach (FileInfo file in files)
                     {
+                        Constants.Logger?.LogInformation("Loading Dll: {dllName}", file.Name);
                         try
                         {
                             LoadDll(file.FullName, namespaceMatch);
                         }
                         catch(Exception e)
                         {
-                            Console.WriteLine($"Failed to load file {file.FullName}");
+                            Constants.Logger?.LogError(e, "Failed to Load {dllName}", file.FullName);
                         }
-                        
                     }
+                }
+                else
+                {
+                    Constants.Logger?.LogWarning("{folderPath} folder does not exist", directoryPath);
                 }
             }
 
@@ -55,6 +65,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         private static MarkdownNamespace[] LoadDll(string dllPath, string namespaceMatch)
         {
+            var dllName = Path.GetFileNameWithoutExtension(dllPath);
             var commentsLookup = GetComments(dllPath, namespaceMatch);
 
             var namespaceRegex = 
@@ -65,14 +76,17 @@ namespace Igloo15.MarkdownApi.Core.Builders
                 try
                 {
                     var types = x.GetTypes();
+                    Constants.Logger?.LogDebug("Loaded {typeCount} Types Successfully", types.Count());
                     return types;
                 }
                 catch (ReflectionTypeLoadException ex)
                 {
+                    Constants.Logger?.LogWarning("Failed to Load some types in {dllName}", dllName);
                     return ex.Types.Where(t => t != null);
                 }
                 catch
                 {
+                    Constants.Logger?.LogWarning("Failed to Load any types in {dllName}", dllName);
                     return Type.EmptyTypes;
                 }
             }
@@ -114,7 +128,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
 
 
-
+            Constants.Logger?.LogDebug("Beginning Building of Markdown Items in {dllName}", dllName);
 
             return new MarkdownTypeBuilder().BuildTypes(markdownableTypes, commentsLookup).ToArray();
         }
@@ -128,12 +142,18 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         static ILookup<string, XmlDocumentComment> GetComments(string dllPath, string namespaceMatch)
         {
-            var xmlPath = Path.Combine(Directory.GetParent(dllPath).FullName, Path.GetFileNameWithoutExtension(dllPath) + ".xml");
+            var dllName = Path.GetFileNameWithoutExtension(dllPath);
+            var xmlPath = Path.Combine(Directory.GetParent(dllPath).FullName, dllName + ".xml");
 
             XmlDocumentComment[] comments = new XmlDocumentComment[0];
             if (File.Exists(xmlPath))
             {
                 comments = VSDocParser.ParseXmlComment(XDocument.Parse(File.ReadAllText(xmlPath)), namespaceMatch);
+                Constants.Logger?.LogDebug("Found {commentCount} comments for {dllName}", comments.Count(), dllName);
+            }
+            else
+            {
+                Constants.Logger?.LogWarning("No Documentation Xml found for {dllPath}", dllName);
             }
             var commentsLookup = comments.ToLookup(x => x.ClassName);
 

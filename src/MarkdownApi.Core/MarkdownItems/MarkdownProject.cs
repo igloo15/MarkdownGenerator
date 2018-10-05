@@ -1,4 +1,5 @@
 ﻿using Igloo15.MarkdownApi.Core.Interfaces;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,14 +17,20 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
 
         public override string FullName { get; }
 
-        public MarkdownProject()
+        internal MarkdownProject()
         {
             Name = null;
             FullName = null;
         }
         
+        /// <summary>
+        /// Resolve the file names and locations based on the ITheme provided
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
         public MarkdownProject Resolve(ITheme theme)
         {
+            Constants.Logger?.LogInformation("Resolving File Paths and File Names");
             foreach (var item in AllItems.Values)
             {
                 if (item.ItemType == MarkdownItemTypes.Namespace)
@@ -40,8 +47,15 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             return this;
         }
 
+        /// <summary>
+        /// Create the Markdown Api Pages based on the ITheme provided and put all files in the given location
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <param name="outputLocation"></param>
+        /// <returns></returns>
         public MarkdownProject Create(ITheme theme, string outputLocation)
         {
+            Constants.Logger?.LogInformation("Create Markdown Page Content and Files");
             var rootLocation = Path.Combine(outputLocation, Location);
             var projectContent = theme.BuildPage(this);
 
@@ -50,13 +64,14 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
 
             if (!String.IsNullOrEmpty(projectContent))
                 File.WriteAllText(Path.Combine(rootLocation, FileName), projectContent);
-            
+            int pageCount = 0;
             foreach (var item in AllItems.Values)
             {
                 var content = item.BuildPage(theme);
 
                 if(!String.IsNullOrEmpty(content))
                 {
+                    pageCount++; 
                     var place = Path.Combine(rootLocation, item.Location);
                     var filePath = Path.Combine(place, item.FileName);
 
@@ -66,7 +81,8 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
                     File.WriteAllText(filePath, content);
                 }
             }
-
+            Constants.Logger?.LogInformation("All Content Created");
+            Constants.Logger?.LogInformation("{pageCount} Markdown Pages created at {output}", pageCount, outputLocation);
             return this;
         }
 

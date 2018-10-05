@@ -16,7 +16,7 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 
         public override string FullName => InternalItem.Name;
 
-        public MarkdownConstructor(ConstructorInfo info, bool isStatic)
+        internal MarkdownConstructor(ConstructorInfo info, bool isStatic)
         {
             IsStatic = isStatic;
             InternalItem = info;

@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
@@ -16,6 +17,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         public string BuildPage(MarkdownProject project)
         {
+            DefaultTheme.ThemeLogger?.LogDebug("Building Main Api Page");
             var homeBuilder = new MarkdownBuilder();
             homeBuilder.HeaderWithLink(1, _options.RootTitle, project.To(project));
             homeBuilder.AppendLine();

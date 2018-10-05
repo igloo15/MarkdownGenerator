@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
 using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,7 +15,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
             foreach(var type in types)
             {
-
+                
                 var tempNamespace = new MarkdownNamespace(type.InternalType.Namespace);
 
                 var myNamespace = MarkdownRepo.TryGetOrAdd(type.InternalType.Namespace, tempNamespace);
@@ -24,6 +25,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
                 if(!type.InternalType.IsEnum)
                 {
+                    
                     var builtType = BuildType(type, myNamespace, typeComments);
 
                     myNamespace.Types.Add(builtType);
@@ -44,6 +46,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public MarkdownType BuildType(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)
         {
+            Constants.Logger?.LogTrace("Building Markdown Item for Type {typeName}", type.Name);
             MarkdownRepo.TryAdd(type);
 
             type.NamespaceItem = namespaceItem;
@@ -51,20 +54,29 @@ namespace Igloo15.MarkdownApi.Core.Builders
             type.Summary = comments.FirstOrDefault(x => x.MemberName == type.Name
                     || x.MemberName.StartsWith(type.Name + "`"))?.Summary ?? "";
 
-
+            Constants.Logger?.LogTrace("Getting Markdown Fields for Type {typeName}", type.Name);
             BuildFields(type, comments, type.GetFields().Together(type.GetStaticFields()).ToArray());
+
+            Constants.Logger?.LogTrace("Getting Markdown Properties for Type {typeName}", type.Name);
             BuildProperties(type, comments, type.GetProperties().Together(type.GetStaticProperties()).ToArray());
+
+            Constants.Logger?.LogTrace("Getting Markdown Methods for Type {typeName}", type.Name);
             BuildMethods(type, comments, type.GetMethods().Together(type.GetStaticMethods()).ToArray());
+
+            Constants.Logger?.LogTrace("Getting Markdown Events for Type {typeName}", type.Name);
             BuildEvents(type, comments, type.GetEvents().Together(type.GetStaticEvents()).ToArray());
-            var constructors = type.GetConstructors();
+
+            Constants.Logger?.LogTrace("Getting Markdown Constructors for Type {typeName}", type.Name);
             BuildConstructors(type, comments, type.GetConstructors().ToArray());
 
+            Constants.Logger?.LogTrace("Completed Building Markdown Type {typeName}", type.Name);
             return type;
         }
 
         public void BuildFields(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownField[] infos)
         {
-            foreach(var item in infos)
+            Constants.Logger?.LogTrace("Found {itemCount} Markdown Fields for Type {typeName}", infos.Length, type.Name);
+            foreach (var item in infos)
             {
                 item.ParentType = type;
                 type.Fields.Add(item);
@@ -77,6 +89,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public void BuildProperties(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownProperty[] infos)
         {
+            Constants.Logger?.LogTrace("Found {itemCount} Markdown Properties for Type {typeName}", infos.Length, type.Name);
             foreach (var item in infos)
             {
                 item.ParentType = type;
@@ -89,6 +102,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public void BuildMethods(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownMethod[] infos)
         {
+            Constants.Logger?.LogTrace("Found {itemCount} Markdown Comments for Type {typeName}", infos.Length, type.Name);
             foreach (var item in infos)
             {
                 item.ParentType = type;
@@ -103,6 +117,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public void BuildEvents(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownEvent[] infos)
         {
+            Constants.Logger?.LogTrace("Found {itemCount} Markdown Events for Type {typeName}", infos.Length, type.Name);
             foreach (var item in infos)
             {
                 item.ParentType = type;
@@ -115,6 +130,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public void BuildConstructors(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownConstructor[] infos)
         {
+            Constants.Logger?.LogTrace("Found {itemCount} Markdown Constructors for Type {typeName}", infos.Length, type.Name);
             foreach (var item in infos)
             {
                 item.ParentType = type;
@@ -127,6 +143,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         public MarkdownEnum BuildEnum(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)
         {
+            Constants.Logger?.LogTrace("Building Markdown Item for Enum {enumName}", type.Name);
             MarkdownEnum me = new MarkdownEnum();
 
             me.NamespaceItem = namespaceItem;
@@ -138,6 +155,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
             MarkdownRepo.TryAdd(me);
 
+            Constants.Logger?.LogTrace("Completed Building Markdown Enum {typeName}", me.Name);
             return me;
         }
     }

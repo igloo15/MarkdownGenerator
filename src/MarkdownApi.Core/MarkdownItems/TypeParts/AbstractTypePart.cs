@@ -13,16 +13,6 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 
         public bool IsStatic { get; protected set; }
 
-        void IInternalMarkdownItem.SetLocation(string location)
-        {
-            Location = location;
-        }
-
-        void IInternalMarkdownItem.SetFilename(string filename)
-        {
-            FileName = filename;
-        }
-
         public override MarkdownProject Project => ParentType.NamespaceItem.Project;
 
     }

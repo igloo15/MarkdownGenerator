@@ -16,7 +16,7 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 
         public string TypeName => InternalItem.EventHandlerType.FullName;
 
-        public MarkdownEvent(EventInfo info, bool isStatic)
+        internal MarkdownEvent(EventInfo info, bool isStatic)
         {
             InternalItem = info;
             IsStatic = isStatic;

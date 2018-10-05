@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.Builders;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         public string BuildPage(MarkdownEnum item)
         {
+            DefaultTheme.ThemeLogger?.LogDebug("Building Enum Page");
             var mb = new MarkdownBuilder();
 
             mb.HeaderWithCode(1, Cleaner.CreateFullTypeWithLinks(item, item.InternalType, false, false));
@@ -48,12 +50,12 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
         private static void BuildEnumTable(MarkdownBuilder mb, IEnumerable<XmlDocumentComment> comments, MarkdownEnum value)
         {
-
+            var underlyingEnumType = Enum.GetUnderlyingType(value.InternalType);
             var enums = value.EnumNames
                     .Select(x => new {
                         Name = x,
-                        //Value = ((Int32)Enum.Parse(type),
-                        Value = x
+                        
+                        Value = (Convert.ChangeType(Enum.Parse(value.InternalType, x), underlyingEnumType))
                     })
                     .OrderBy(x => x.Value)
                     .ToArray();
@@ -72,7 +74,7 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
 
 
                     return new[] {
-                        item.Value,
+                        item.Value.ToString(),
                         item.Name,
                         summary
                     };

@@ -4,7 +4,7 @@ Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [MarkdownIte
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
-Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md)
+Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md), [IInternalMarkdownItem]()
 
 
 ## Constructors

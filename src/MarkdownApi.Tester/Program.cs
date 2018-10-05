@@ -2,6 +2,8 @@
 using Igloo15.MarkdownApi.Core;
 using Igloo15.MarkdownApi.Core.Themes;
 using Igloo15.MarkdownApi.Core.Themes.Default;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace Igloo15.MarkdownApi.Tester
 {
@@ -11,9 +13,16 @@ namespace Igloo15.MarkdownApi.Tester
         {
             Console.WriteLine("Hello World!");
 
+            
+
+
+
+            var factory = new LoggerFactory();
+
+            factory.AddConsole();
 
             //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
-            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "");
+            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "", factory);
 
 
 
@@ -29,13 +38,12 @@ namespace Igloo15.MarkdownApi.Tester
                 @"..\..\..\..\docs\api"
             );
 
-
+            AppDomain.CurrentDomain.ProcessExit += (e, s) =>
+            {
+                factory.Dispose();
+            };
             
-
-            Console.WriteLine(project);
-
-            //Console.ReadLine();
-
+            
         }
     }
 }

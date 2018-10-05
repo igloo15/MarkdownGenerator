@@ -1,5 +1,12 @@
 igloo15.MarkdownApi
 ===
+
+Tool: [![NuGet](https://img.shields.io/nuget/v/igloo15.MarkdownApi.Tool.svg)](https://www.nuget.org/packages/igloo15.MarkdownApi.Tool/)
+
+Core: [![NuGet](https://img.shields.io/nuget/v/igloo15.MarkdownApi.Tool.svg)](https://www.nuget.org/packages/igloo15.MarkdownApi.Core/)
+
+
+
 Generate markdown from C# binary & xml document for GitHub/GitLab Wiki. This library has two options
 
 ## Install
