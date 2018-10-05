@@ -18,7 +18,7 @@ namespace Igloo15.MarkdownApi.Tool
         [Option("namespace-filter", HelpText = "A regex used to generate documentation only for namespaces that match", Default = "")]
         public string NamespaceFilter { get; set; }
 
-        [Option("root-filename", HelpText = "The name of the markdown file at the root of your documentation", Default = "Home")]
+        [Option("root-filename", HelpText = "The name of the markdown file at the root of your documentation", Default = "README.md")]
         public string RootFileName { get; set; }
 
         [Option("title", Default = "Api", HelpText = "Title of the root home page")]
