@@ -66,12 +66,14 @@ namespace Igloo15.MarkdownApi.Tool
         [Option("theme", Default = "Default", HelpText = "The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined")]
         public string ThemeName { get; set; }
         
-        [Usage(ApplicationAlias = "markdowngen")]
+        [Usage(ApplicationAlias = "markdownapi")]
         public static IEnumerable<Example> Examples
         {
             get
             {
                 yield return new Example("Normal Usage", new Options { DllPath = "./MyDll.dll", Destination = "./Api" });
+                yield return new Example("Wildcard Usage", new Options { DllPath = "./bin/*.dll", Destination = "./Api" });
+                yield return new Example("Multiple Search Locations", new Options { DllPath = "./bin/*.dll;./dist/myapp/myApp.dll", Destination = "../../..docs/Api" });
             }
         }
 
