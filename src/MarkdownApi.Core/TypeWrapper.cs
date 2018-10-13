@@ -5,14 +5,30 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TypeWrapper
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public MemberInfo Info { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string FullName { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(PropertyInfo info)
         {
             Info = info;
@@ -20,6 +36,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(FieldInfo info)
         {
             Info = info;
@@ -27,6 +47,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(MethodInfo info)
         {
             Info = info;
@@ -34,6 +58,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(EventInfo info)
         {
             Info = info;
@@ -41,6 +69,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(ConstructorInfo info)
         {
             Info = info;
@@ -48,6 +80,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="info"></param>
         public TypeWrapper(Type info)
         {
             Info = info;
@@ -60,6 +96,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = info.Name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
         public TypeWrapper(string name)
         {
             Info = null;
@@ -67,6 +107,10 @@ namespace Igloo15.MarkdownApi.Core
             Name = name;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public string GetId()
         {
             if (Info == null)

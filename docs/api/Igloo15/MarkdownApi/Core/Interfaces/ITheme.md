@@ -28,6 +28,6 @@ A theme is used to generate the content for markdown pages as well as where mark
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownMethod`](./../MarkdownItems/TypeParts/MarkdownMethod.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownEvent`](./../MarkdownItems/TypeParts/MarkdownEvent.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownConstructor`](./../MarkdownItems/TypeParts/MarkdownConstructor.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
-| void | SetLogger ( [`ILogger`]() logger ) | Set the default logger to be used during Theme Construction | 
+| void | SetLogger ( [`ILogger`](./ITheme.md) logger ) | Set the default logger to be used during Theme Construction | 
 
 

@@ -160,15 +160,23 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownConstructor[] GetConstructors(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance)
+            return mdType.InternalType.GetConstructors(BindingFlags.Public | BindingFlags.Instance)
                 .Where(x => x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(mi => new MarkdownConstructor(mi, mi.IsStatic))
                 .ToArray();
         }
-        
+
+        public static MarkdownConstructor[] GetStaticConstructors(this MarkdownType mdType)
+        {
+            return mdType.InternalType.GetConstructors(BindingFlags.Public | BindingFlags.Static)
+                .Where(x => x.FilterMemberInfo() && !x.IsPrivate)
+                .Select(mi => new MarkdownConstructor(mi, mi.IsStatic))
+                .ToArray();
+        }
+
         public static MarkdownMethod[] GetMethods(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
+            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(mi => new MarkdownMethod(mi, false))
                 .ToArray();
@@ -176,7 +184,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownMethod[] GetStaticMethods(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
+            return mdType.InternalType.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.InvokeMethod)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(mi => new MarkdownMethod(mi, true))
                 .ToArray();
@@ -184,7 +192,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownProperty[] GetProperties(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
+            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Where(y => y.FilterPropertyInfo())
                 .Select(pi => new MarkdownProperty(pi, false))
@@ -193,7 +201,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownProperty[] GetStaticProperties(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
+            return mdType.InternalType.GetProperties(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.GetProperty | BindingFlags.SetProperty)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo())
                 .Where(y => y.FilterPropertyInfo())
                 .Select(pi => new MarkdownProperty(pi, true))
@@ -202,7 +210,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownField[] GetFields(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
+            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(fi => new MarkdownField(fi, false))
                 .ToArray();
@@ -210,7 +218,7 @@ namespace Igloo15.MarkdownApi.Core
 
         public static MarkdownField[] GetStaticFields(this MarkdownType mdType)
         {
-            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
+            return mdType.InternalType.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.GetField | BindingFlags.SetField)
                 .Where(x => !x.IsSpecialName && x.FilterMemberInfo() && !x.IsPrivate)
                 .Select(fi => new MarkdownField(fi, true))
                 .ToArray();

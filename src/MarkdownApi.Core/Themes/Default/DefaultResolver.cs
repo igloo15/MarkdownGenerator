@@ -5,16 +5,28 @@ using System.IO;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DefaultResolver : IResolver
     {
         private DefaultOptions _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public DefaultResolver(DefaultOptions options)
         {
             _options = options;
         }
 
 
+        /// <summary>
+        /// Calculates the path for the markdown item
+        /// </summary>
+        /// <param name="item">The item to get a path for</param>
+        /// <returns>String path to where to place the markdown item page</returns>
         public string GetPath(IMarkdownItem item)
         {
             switch (item)
@@ -40,6 +52,11 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             }
         }
 
+        /// <summary>
+        /// Gets the filename for the markdown item
+        /// </summary>
+        /// <param name="item">The item to get a filename for</param>
+        /// <returns>String name of the file that the item's content should be in</returns>
         public string GetFileName(IMarkdownItem item)
         {
             switch (item)

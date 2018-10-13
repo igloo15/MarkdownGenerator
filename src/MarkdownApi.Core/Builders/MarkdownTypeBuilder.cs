@@ -67,7 +67,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             BuildEvents(type, comments, type.GetEvents().Together(type.GetStaticEvents()).ToArray());
 
             Constants.Logger?.LogTrace("Getting Markdown Constructors for Type {typeName}", type.Name);
-            BuildConstructors(type, comments, type.GetConstructors().ToArray());
+            BuildConstructors(type, comments, type.GetConstructors().Together(type.GetStaticConstructors()).ToArray());
 
             Constants.Logger?.LogTrace("Completed Building Markdown Type {typeName}", type.Name);
             return type;

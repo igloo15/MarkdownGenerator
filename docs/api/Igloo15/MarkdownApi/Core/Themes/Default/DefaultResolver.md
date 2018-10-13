@@ -18,7 +18,7 @@ Implements [IResolver](./../../Interfaces/IResolver.md)
 
 | Return | Name | Summary | 
 | --- | --- | --- | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | GetFileName ( [`IMarkdownItem`](./../../Interfaces/IMarkdownItem.md) item ) |  | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | GetPath ( [`IMarkdownItem`](./../../Interfaces/IMarkdownItem.md) item ) |  | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | GetFileName ( [`IMarkdownItem`](./../../Interfaces/IMarkdownItem.md) item ) | Gets the filename for the markdown item | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | GetPath ( [`IMarkdownItem`](./../../Interfaces/IMarkdownItem.md) item ) | Calculates the path for the markdown item | 
 
 

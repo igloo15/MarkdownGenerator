@@ -42,6 +42,10 @@ namespace Igloo15.MarkdownApi.Core.Themes
         /// </summary>
         public IResolver Resolver => new DefaultResolver(_options);
 
+        /// <summary>
+        /// Set the default logger to be used during Theme Construction
+        /// </summary>
+        /// <param name="logger">The Logger</param>
         public void SetLogger(ILogger logger)
         {
             ThemeLogger = logger;

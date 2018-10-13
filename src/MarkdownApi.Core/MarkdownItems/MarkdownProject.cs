@@ -7,14 +7,29 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.MarkdownItems
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MarkdownProject : AbstractMarkdownItem
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public Dictionary<string, IMarkdownItem> AllItems { get; internal set; } = new Dictionary<string, IMarkdownItem>();
 
+        /// <summary>
+        /// The type of markdown item
+        /// </summary>
         public override MarkdownItemTypes ItemType => MarkdownItemTypes.Project;
 
+        /// <summary>
+        /// The Name of the Markdown item
+        /// </summary>
         public override string Name { get; }
 
+        /// <summary>
+        /// The full name of the Markdown Item
+        /// </summary>
         public override string FullName { get; }
 
         internal MarkdownProject()
@@ -86,6 +101,11 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             return this;
         }
 
+        /// <summary>
+        /// Build the Markdown Project and all items in the project with the given field in the given location. This method is shorthand for calling Resolve and then Create
+        /// </summary>
+        /// <param name="theme">The theme to use to create the markdown</param>
+        /// <param name="outputLocation">The location to put all the markdown files</param>
         public void Build(ITheme theme, string outputLocation)
         {
             Resolve(theme);
@@ -93,15 +113,32 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
             Create(theme, outputLocation);
         }
 
+        /// <summary>
+        /// Create a page for this markdown item or "" if no page is created
+        /// </summary>
+        /// <param name="theme">The theme to be used to in building the page</param>
+        /// <returns>The text content of the page or "" if no page content</returns>
         public override string BuildPage(ITheme theme)
         {
             return theme.BuildPage(this);
         }
 
+        /// <summary>
+        /// The markdown project the item is part of
+        /// </summary>
         public override MarkdownProject Project => this;
 
+        /// <summary>
+        /// The type info of the MarkdownItem used to find references to it from other MarkdownItems
+        /// </summary>
         public override TypeWrapper TypeInfo => new TypeWrapper(FullName);
 
+        /// <summary>
+        /// Try to get a markdownitem with the given TypeWrapper lookup key
+        /// </summary>
+        /// <param name="wrapper">The key to look up the markdownitem</param>
+        /// <param name="value">If found the IMarkdownItem</param>
+        /// <returns>True if found or false if not found</returns>
         public bool TryGetValue(TypeWrapper wrapper, out IMarkdownItem value)
         {
             return AllItems.TryGetValue(wrapper.GetId(), out value);  

@@ -7,8 +7,19 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// Used as a utility class for creating clean links and names for MarkdownItems
+    /// </summary>
     public static class Cleaner
     {
+        /// <summary>
+        /// Create a Link to the target from the MarkadownItem with full type information
+        /// </summary>
+        /// <param name="currentItem">The current location to create a link from</param>
+        /// <param name="target">The target to link to </param>
+        /// <param name="useFullName">Use the full name of the type with namespace</param>
+        /// <param name="useSpecialText">Use special code quote on link title to make it look nicer</param>
+        /// <returns>The markdown string</returns>
         public static string CreateFullTypeWithLinks(IMarkdownItem currentItem, Type target, bool useFullName, bool useSpecialText)
         {
             StringBuilder sb = new StringBuilder();
@@ -29,6 +40,14 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return actualName;
         }
 
+        /// <summary>
+        /// Create a constructor with links and parameters
+        /// </summary>
+        /// <param name="currentItem">The current location to create this Constructor name with links</param>
+        /// <param name="constructor">The constructor to clean up</param>
+        /// <param name="useFullName">Use full name of the constructor</param>
+        /// <param name="useParameterNames">Use parameter names if set to false only type will be shown</param>
+        /// <returns>The markdown string</returns>
         public static string CreateFullConstructorsWithLinks(IMarkdownItem currentItem, MarkdownConstructor constructor, bool useFullName, bool useParameterNames)
         {
             var parameters = constructor.InternalItem.GetParameters();
@@ -63,6 +82,14 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return mb.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentItem"></param>
+        /// <param name="method"></param>
+        /// <param name="useFullName"></param>
+        /// <param name="useParameterNames"></param>
+        /// <returns></returns>
         public static string CreateFullMethodWithLinks(IMarkdownItem currentItem, MarkdownMethod method, bool useFullName, bool useParameterNames)
         {
             var parameters = method.InternalItem.GetParameters();
@@ -104,6 +131,14 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return mb.ToString();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currentItem"></param>
+        /// <param name="property"></param>
+        /// <param name="useFullName"></param>
+        /// <param name="useParameterNames"></param>
+        /// <returns></returns>
         public static string CreateFullParameterWithLinks(IMarkdownItem currentItem, MarkdownProperty property, bool useFullName, bool useParameterNames)
         {
             var fullParameterName = property.InternalItem.ToString();
@@ -153,6 +188,13 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return (null, null);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="keepGenericNumber"></param>
+        /// <param name="specialText"></param>
+        /// <returns></returns>
         public static string CleanFullName(Type t, bool keepGenericNumber, bool specialText)
         {
             if (t == null) return "";
@@ -165,6 +207,13 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return CleanName(t.FullName, keepGenericNumber, specialText);            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="keepGenericNumber"></param>
+        /// <param name="specialText"></param>
+        /// <returns></returns>
         public static string CleanName(string name, bool keepGenericNumber, bool specialText)
         {
             if (String.IsNullOrEmpty(name))

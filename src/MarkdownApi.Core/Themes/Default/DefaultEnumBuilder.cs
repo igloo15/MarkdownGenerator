@@ -8,15 +8,27 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DefaultEnumBuilder
     {
         private DefaultOptions _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public DefaultEnumBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public string BuildPage(MarkdownEnum item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Enum Page");

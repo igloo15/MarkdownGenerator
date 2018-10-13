@@ -7,9 +7,19 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class MarkdownApiGenerator
     {
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="searchArea"></param>
+        /// <param name="namespaceMatch"></param>
+        /// <param name="factory"></param>
+        /// <returns></returns>
         public static MarkdownProject GenerateProject(string searchArea, string namespaceMatch, ILoggerFactory factory = null)
         {
             Constants.Logger = factory?.CreateLogger("Generation");

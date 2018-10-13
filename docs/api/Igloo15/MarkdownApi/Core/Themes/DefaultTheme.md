@@ -37,13 +37,6 @@ This default theme is bundled with the core to provide an example and base themi
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownMethod`](./../MarkdownItems/TypeParts/MarkdownMethod.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownEvent`](./../MarkdownItems/TypeParts/MarkdownEvent.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownConstructor`](./../MarkdownItems/TypeParts/MarkdownConstructor.md) item ) | Builds Namespace Pages with the given MarkdownNamespace Item | 
-| void | SetLogger ( [`ILogger`]() logger ) |  | 
-
-
-## Static Fields
-
-| Type | Name | Summary | 
-| --- | --- | --- | 
-| [ILogger]() | ThemeLogger |  | 
+| void | SetLogger ( [`ILogger`](./DefaultTheme.md) logger ) | Set the default logger to be used during Theme Construction | 
 
 

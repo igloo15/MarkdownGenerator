@@ -3,8 +3,16 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Builders
 {
+    /// <summary>
+    /// Builds Markdown strings
+    /// </summary>
     public class MarkdownBuilder
     {
+        /// <summary>
+        /// Places code in a markdown codeblock
+        /// </summary>
+        /// <param name="code">The code to be wrapped</param>
+        /// <returns>The wrapped code</returns>
         public static string MarkdownCodeQuote(string code)
         {
             return "`" + code + "`";
@@ -13,13 +21,22 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
         StringBuilder sb = new StringBuilder();
 
+        /// <summary>
+        /// Appends text to an internal string builder
+        /// </summary>
+        /// <param name="text">The text to be appended</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Append(string text)
         {
             sb.Append(text);
 
             return this;
         }
-
+        
+        /// <summary>
+        /// Appends a new line to the internal string builder
+        /// </summary>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder AppendLine()
         {
             sb.AppendLine();
@@ -27,6 +44,11 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Appends text and a new line to internal string builder
+        /// </summary>
+        /// <param name="text">The text to be appended</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder AppendLine(string text)
         {
             sb.AppendLine(text);
@@ -34,6 +56,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Create a header at the given level with the text
+        /// </summary>
+        /// <param name="level">The header level</param>
+        /// <param name="text">The header text</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Header(int level, string text)
         {
             for (int i = 0; i < level; i++)
@@ -46,8 +74,16 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Header with code
+        /// </summary>
+        /// <param name="level">The header level</param>
+        /// <param name="code">The header code</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder HeaderWithCode(int level, string code)
         {
+            
+
             for (int i = 0; i < level; i++)
             {
                 sb.Append("#");
@@ -59,6 +95,13 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// The header with a link
+        /// </summary>
+        /// <param name="level">The header level</param>
+        /// <param name="text">The header text</param>
+        /// <param name="url">The header url</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder HeaderWithLink(int level, string text, string url)
         {
             for (int i = 0; i < level; i++)
@@ -72,6 +115,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// A markdown link
+        /// </summary>
+        /// <param name="text">The text of the link</param>
+        /// <param name="url">The url of the link</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Link(string text, string url)
         {
             sb.Append("[");
@@ -84,6 +133,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Create a markdown image
+        /// </summary>
+        /// <param name="altText">The image alt text</param>
+        /// <param name="imageUrl">The url to image</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Image(string altText, string imageUrl)
         {
             sb.Append("!");
@@ -92,6 +147,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Wrap text in a code block for a specific language
+        /// </summary>
+        /// <param name="language">The code language</param>
+        /// <param name="code">The code</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Code(string language, string code)
         {
             sb.Append("```");
@@ -102,6 +163,11 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Single Code Quote
+        /// </summary>
+        /// <param name="code">The code</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder CodeQuote(string code)
         {
             sb.Append("`");
@@ -116,6 +182,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
         /// </summary>
         /// <param name="headers">The header of table</param>
         /// <param name="items">The items on each row</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder Table(string[] headers, IEnumerable<string[]> items)
         {
             sb.Append("| ");
@@ -150,6 +217,11 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Creates a Markdown List
+        /// </summary>
+        /// <param name="text">The text item for the list</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder List(string text) // nest zero
         {
             sb.Append("- ");
@@ -158,6 +230,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Create a link on a list item
+        /// </summary>
+        /// <param name="text">The text for the list link item</param>
+        /// <param name="url">The url for link</param>
+        /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder ListLink(string text, string url) // nest zero
         {
             sb.Append("- ");
@@ -167,6 +245,10 @@ namespace Igloo15.MarkdownApi.Core.Builders
             return this;
         }
 
+        /// <summary>
+        /// Convert internal stringbuilder to string
+        /// </summary>
+        /// <returns>Markdown string</returns>
         public override string ToString()
         {
             return sb.ToString();

@@ -9,15 +9,27 @@ using System.Linq;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DefaultTypeBuilder
     {
         private DefaultOptions _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public DefaultTypeBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public string BuildPage(MarkdownType item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Type Page");

@@ -8,26 +8,75 @@ using System.Xml.Linq;
 
 namespace Igloo15.MarkdownApi.Core.Builders
 {
+    /// <summary>
+    /// Type of Xml Comment
+    /// </summary>
     public enum MemberType
     {
+        /// <summary>
+        /// Xml comment for field
+        /// </summary>
         Field = 'F',
+        /// <summary>
+        /// Xml Comment for Property
+        /// </summary>
         Property = 'P',
+        /// <summary>
+        /// Xml Comment for Type
+        /// </summary>
         Type = 'T',
+        /// <summary>
+        /// Xml comment for Event
+        /// </summary>
         Event = 'E',
+        /// <summary>
+        /// Xml comment for Method
+        /// </summary>
         Method = 'M',
+        /// <summary>
+        /// Xml comment for none
+        /// </summary>
         None = 0
     }
-
+    
+    /// <summary>
+    /// Xml Comment in Xml Document
+    /// </summary>
     public class XmlDocumentComment
     {
+        /// <summary>
+        /// The type of comment
+        /// </summary>
         public MemberType MemberType { get; internal set; }
+        /// <summary>
+        /// The class name for the comment
+        /// </summary>
         public string ClassName { get; internal set; }
+        /// <summary>
+        /// The Member Name for this comment
+        /// </summary>
         public string MemberName { get; internal set; }
+        /// <summary>
+        /// The Summary comment
+        /// </summary>
         public string Summary { get; internal set; }
+        /// <summary>
+        /// The Remarks of the comment
+        /// </summary>
         public string Remarks { get; internal set; }
+        /// <summary>
+        /// Any parameter summaries of comment
+        /// </summary>
         public Dictionary<string, string> Parameters { get; internal set; }
+        /// <summary>
+        /// The summary of the return
+        /// </summary>
         public string Returns { get; internal set; }
 
+        /// <summary>
+        /// Converts comment to a single string summary
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return MemberType + ":" + ClassName + "." + MemberName;

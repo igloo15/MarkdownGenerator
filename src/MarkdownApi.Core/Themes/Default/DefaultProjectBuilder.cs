@@ -6,15 +6,27 @@ using System.Linq;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DefaultProjectBuilder
     {
         private DefaultOptions _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public DefaultProjectBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="project"></param>
+        /// <returns></returns>
         public string BuildPage(MarkdownProject project)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Main Api Page");

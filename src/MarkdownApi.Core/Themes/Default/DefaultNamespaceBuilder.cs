@@ -8,15 +8,27 @@ using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DefaultNamespaceBuilder
     {
         private DefaultOptions _options;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public DefaultNamespaceBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public string BuildPage(MarkdownNamespace item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Namespace Page");
