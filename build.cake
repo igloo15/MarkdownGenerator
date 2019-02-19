@@ -103,7 +103,8 @@ Task("Push")
         {
             Information($"Pushing Package {nupkgFile}");
             NuGetPush(nupkgFile, new NuGetPushSettings {
-                Source = "https://api.nuget.org/v3/index.json"
+                Source = "https://api.nuget.org/v3/index.json",
+				ApiKey = EnvironmentVariable("apikey") 
             });
             Information($"Succesfully Pushed Package {nupkgFile}");
         }
