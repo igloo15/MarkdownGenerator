@@ -1,4 +1,4 @@
-#tool "nuget:?package=GitVersion.CommandLine"
+#tool "nuget:?package=GitVersion.CommandLine&version=3.6.5"
 #addin nuget:?package=Cake.Git
 #addin "Cake.Incubator"
 
@@ -36,6 +36,9 @@ Task("Update-Version")
 				});
 
 		var cakeVersion = typeof(ICakeContext).Assembly.GetName().Version.ToString();
+		
+		if(AppVeyor.IsRunningOnAppVeyor)
+			AppVeyor.UpdateBuildVersion(result.LegacySemVerPadded);
 
         MSBuildSettings = new DotNetCoreMSBuildSettings()
                             .WithProperty("Version", result.LegacySemVerPadded)
@@ -47,7 +50,10 @@ Task("Update-Version")
         Information("");
         Information("GitVersion:");
         Information(result.Dump());
-	});
+	})
+    .OnError(error => {
+        Error("Error Message {0}", error);
+    });
 
 Task("Clean-Packages-Local")
     .Does(() => {
