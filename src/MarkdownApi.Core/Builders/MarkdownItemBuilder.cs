@@ -30,6 +30,12 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
                 
                 var index = dllPath.LastIndexOf(Path.DirectorySeparatorChar);
+                if (index < 0)
+                {
+                    Constants.Logger?.LogWarning($"SKIPPING : Index {index} found for path {dllPath}");
+                    continue;
+                }
+                    
 
                 var directoryPath = dllPath.Substring(0, index);
                 var filePath = dllPath.Substring(index+1);
