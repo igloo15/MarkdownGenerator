@@ -16,7 +16,7 @@ Task("Pack")
     .IsDependentOn("Standard-All")
     .IsDependentOn("CSharp-NetCore-Pack-All")
     .IsDependentOn("Changelog-Generate")
-    .IsDependentOn("Markdown-Generate-Api")
+    //.IsDependentOn("Markdown-Generate-Api")
     .CompleteTask();
 
 Task("Push")
