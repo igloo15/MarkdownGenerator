@@ -1,10 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     internal class MarkdownTypeBuilder
     {
@@ -109,10 +110,24 @@ namespace Igloo15.MarkdownApi.Core.Builders
                 type.Methods.Add(item);
                 MarkdownRepo.TryAdd(item);
 
-                item.Summary = comments.FirstOrDefault(a => (a.MemberName == item.Name || a.MemberName.StartsWith(item.Name + "`"))
-                && item.InternalItem.GetParameters().All(b => a.Parameters.ContainsKey(b.Name))
-                    )?.Summary ?? "";
+                item.Summary = comments.FirstOrDefault(a => MethodCommentFilter(a, item))?.Summary ?? "";
             }
+        }
+
+        private bool MethodCommentFilter(XmlDocumentComment comment, MarkdownMethod method)
+        {
+            var isCorrectType = comment.MemberName == method.Name
+                    || comment.MemberName.StartsWith(method.Name + "`");
+
+            if (isCorrectType)
+            {
+                if (method.InternalItem.GetParameters().Count() == comment.Parameters.Count())
+                {
+                    return method.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
+                }
+            }
+
+            return false;
         }
 
         public void BuildEvents(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownEvent[] infos)
@@ -136,9 +151,24 @@ namespace Igloo15.MarkdownApi.Core.Builders
                 item.ParentType = type;
                 type.Constructors.Add(item);
                 MarkdownRepo.TryAdd(item);
-                item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
-                    || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
+                item.Summary = comments.FirstOrDefault(x => ConstructorCommentFilter(x, item))?.Summary ?? "";
             }
+        }
+
+        private bool ConstructorCommentFilter(XmlDocumentComment comment, MarkdownConstructor constructor)
+        {
+            var isCorrectType = comment.MemberName == constructor.Name.Replace('.', '#')
+                    || comment.MemberName.StartsWith(constructor.Name.Replace('.', '#') + "`");
+
+            if(isCorrectType)
+            {
+                if(constructor.InternalItem.GetParameters().Count() == comment.Parameters.Count())
+                {
+                    return constructor.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
+                }
+            }
+
+            return false;
         }
 
         public MarkdownEnum BuildEnum(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)

@@ -1,24 +1,17 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Reflection;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    public static class DefaultThemeExtensions
+
+    internal static class DefaultThemeExtensions
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="namespaceValue"></param>
-        /// <param name="mb"></param>
+        
         public static void BuildNamespaceLinks(this IMarkdownItem item, string namespaceValue, MarkdownBuilder mb)
         {
             var namespaceItems = namespaceValue.Split('.');
@@ -50,14 +43,6 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             mb.AppendLine().AppendLine();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="currentType"></param>
-        /// <param name="targetType"></param>
-        /// <param name="useFullName"></param>
-        /// <param name="specialText"></param>
-        /// <returns></returns>
         public static string GetNameOrNameLink(this IMarkdownItem currentType, Type targetType, bool useFullName, bool specialText)
         {
             MarkdownBuilder tempMB = new MarkdownBuilder();
@@ -97,12 +82,6 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return tempMB.ToString();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="currentItem"></param>
-        /// <param name="info"></param>
-        /// <returns></returns>
         public static string GetLink(this IMarkdownItem currentItem, TypeWrapper info)
         {
             if (currentItem.Project.TryGetValue(info, out IMarkdownItem lookupItem))
@@ -116,21 +95,11 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         public static string WrapSpecial(this string text)
         {
             return $"`{text}`";
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         public static string GetBaseName(this string text)
         {
             return text.Split('.').Last();

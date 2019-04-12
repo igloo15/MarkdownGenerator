@@ -1,9 +1,9 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems
+namespace igloo15.MarkdownApi.Core.MarkdownItems
 {
     /// <summary>
     /// The abstract Markdown item that implements some base properties and functions for MarkdownItems

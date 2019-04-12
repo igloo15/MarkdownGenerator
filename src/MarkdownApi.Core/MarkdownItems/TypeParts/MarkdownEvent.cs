@@ -1,8 +1,8 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Reflection;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
+namespace igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 {
     /// <summary>
     /// MarkdownEvent is an event in a MarkdownType

@@ -1,11 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// Used as a utility class for creating clean links and names for MarkdownItems
@@ -83,13 +83,13 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         }
 
         /// <summary>
-        /// 
+        /// Cleans a method and adds the appropiate links
         /// </summary>
-        /// <param name="currentItem"></param>
-        /// <param name="method"></param>
-        /// <param name="useFullName"></param>
-        /// <param name="useParameterNames"></param>
-        /// <returns></returns>
+        /// <param name="currentItem">The current markdown item containing the method to be cleaned</param>
+        /// <param name="method">The method to be cleaned</param>
+        /// <param name="useFullName">Determine if full name of method should be shown</param>
+        /// <param name="useParameterNames">Determines if parameter names should be shown</param>
+        /// <returns>The cleaned string</returns>
         public static string CreateFullMethodWithLinks(IMarkdownItem currentItem, MarkdownMethod method, bool useFullName, bool useParameterNames)
         {
             var parameters = method.InternalItem.GetParameters();
@@ -132,13 +132,13 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         }
 
         /// <summary>
-        /// 
+        /// Create a full parameter name with links
         /// </summary>
-        /// <param name="currentItem"></param>
-        /// <param name="property"></param>
-        /// <param name="useFullName"></param>
-        /// <param name="useParameterNames"></param>
-        /// <returns></returns>
+        /// <param name="currentItem">The current markdown item with the property to be rendered</param>
+        /// <param name="property">The markdown property</param>
+        /// <param name="useFullName">Determines if the fullName of Markdown property should be used</param>
+        /// <param name="useParameterNames">Determines if parameter names should be shown on property</param>
+        /// <returns>Returns the full parameter name with links rendered in markdown</returns>
         public static string CreateFullParameterWithLinks(IMarkdownItem currentItem, MarkdownProperty property, bool useFullName, bool useParameterNames)
         {
             var fullParameterName = property.InternalItem.ToString();
@@ -189,12 +189,12 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         }
 
         /// <summary>
-        /// 
+        /// Cleans a type and returns the full name
         /// </summary>
-        /// <param name="t"></param>
-        /// <param name="keepGenericNumber"></param>
-        /// <param name="specialText"></param>
-        /// <returns></returns>
+        /// <param name="t">The type to clean</param>
+        /// <param name="keepGenericNumber">Determines if the type's generic number should be kept and shown</param>
+        /// <param name="specialText">Returns if clean name should be rendered as special text</param>
+        /// <returns>The clean name returned</returns>
         public static string CleanFullName(Type t, bool keepGenericNumber, bool specialText)
         {
             if (t == null) return "";
@@ -208,12 +208,12 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         }
 
         /// <summary>
-        /// 
+        /// Cleans a name removing bad characters and other items
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="keepGenericNumber"></param>
-        /// <param name="specialText"></param>
-        /// <returns></returns>
+        /// <param name="name">The name to clean</param>
+        /// <param name="keepGenericNumber">If a generic number exists this will determine if it should be kept</param>
+        /// <param name="specialText">Render cleaned name with special text</param>
+        /// <returns>The cleaned name</returns>
         public static string CleanName(string name, bool keepGenericNumber, bool specialText)
         {
             if (String.IsNullOrEmpty(name))
@@ -243,7 +243,28 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return name;
         }
 
-        
+        /// <summary>
+        /// Remove generics from name basically the `1 text
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns>GenericLess string</returns>
+        public static string RemoveGenerics(string name)
+        {
+            var indexDash = name.IndexOf('`');
+            if (indexDash < 0)
+                return name;
+
+            var endPartOfString = name.Substring(indexDash, name.Length - indexDash);
+
+            var bracketDash = endPartOfString.IndexOf('[');
+            if (bracketDash < 0)
+                return name;
+
+            var genericString = name.Substring(indexDash, bracketDash);
+            name = name.Replace(genericString, "");
+
+            return RemoveGenerics(name);
+        }
 
     }
 }

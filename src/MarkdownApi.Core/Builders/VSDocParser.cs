@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     /// <summary>
     /// Type of Xml Comment
@@ -116,10 +116,27 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
                     var returns = ((string)x.Element("returns")) ?? "";
                     var remarks = ((string)x.Element("remarks")) ?? "";
+
                     var parameters = x.Elements("param")
                         .Select(e => Tuple.Create(e.Attribute("name").Value, e))
                         .Distinct(new Item1EqualityCompaerer<string, XElement>())
                         .ToDictionary(e => e.Item1, e => e.Item2.Value);
+
+                    if (memberType == MemberType.Method && match.Groups.Count > 3 && !string.IsNullOrEmpty(match.Groups[4].Value))
+                    {
+                        int index = 0;
+                        Dictionary<string, string> methodParams = new Dictionary<string, string>();
+                        var paramTypes = match.Groups[4].Value.Replace("(", "").Replace(")", "").Split(',');
+                        foreach(var paramElem in x.Elements("param"))
+                        {
+                            methodParams.Add(paramElem.Attribute("name").Value + ":" + paramTypes[index], paramElem.Value);
+                            index++;
+                        }
+                        parameters = methodParams;
+                    }
+                    
+
+                    
 
                     var className = (memberType == MemberType.Type)
                         ? match.Groups[2].Value + "." + match.Groups[3].Value

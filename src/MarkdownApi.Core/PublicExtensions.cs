@@ -1,10 +1,10 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     /// <summary>
     /// Public Extensions are extension methods meant to be used by anyone with dependency on the MarkdownApi.Core

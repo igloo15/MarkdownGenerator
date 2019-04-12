@@ -1,9 +1,9 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
+namespace igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 {
     /// <summary>
     /// Abstract Markdown Type Part used to implement basic MarkdownTypePart functionality

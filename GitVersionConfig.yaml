@@ -7,16 +7,16 @@ branches:
     tag: 
     increment: Patch
     prevent-increment-of-merged-branch-version: true
-  release[/-]:
+  release:
     mode: ContinuousDeployment
     tag: beta
-  feature[/-]:
+  feature:
     mode: ContinuousDeployment
     tag: dev
     increment: Inherit
-  hotfix[/-]:
+  hotfix:
     tag: beta
-  support[/-]:
+  support:
     tag: 
     increment: Patch
     prevent-increment-of-merged-branch-version: true
@@ -25,8 +25,10 @@ branches:
     tag: dev
     increment: Minor
     track-merge-target: true
-  (merge|merge\-requests|pr)[/-]:
+  pull-request:
+    regex: (merge|merge\-requests|pr)[/-]
     mode: ContinuousDeployment
     tag: dev
     increment: Inherit
     tag-number-pattern: '[/-](?<number>\d+)[-/]'
+

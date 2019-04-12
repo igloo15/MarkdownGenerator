@@ -8,14 +8,14 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Igloo15.MarkdownApi.Core;
-using Igloo15.MarkdownApi.Core.Themes;
+using igloo15.MarkdownApi.Core;
+using igloo15.MarkdownApi.Core.Themes;
 using Microsoft.Extensions.Logging;
 
-namespace Igloo15.MarkdownApi.Tool
+namespace igloo15.MarkdownApi.Tool
 {
         
-    class Program
+    static class Program
     {
 
         static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).MapResult(prog => Execute(prog), _ => 1);

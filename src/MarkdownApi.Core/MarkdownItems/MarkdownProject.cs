@@ -1,19 +1,19 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems
+namespace igloo15.MarkdownApi.Core.MarkdownItems
 {
     /// <summary>
-    /// 
+    /// A markdown project used to produce markdown files
     /// </summary>
     public class MarkdownProject : AbstractMarkdownItem
     {
         /// <summary>
-        /// 
+        /// All the renderable markdown items
         /// </summary>
         public Dictionary<string, IMarkdownItem> AllItems { get; internal set; } = new Dictionary<string, IMarkdownItem>();
 
@@ -41,10 +41,17 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
         /// <summary>
         /// Resolve the file names and locations based on the ITheme provided
         /// </summary>
-        /// <param name="theme"></param>
-        /// <returns></returns>
+        /// <param name="theme">The theme to be used in rendering the markdown</param>
+        /// <returns>This markdown project for fluent use</returns>
         public MarkdownProject Resolve(ITheme theme)
         {
+            if (AllItems.Count == 0)
+            {
+                Constants.Logger?.LogError("There are not items to resolve");
+                return this;
+            }
+                
+
             Constants.Logger?.LogInformation("Resolving File Paths and File Names");
             foreach (var item in AllItems.Values)
             {
@@ -65,11 +72,17 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
         /// <summary>
         /// Create the Markdown Api Pages based on the ITheme provided and put all files in the given location
         /// </summary>
-        /// <param name="theme"></param>
-        /// <param name="outputLocation"></param>
-        /// <returns></returns>
+        /// <param name="theme">The theme used to render the markdown files</param>
+        /// <param name="outputLocation">The location to output the rendered markdown files</param>
+        /// <returns>The markdown project for fluent use</returns>
         public MarkdownProject Create(ITheme theme, string outputLocation)
         {
+            if (AllItems.Count == 0)
+            {
+                Constants.Logger?.LogError("There are not items to create");
+                return this;
+            }
+
             Constants.Logger?.LogInformation("Create Markdown Page Content and Files");
             var rootLocation = Path.Combine(outputLocation, Location);
             var projectContent = theme.BuildPage(this);
@@ -108,6 +121,12 @@ namespace Igloo15.MarkdownApi.Core.MarkdownItems
         /// <param name="outputLocation">The location to put all the markdown files</param>
         public void Build(ITheme theme, string outputLocation)
         {
+            if (AllItems.Count == 0)
+            {
+                Constants.Logger?.LogError("There are not items to build");
+                return;
+            }
+
             Resolve(theme);
 
             Create(theme, outputLocation);

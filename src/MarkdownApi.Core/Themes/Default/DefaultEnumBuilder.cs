@@ -1,34 +1,34 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
-    /// 
+    /// The default enum page builder
     /// </summary>
     public class DefaultEnumBuilder
     {
         private DefaultOptions _options;
 
         /// <summary>
-        /// 
+        /// Constructs a enum page builder
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The default options</param>
         public DefaultEnumBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
         /// <summary>
-        /// 
+        /// Builds the markdown for the markdown page
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The markdown enum item</param>
+        /// <returns>The markdown text</returns>
         public string BuildPage(MarkdownEnum item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Enum Page");

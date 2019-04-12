@@ -1,0 +1,69 @@
+{
+  "Categories": [
+    {
+      "Keys": [
+        "#Add",
+        "#ADD",
+        "#add"
+      ],
+      "ReplaceTokens": [],
+      "ReplaceKey": true,
+      "IsSummary": false,
+      "IsDefault": false,
+      "DisplayName": "Add"
+    },
+    {
+      "Keys": [
+        "#Changes"
+      ],
+      "ReplaceTokens": [],
+      "ReplaceKey": true,
+      "IsSummary": false,
+      "IsDefault": false,
+      "DisplayName": "Other Changes"
+    },
+    {
+      "Keys": [
+        "#Fix", "#Fixes"
+      ],
+      "ReplaceTokens": [],
+      "ReplaceKey": true,
+      "IsSummary": false,
+      "IsDefault": false,
+      "DisplayName": "Other Changes"
+    },
+    {
+      "Keys": [
+        "#Summary"
+      ],
+      "ReplaceTokens": [],
+      "ReplaceKey": true,
+      "IsSummary": true,
+      "IsDefault": false,
+      "DisplayName": "Summary"
+    }
+  ],
+  "Links": [],
+  "VersionFilters": [
+    "v",
+    "V"
+  ],
+  "Templates": {
+    "TitleTemplate": "# Changelog",
+    "VersionTemplate": "## {Version}",
+    "SummarySentenceTemplate": "{Message}. ",
+    "CategoryTemplate": "### {Category}",
+    "IssueTemplate": "* {Message} {Links}",
+    "LinkTemplate": "[{LinkCleanKey}]({Url})",
+    "NoIssuesTemplate": " N/A ",
+    "EndVersionTemplate": "\n",
+    "EndCategoryTemplate": "\n"
+  },
+  "ChangelogLocation": "./CHANGELOG.md",
+  "GitRepoLocation": ".",
+  "UnreleasedTitle": "Unreleased",
+  "GitRepoCommitLimit": -1,
+  "AllCommits": true,
+  "TestMode": false,
+  "LatestCodeBranch": "develop"
+}

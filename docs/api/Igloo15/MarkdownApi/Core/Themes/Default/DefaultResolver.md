@@ -1,17 +1,19 @@
 # [DefaultResolver](./DefaultResolver.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](./../README.md) > [Default](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](./../README.md) > [Default](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
 Implements [IResolver](./../../Interfaces/IResolver.md)
 
+## Summary
+This default resolver is used to resolve the location to each page
 
 ## Constructors
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultResolver ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultResolver ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs the Default Resolver using the given options | 
 
 
 ## Methods

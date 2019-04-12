@@ -1,11 +1,11 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Tool
+namespace igloo15.MarkdownApi.Tool
 {
     internal class Options
     {
@@ -65,6 +65,9 @@ namespace Igloo15.MarkdownApi.Tool
 
         [Option("theme", Default = "Default", HelpText = "The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined")]
         public string ThemeName { get; set; }
+
+        [Option("default-theme-file", Default ="default.settings.json", HelpText = "File containing settings for the default theme")]
+        public string DefaultThemeSettingsFile { get; set; }
         
         [Usage(ApplicationAlias = "markdownapi")]
         public static IEnumerable<Example> Examples
@@ -81,7 +84,6 @@ namespace Igloo15.MarkdownApi.Tool
         {
             DefaultOptions options = new DefaultOptions();
 
-
             options.RootTitle = RootTitle;
             options.RootFileName = RootFileName;
             options.RootSummary = Summary;
@@ -91,6 +93,7 @@ namespace Igloo15.MarkdownApi.Tool
             options.BuildMethodPages = MethodPages;
             options.MethodFolderName = MethodFolderName;
             options.ConstructorFolderName = ConstructorsFolderName;
+            options.DefaultSettingsFile = DefaultThemeSettingsFile;
 
             return options;
         }

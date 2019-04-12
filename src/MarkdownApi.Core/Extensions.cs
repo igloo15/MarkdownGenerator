@@ -1,6 +1,6 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     internal static class Extensions
     {
@@ -154,6 +154,27 @@ namespace Igloo15.MarkdownApi.Core
         public static string GetId(this MemberInfo info)
         {
             return $"{info.Module.MetadataToken}-{info.MetadataToken}";
+        }
+
+        public static string GetCommentTypeString(this Type info)
+        {
+            var typeName = info.ToString().Replace("&", "@");
+            if (info.GenericTypeArguments.Length > 0)
+            {
+                var indexDash = typeName.IndexOf('`');
+                typeName = typeName.Substring(0, indexDash);
+                string genericTypeString = "";
+                for (var i = 0; i < info.GenericTypeArguments.Length; i++)
+                {
+                    var genericType = info.GenericTypeArguments[i];
+                    genericTypeString += genericType.GetCommentTypeString();
+                    if (i + 1 != info.GenericTypeArguments.Length)
+                        genericTypeString += ",";
+                }
+                typeName += $"{{{genericTypeString}}}";
+            }
+
+            return typeName;
         }
 
         #region GetTypeParts

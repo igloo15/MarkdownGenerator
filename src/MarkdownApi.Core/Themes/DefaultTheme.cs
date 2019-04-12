@@ -1,10 +1,10 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 
-namespace Igloo15.MarkdownApi.Core.Themes
+namespace igloo15.MarkdownApi.Core.Themes
 {
     /// <summary>
     /// This default theme is bundled with the core to provide an example and base theming for documentation generated
@@ -25,7 +25,7 @@ namespace Igloo15.MarkdownApi.Core.Themes
         /// <param name="options">The options to configure the default theme</param>
         public DefaultTheme(DefaultOptions options)
         {
-            _options = options;
+            _options = options.LoadFile();
             _enumBuilder = new DefaultEnumBuilder(_options);
             _namespaceBuilder = new DefaultNamespaceBuilder(_options);
             _projectBuilder = new DefaultProjectBuilder(_options);
