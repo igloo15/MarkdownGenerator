@@ -33,6 +33,7 @@ namespace Igloo15.MarkdownApi.Tester
                         BuildTypePages = true,
                         RootFileName = "README.md",
                         RootTitle = "API",
+                        RootSummary = "The Root Page Summary",
                         ShowParameterNames = true
                     }
                 ),

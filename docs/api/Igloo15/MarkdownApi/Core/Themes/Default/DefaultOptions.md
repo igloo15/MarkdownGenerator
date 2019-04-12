@@ -23,7 +23,9 @@ The default options that can be set on the default theme
 | [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | BuildNamespacePages | Build namespace pages defaults to true | 
 | [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | BuildTypePages | Build Type pages defaults to true | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | ConstructorFolderName | The name of the folder containing constructor pages | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | DefaultSettingsFile | File to load namespace summaries from | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | MethodFolderName | The name of the folder containing method pages | 
+| [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2)\<[String](https://docs.microsoft.com/en-us/dotnet/api/System.String), [String](https://docs.microsoft.com/en-us/dotnet/api/System.String)> | NamespaceSummaries | Summaries for each namespace found | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | RootFileName | The name of the root file name of the api documentation | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | RootSummary | The summary text provided in the root file | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | RootTitle | The title in the root file | 

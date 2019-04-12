@@ -70,16 +70,12 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             if(!firstInterface)
                 mb.AppendLine().AppendLine();
 
-            if (!String.IsNullOrEmpty(item.Summary))
+            if (!string.IsNullOrEmpty(item.Summary))
             {
                 mb.Header(2, "Summary");
                 mb.AppendLine(item.Summary);
             }
-
             
-
-            //mb.Append(GetCode(value));
-
 
             mb.AppendLine();
             var typeZeroHeaders = new[] { "Name", "Summary" };

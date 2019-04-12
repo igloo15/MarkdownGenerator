@@ -36,6 +36,24 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             namespaceBuilder.HeaderWithLink(1, item.FullName, item.To(item));
             namespaceBuilder.AppendLine();
 
+            var summary = "";
+            if (!string.IsNullOrEmpty(item.Summary))
+            {
+                summary = item.Summary;
+            }
+            else if(_options.NamespaceSummaries.ContainsKey(item.FullName))
+            {
+                summary = _options.NamespaceSummaries[item.FullName];
+            }
+
+            if (!string.IsNullOrEmpty(summary))
+            {
+                namespaceBuilder.Header(2, "Summary");
+                namespaceBuilder.AppendLine(summary).AppendLine();
+            }
+
+            namespaceBuilder.Header(2, "Types").AppendLine();
+
             foreach (var type in item.Types.OrderBy(x => x.Name))
             {
                 var sb = new StringBuilder();

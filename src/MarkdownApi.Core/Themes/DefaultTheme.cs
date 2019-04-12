@@ -25,7 +25,7 @@ namespace Igloo15.MarkdownApi.Core.Themes
         /// <param name="options">The options to configure the default theme</param>
         public DefaultTheme(DefaultOptions options)
         {
-            _options = options;
+            _options = options.LoadFile();
             _enumBuilder = new DefaultEnumBuilder(_options);
             _namespaceBuilder = new DefaultNamespaceBuilder(_options);
             _projectBuilder = new DefaultProjectBuilder(_options);

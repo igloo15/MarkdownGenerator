@@ -34,17 +34,27 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             homeBuilder.HeaderWithLink(1, _options.RootTitle, project.To(project));
             homeBuilder.AppendLine();
 
+            if (!string.IsNullOrEmpty(_options.RootSummary))
+            {
+                homeBuilder
+                    .Header(2, "Summary")
+                    .AppendLine(_options.RootSummary)
+                    .AppendLine();
+            }
+
+            homeBuilder.Header(2, "Namespaces").AppendLine();
+
             foreach (var tempItem in project.AllItems.Values.Where(i => i.ItemType == MarkdownItemTypes.Namespace))
             {
                 var g = tempItem.As<MarkdownNamespace>();
 
                 if (!String.IsNullOrEmpty(g.FileName))
                 {
-                    homeBuilder.HeaderWithLink(2, g.FullName, project.To(g));
+                    homeBuilder.HeaderWithLink(3, g.FullName, project.To(g));
                 }
                 else
                 {
-                    homeBuilder.Header(2, g.Name);
+                    homeBuilder.Header(3, g.Name);
                 }
 
                 homeBuilder.AppendLine();

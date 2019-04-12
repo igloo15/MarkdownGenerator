@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Json;
 using System.Text;
 
 namespace Igloo15.MarkdownApi.Core.Themes.Default
@@ -68,5 +71,56 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
         /// Determines if the parameter names should be shown defaults to false
         /// </summary>
         public bool ShowParameterNames { get; set; } = false;
+
+        /// <summary>
+        /// Summaries for each namespace found
+        /// </summary>
+        public Dictionary<string, string> NamespaceSummaries { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// File to load namespace summaries from
+        /// </summary>
+        public string DefaultSettingsFile { get; set; } = "default.settings.json";
+
+
+        internal DefaultOptions LoadFile()
+        {
+            if(File.Exists(DefaultSettingsFile))
+            {
+                var defaultSettingsObj = JsonObject.Parse(File.ReadAllText(DefaultSettingsFile)) as JsonObject;
+
+                if(defaultSettingsObj != null)
+                {
+                    try
+                    {
+                        if (defaultSettingsObj.TryGetValue(nameof(RootSummary), out JsonValue rootSummary))
+                            RootSummary = rootSummary;
+
+                        if(defaultSettingsObj.TryGetValue(nameof(NamespaceSummaries), out JsonValue nameSpaceSummariesVal))
+                        {
+                            var namespaceSummaryObj = nameSpaceSummariesVal as JsonObject;
+                            if(namespaceSummaryObj != null)
+                            {
+                                namespaceSummaryObj.Foreach(kvp => NamespaceSummaries[kvp.Key] = kvp.Value);
+                            }
+                        }
+
+                        if (defaultSettingsObj.TryGetValue(nameof(RootFileName), out JsonValue rootFile))
+                            RootFileName = rootFile;
+
+                        if (defaultSettingsObj.TryGetValue(nameof(RootTitle), out JsonValue rootTitle))
+                            RootTitle = rootTitle;
+                    }
+                    catch (Exception e)
+                    {
+                        Constants.Logger?.LogError(e, "Failed in loading default settings json file. File was found but it was in bad format");
+                    }
+                    
+                }
+                    
+            }
+
+            return this;
+        }
     }
 }
