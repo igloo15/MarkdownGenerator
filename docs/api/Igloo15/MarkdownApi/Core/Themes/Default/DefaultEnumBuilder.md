@@ -11,7 +11,7 @@ The default enum page builder
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultEnumBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultEnumBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a enum page builder | 
 
 
 ## Methods

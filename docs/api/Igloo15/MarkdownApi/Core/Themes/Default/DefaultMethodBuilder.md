@@ -11,7 +11,7 @@ Default markdown method page builder - Warning this is not yet implemented
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultMethodBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultMethodBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a markdown method page builder  - Warning this is not yet implemented | 
 
 
 ## Methods

@@ -11,7 +11,7 @@ The default markdown constructor page builder - Warning this is not yet implemen
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultConstructorBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultConstructorBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a constructor page builder - Warning this is not yet implemented | 
 
 
 ## Methods

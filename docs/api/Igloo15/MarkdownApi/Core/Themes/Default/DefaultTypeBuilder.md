@@ -11,7 +11,7 @@ The default type page builder
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultTypeBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultTypeBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | The default type page builder constructor | 
 
 
 ## Methods

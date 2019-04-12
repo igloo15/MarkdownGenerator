@@ -11,7 +11,7 @@ A markdown project page builder this is the root of all the markdown api content
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultProjectBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultProjectBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a markdown project page builder | 
 
 
 ## Methods

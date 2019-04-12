@@ -13,7 +13,7 @@ This default resolver is used to resolve the location to each page
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultResolver ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultResolver ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs the Default Resolver using the given options | 
 
 
 ## Methods

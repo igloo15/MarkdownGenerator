@@ -11,7 +11,7 @@ The markdown namespace page builder
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultNamespaceBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) |  | 
+| DefaultNamespaceBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a namespace page builder | 
 
 
 ## Methods
