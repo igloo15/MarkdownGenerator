@@ -156,6 +156,27 @@ namespace Igloo15.MarkdownApi.Core
             return $"{info.Module.MetadataToken}-{info.MetadataToken}";
         }
 
+        public static string GetCommentTypeString(this Type info)
+        {
+            var typeName = info.ToString().Replace("&", "@");
+            if (info.GenericTypeArguments.Length > 0)
+            {
+                var indexDash = typeName.IndexOf('`');
+                typeName = typeName.Substring(0, indexDash);
+                string genericTypeString = "";
+                for (var i = 0; i < info.GenericTypeArguments.Length; i++)
+                {
+                    var genericType = info.GenericTypeArguments[i];
+                    genericTypeString += genericType.GetCommentTypeString();
+                    if (i + 1 != info.GenericTypeArguments.Length)
+                        genericTypeString += ",";
+                }
+                typeName += $"{{{genericTypeString}}}";
+            }
+
+            return typeName;
+        }
+
         #region GetTypeParts
 
         public static MarkdownConstructor[] GetConstructors(this MarkdownType mdType)

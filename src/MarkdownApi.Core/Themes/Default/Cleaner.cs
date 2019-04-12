@@ -243,7 +243,23 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return name;
         }
 
-        
+        public static string RemoveGenerics(string name)
+        {
+            var indexDash = name.IndexOf('`');
+            if (indexDash < 0)
+                return name;
+
+            var endPartOfString = name.Substring(indexDash, name.Length - indexDash);
+
+            var bracketDash = endPartOfString.IndexOf('[');
+            if (bracketDash < 0)
+                return name;
+
+            var genericString = name.Substring(indexDash, bracketDash);
+            name = name.Replace(genericString, "");
+
+            return RemoveGenerics(name);
+        }
 
     }
 }

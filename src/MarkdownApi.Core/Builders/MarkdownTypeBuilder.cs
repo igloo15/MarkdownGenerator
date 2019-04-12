@@ -1,5 +1,6 @@
 ﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
 using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using Igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,7 +123,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 if (method.InternalItem.GetParameters().Count() == comment.Parameters.Count())
                 {
-                    return method.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.FullName));
+                    return method.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
                 }
             }
 
@@ -163,7 +164,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
             {
                 if(constructor.InternalItem.GetParameters().Count() == comment.Parameters.Count())
                 {
-                    return constructor.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.FullName));
+                    return constructor.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
                 }
             }
 

@@ -29,6 +29,6 @@ A markdown project used to produce markdown files
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`ITheme`](./../Interfaces/ITheme.md) theme ) | Create a page for this markdown item or "" if no page is created | 
 | [MarkdownProject](./MarkdownProject.md) | Create ( [`ITheme`](./../Interfaces/ITheme.md) theme, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) outputLocation ) | Create the Markdown Api Pages based on the ITheme provided and put all files in the given location | 
 | [MarkdownProject](./MarkdownProject.md) | Resolve ( [`ITheme`](./../Interfaces/ITheme.md) theme ) | Resolve the file names and locations based on the ITheme provided | 
-| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | TryGetValue ( [`TypeWrapper`](./../TypeWrapper.md) wrapper, out [`IMarkdownItem`](./MarkdownProject.md) value ) |  | 
+| [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | TryGetValue ( [`TypeWrapper`](./../TypeWrapper.md) wrapper, out [`IMarkdownItem`](./MarkdownProject.md) value ) | Try to get a markdownitem with the given TypeWrapper lookup key | 
 
 

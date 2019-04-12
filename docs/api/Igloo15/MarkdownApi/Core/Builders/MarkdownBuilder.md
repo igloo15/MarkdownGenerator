@@ -30,7 +30,7 @@ Builds Markdown strings
 | [MarkdownBuilder](./MarkdownBuilder.md) | Link ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) text, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) url ) | A markdown link | 
 | [MarkdownBuilder](./MarkdownBuilder.md) | List ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) text ) | Creates a Markdown List | 
 | [MarkdownBuilder](./MarkdownBuilder.md) | ListLink ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) text, [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String) url ) | Create a link on a list item | 
-| [MarkdownBuilder](./MarkdownBuilder.md) | Table ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String)[] headers, [`IEnumerable`](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1)\<[`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String)[]> items ) |  | 
+| [MarkdownBuilder](./MarkdownBuilder.md) | Table ( [`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String)[] headers, [`IEnumerable`](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.IEnumerable-1)\<[`String`](https://docs.microsoft.com/en-us/dotnet/api/System.String)[]> items ) | Create a table with the header and given items | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | ToString (  ) | Convert internal stringbuilder to string | 
 
 
