@@ -25,15 +25,19 @@ nuget install igloo15.MarkdownApi.Core
 ```
 markdownapi --help
 
-markdownapi 0.4.0
-Copyright (C) 2018 Igloo15, jyasuu, neuecc
+markdownapi 0.5.0-dev0011
+Copyright (C) 2019 Igloo15, jyasuu, neuecc
 USAGE:
 Normal Usage:
 markdownapi ./MyDll.dll ./Api
+Wildcard Usage:
+markdownapi ./bin/*.dll ./Api
+Multiple Search Locations:
+markdownapi ./bin/*.dll;./dist/myapp/myApp.dll ../../..docs/Api
 
   --namespace-filter           (Default: ) A regex used to generate documentation only for namespaces that match
 
-  --root-filename              (Default: Home) The name of the markdown file at the root of your documentation
+  --root-filename              (Default: README.md) The name of the markdown file at the root of your documentation
 
   --title                      (Default: Api) Title of the root home page
 
@@ -63,15 +67,15 @@ markdownapi ./MyDll.dll ./Api
 
   --event-folder               (Default: Events) The folder to store event pages in
 
-  --theme                      (Default: Default) The theme you wish to use. Selecting a theme will potentially
-                               override the commandline arguments you have defined
+  --theme                      (Default: Default) The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined
+
+  --default-theme-file         (Default: default.settings.json) File containing settings for the default theme
 
   --help                       Display this help screen.
 
   --version                    Display version information.
 
-  Dll Path (pos. 0)            Required. The path to the dll to create documentation for. May include wildcards on file
-                               name. Use ';' to search multiple areas
+  Dll Path (pos. 0)            Required. The path to the dll to create documentation for. May include wildcards on file name. Use ';' to search multiple areas
 
   Output Directory (pos. 1)    (Default: md) The root folder to put documentation in
 ```
@@ -81,17 +85,24 @@ markdownapi ./MyDll.dll ./Api
 #### Tool Commands
 
 ```
-markdownapi "./build/*.dll" "./docs/api"
+markdownapi "./build/**/*.dll" "./docs/api"
 ```
+Globbing support allows you to find all dlls underneath a folder
 
 ```
 markdownapi "./bin/MyDll.dll" "./api/markdown"
 ```
+Access specific dlls and output them to a location
+
+```
+markdownapi "./dist/**/publish/igloo15*.dll" "./docs/api"
+```
+Many different globbing rules
 
 #### Library Snippet
 
 ```csharp
-var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "");
+var project = MarkdownApiGenerator.GenerateProject("../../../MarkdownApi.Core/Debug/netstandard2.0/*.dll");
 
 project.Build(new DefaultTheme(new DefaultOptions
         {
@@ -102,7 +113,7 @@ project.Build(new DefaultTheme(new DefaultOptions
             ShowParameterNames = true
         }
     ),
-    @"..\..\..\..\docs\api"
+    "../../../../docs/api"
 );
 ```
 #### Results
