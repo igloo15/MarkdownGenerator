@@ -72,6 +72,9 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                     {
                         homeBuilder.List(item.Name);
                     }
+
+                    if (!string.IsNullOrEmpty(item.Summary))
+                        homeBuilder.Tab().List(item.Summary);
                 }
             }
 

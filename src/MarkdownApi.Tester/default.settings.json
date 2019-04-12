@@ -1,6 +1,7 @@
 {
   "RootSummary": "This is the root summary",
   "NamespaceSummaries": {
+    "Igloo15.MarkdownApi.Core": "This is the core namespace with root level types",
     "Igloo15.MarkdownApi.Core.Themes.Default": "This is the default theme summary"
   }
 }

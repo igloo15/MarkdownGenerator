@@ -8,6 +8,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
     /// </summary>
     public class MarkdownBuilder
     {
+        
         /// <summary>
         /// Places code in a markdown codeblock
         /// </summary>
@@ -20,6 +21,17 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
 
         StringBuilder sb = new StringBuilder();
+
+        /// <summary>
+        /// Appends a Tab to the current line
+        /// </summary>
+        /// <returns>The MarkdownBuilder</returns>
+        public MarkdownBuilder Tab()
+        {
+            sb.Append("\t");
+
+            return this;
+        }
 
         /// <summary>
         /// Appends text to an internal string builder

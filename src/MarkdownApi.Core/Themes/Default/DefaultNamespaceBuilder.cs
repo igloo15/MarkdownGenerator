@@ -65,6 +65,9 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
                 {
                     namespaceBuilder.List(item.Name);
                 }
+
+                if (!string.IsNullOrEmpty(type.Summary))
+                    namespaceBuilder.Tab().List(type.Summary);
             }
 
             namespaceBuilder.AppendLine();
