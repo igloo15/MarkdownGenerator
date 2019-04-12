@@ -1,13 +1,13 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// The default type page builder

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     /// <summary>
     /// Builds Markdown strings

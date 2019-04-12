@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using Igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.Interfaces;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
+namespace igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
 {
     /// <summary>
     /// Markdown Constructor is a TypePart identified as the construct of a Markdown Type

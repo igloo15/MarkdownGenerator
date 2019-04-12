@@ -1,7 +1,7 @@
-﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.MarkdownItems;
 using System.Collections.Generic;
 
-namespace Igloo15.MarkdownApi.Core.Interfaces
+namespace igloo15.MarkdownApi.Core.Interfaces
 {
     /// <summary>
     /// A markdown item that could be parsed to a markdown page

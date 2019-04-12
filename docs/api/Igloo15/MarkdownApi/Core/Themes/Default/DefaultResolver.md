@@ -1,6 +1,6 @@
 # [DefaultResolver](./DefaultResolver.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](./../README.md) > [Default](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](./../README.md) > [Default](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 

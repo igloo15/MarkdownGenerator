@@ -5,7 +5,7 @@ using System.IO;
 using System.Json;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// The default options that can be set on the default theme

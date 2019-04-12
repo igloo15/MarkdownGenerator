@@ -1,8 +1,8 @@
-﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using Microsoft.Extensions.Logging;
 
-namespace Igloo15.MarkdownApi.Core.Interfaces
+namespace igloo15.MarkdownApi.Core.Interfaces
 {
     /// <summary>
     /// A theme is used to generate the content for markdown pages as well as where markdown pages should be placed

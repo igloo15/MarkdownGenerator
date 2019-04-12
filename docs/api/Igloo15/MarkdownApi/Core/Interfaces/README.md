@@ -1,4 +1,4 @@
-# [Igloo15.MarkdownApi.Core.Interfaces](./README.md)
+# [igloo15.MarkdownApi.Core.Interfaces](./README.md)
 
 ## Types
 

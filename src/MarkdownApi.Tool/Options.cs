@@ -1,11 +1,11 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Tool
+namespace igloo15.MarkdownApi.Tool
 {
     internal class Options
     {

@@ -1,9 +1,9 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System.IO;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// This default resolver is used to resolve the location to each page

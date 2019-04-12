@@ -1,5 +1,5 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.IO;
 using Microsoft.Extensions.FileSystemGlobbing;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     /// <summary>
     /// The main class used to generate a project based on the search area

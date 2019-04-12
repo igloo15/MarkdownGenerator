@@ -1,11 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// Used as a utility class for creating clean links and names for MarkdownItems

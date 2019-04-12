@@ -1,10 +1,10 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 
-namespace Igloo15.MarkdownApi.Core.Themes
+namespace igloo15.MarkdownApi.Core.Themes
 {
     /// <summary>
     /// This default theme is bundled with the core to provide an example and base theming for documentation generated

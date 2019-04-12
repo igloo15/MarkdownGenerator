@@ -1,10 +1,10 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
     /// A markdown project page builder this is the root of all the markdown api content

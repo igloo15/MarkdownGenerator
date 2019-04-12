@@ -1,6 +1,6 @@
 ﻿
-using Igloo15.MarkdownApi.Core;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core;
+using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,7 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     
     internal static class MarkdownItemBuilder

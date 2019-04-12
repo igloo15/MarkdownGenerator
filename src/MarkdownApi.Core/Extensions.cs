@@ -1,6 +1,6 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     internal static class Extensions
     {

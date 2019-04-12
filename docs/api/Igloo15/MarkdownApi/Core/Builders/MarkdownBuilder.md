@@ -1,6 +1,6 @@
 # [MarkdownBuilder](./MarkdownBuilder.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [Builders](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [Builders](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 

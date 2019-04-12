@@ -1,6 +1,6 @@
 # [AbstractType](./AbstractType.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [MarkdownItems](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [MarkdownItems](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 

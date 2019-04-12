@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     /// <summary>
     /// A wrapper around a type 

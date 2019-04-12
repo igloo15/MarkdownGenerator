@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     /// <summary>
     /// Type of Xml Comment

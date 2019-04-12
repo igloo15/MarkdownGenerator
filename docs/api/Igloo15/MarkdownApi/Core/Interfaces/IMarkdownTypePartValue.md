@@ -1,6 +1,6 @@
 # [IMarkdownTypePartValue](./IMarkdownTypePartValue.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [Interfaces](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./../README.md) > [Interfaces](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 

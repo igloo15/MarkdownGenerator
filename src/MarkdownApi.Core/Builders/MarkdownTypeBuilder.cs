@@ -1,11 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.MarkdownItems;
-using Igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+﻿using igloo15.MarkdownApi.Core.MarkdownItems;
+using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core.Builders
+namespace igloo15.MarkdownApi.Core.Builders
 {
     internal class MarkdownTypeBuilder
     {

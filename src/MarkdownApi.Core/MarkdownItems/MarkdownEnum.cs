@@ -1,10 +1,10 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems
+namespace igloo15.MarkdownApi.Core.MarkdownItems
 {
     /// <summary>
     /// Markdown Enum is a type that is a Enum

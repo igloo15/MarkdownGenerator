@@ -1,12 +1,12 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
-using Igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
     internal static class MarkdownRepo
     {

@@ -1,9 +1,9 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems
+namespace igloo15.MarkdownApi.Core.MarkdownItems
 {
     /// <summary>
     /// Markdown Namespace is a single namespace in a project

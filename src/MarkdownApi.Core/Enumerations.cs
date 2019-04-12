@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core
+namespace igloo15.MarkdownApi.Core
 {
 
     /// <summary>

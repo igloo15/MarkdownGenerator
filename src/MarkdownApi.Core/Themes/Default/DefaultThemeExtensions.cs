@@ -1,12 +1,12 @@
-﻿using Igloo15.MarkdownApi.Core.Builders;
-using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Reflection;
 
-namespace Igloo15.MarkdownApi.Core.Themes.Default
+namespace igloo15.MarkdownApi.Core.Themes.Default
 {
 
     internal static class DefaultThemeExtensions

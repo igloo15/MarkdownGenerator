@@ -1,11 +1,11 @@
-﻿using Igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Interfaces;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Igloo15.MarkdownApi.Core.MarkdownItems
+namespace igloo15.MarkdownApi.Core.MarkdownItems
 {
     /// <summary>
     /// A markdown project used to produce markdown files

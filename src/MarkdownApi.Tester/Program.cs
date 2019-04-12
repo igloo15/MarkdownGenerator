@@ -1,11 +1,11 @@
 ﻿using System;
-using Igloo15.MarkdownApi.Core;
-using Igloo15.MarkdownApi.Core.Themes;
-using Igloo15.MarkdownApi.Core.Themes.Default;
+using igloo15.MarkdownApi.Core;
+using igloo15.MarkdownApi.Core.Themes;
+using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
-namespace Igloo15.MarkdownApi.Tester
+namespace igloo15.MarkdownApi.Tester
 {
     static class Program
     {

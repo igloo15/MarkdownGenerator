@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>igloo15.MarkdownApi.Tool</AssemblyName>
     <AssemblyTitle>markdownapi</AssemblyTitle>
-    <RootNamespace>Igloo15.MarkdownApi.Tool</RootNamespace>
+    <RootNamespace>igloo15.MarkdownApi.Tool</RootNamespace>
     <BaseOutputPath>$(MSBuildProjectFullPath)\..\..\..\dist\MarkdownApi.Tool</BaseOutputPath>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
@@ -15,7 +15,7 @@
     <IsPackable>true</IsPackable>
     <PackageVersion>$(Version)</PackageVersion>
     <Title>igloo15.MarkdownApi.Tool</Title>
-    <Authors>Igloo15, jyasuu, neuecc</Authors>
+    <Authors>igloo15, jyasuu, neuecc</Authors>
     <Description>dotnet cli tool used to generate markdown documentation of the source</Description>
     <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
     <PackageTags>markdown;dotnet;cli;tool;netcore</PackageTags>

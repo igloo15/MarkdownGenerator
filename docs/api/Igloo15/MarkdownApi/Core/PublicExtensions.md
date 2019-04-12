@@ -1,6 +1,6 @@
 # [PublicExtensions](./PublicExtensions.md)
 
-Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./README.md)
+Namespace: [igloo15]() > [MarkdownApi]() > [Core](./README.md)
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
