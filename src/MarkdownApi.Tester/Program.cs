@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging.Console;
 
 namespace Igloo15.MarkdownApi.Tester
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -22,7 +22,8 @@ namespace Igloo15.MarkdownApi.Tester
             factory.AddConsole();
 
             //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
-            var project = MarkdownApiGenerator.GenerateProject(@"..\..\..\MarkdownApi.Core\Debug\netstandard2.0\*.dll", "", factory);
+            var project = MarkdownApiGenerator.GenerateProject("../../../MarkdownApi.Core/**/igloo15*.dll", "", factory);
+            //var project = MarkdownApiGenerator.GenerateProject("../../../../../Nuget.Searcher/dist/**/publish/igloo15*.dll", factory);
 
 
 
@@ -42,7 +43,8 @@ namespace Igloo15.MarkdownApi.Tester
             {
                 factory.Dispose();
             };
-            
+
+            Console.ReadLine();
             
         }
     }

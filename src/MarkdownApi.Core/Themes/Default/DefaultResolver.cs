@@ -6,16 +6,16 @@ using System.IO;
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
-    /// 
+    /// This default resolver is used to resolve the location to each page
     /// </summary>
     public class DefaultResolver : IResolver
     {
         private DefaultOptions _options;
 
         /// <summary>
-        /// 
+        /// Constructs the Default Resolver using the given options
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The options for the resolver</param>
         public DefaultResolver(DefaultOptions options)
         {
             _options = options;

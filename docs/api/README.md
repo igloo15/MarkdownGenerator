@@ -18,7 +18,6 @@
 - [`DefaultOptions`](./Igloo15/MarkdownApi/Core/Themes/Default/DefaultOptions.md)
 - [`DefaultProjectBuilder`](./Igloo15/MarkdownApi/Core/Themes/Default/DefaultProjectBuilder.md)
 - [`DefaultResolver`](./Igloo15/MarkdownApi/Core/Themes/Default/DefaultResolver.md)
-- [`DefaultThemeExtensions`](./Igloo15/MarkdownApi/Core/Themes/Default/DefaultThemeExtensions.md)
 - [`DefaultTypeBuilder`](./Igloo15/MarkdownApi/Core/Themes/Default/DefaultTypeBuilder.md)
 ## [Igloo15.MarkdownApi.Core.MarkdownItems](./Igloo15/MarkdownApi/Core/MarkdownItems/README.md)
 

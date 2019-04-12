@@ -4,6 +4,8 @@ Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
+## Summary
+A markdown project page builder this is the root of all the markdown api content
 
 ## Constructors
 
@@ -16,6 +18,6 @@ Assembly: igloo15.MarkdownApi.Core.dll
 
 | Return | Name | Summary | 
 | --- | --- | --- | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownProject`](./../../MarkdownItems/MarkdownProject.md) project ) |  | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownProject`](./../../MarkdownItems/MarkdownProject.md) project ) | Builds the content for the markdown project page | 
 
 

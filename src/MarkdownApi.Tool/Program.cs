@@ -15,7 +15,7 @@ using Microsoft.Extensions.Logging;
 namespace Igloo15.MarkdownApi.Tool
 {
         
-    class Program
+    static class Program
     {
 
         static void Main(string[] args) => Parser.Default.ParseArguments<Options>(args).MapResult(prog => Execute(prog), _ => 1);

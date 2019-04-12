@@ -10,26 +10,26 @@ using System.Linq;
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
-    /// 
+    /// The default type page builder
     /// </summary>
     public class DefaultTypeBuilder
     {
         private DefaultOptions _options;
 
         /// <summary>
-        /// 
+        /// The default type page builder constructor
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The options for this page builder</param>
         public DefaultTypeBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
         /// <summary>
-        /// 
+        /// Builds the page of a MarkdownType and return the rendered markdown
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The markdown item to be rendered</param>
+        /// <returns>The markdown text</returns>
         public string BuildPage(MarkdownType item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Type Page");

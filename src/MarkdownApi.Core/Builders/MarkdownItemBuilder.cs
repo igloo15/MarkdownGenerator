@@ -1,6 +1,7 @@
 ﻿
 using Igloo15.MarkdownApi.Core;
 using Igloo15.MarkdownApi.Core.MarkdownItems;
+using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,47 +24,45 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
             MarkdownProject project = new MarkdownProject();
 
-            var dllPaths = searchArea.Split(';');
-            foreach(var dllPath in dllPaths)
-            {
-                Constants.Logger?.LogInformation("Searching {searchArea} for dlls", dllPath);
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-                
-                var index = dllPath.LastIndexOf(Path.DirectorySeparatorChar);
-                if (index < 0)
+            var matcher = new Matcher();
+            foreach(var searchPath in searchArea.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                matcher.AddInclude(searchPath);
+            }
+            var rootDir = Directory.GetCurrentDirectory();
+            var results = matcher.GetResultsInFullPath(rootDir);
+            Constants.Logger?.LogInformation($"Found {results.Count()} dlls from {rootDir} using {searchArea}");
+            List<string> processedDlls = new List<string>();
+            foreach (var dllPath in results)
+            {
+                var dllName = Path.GetFileName(dllPath);
+                Constants.Logger?.LogInformation("Loading Dll: {dllName}", dllPath);
+
+                if(processedDlls.Contains(dllName))
                 {
-                    Constants.Logger?.LogWarning($"SKIPPING : Index {index} found for path {dllPath}");
+                    Constants.Logger?.LogWarning("Duplicate Dll: {dllName}", dllName);
                     continue;
                 }
-                    
 
-                var directoryPath = dllPath.Substring(0, index);
-                var filePath = dllPath.Substring(index+1);
-
-                DirectoryInfo folder = new DirectoryInfo(directoryPath);
-                if (folder.Exists) // else: Invalid folder!
+                try
                 {
-                    FileInfo[] files = folder.GetFiles(filePath);
-
-                    Constants.Logger?.LogInformation("Found {dllCount} dlls in {folderPath}", files.Length, directoryPath);
-
-                    foreach (FileInfo file in files)
+                    if(File.Exists(dllPath) && Path.GetExtension(dllPath) == ".dll")
                     {
-                        Constants.Logger?.LogInformation("Loading Dll: {dllName}", file.Name);
-                        try
-                        {
-                            LoadDll(file.FullName, namespaceMatch);
-                        }
-                        catch(Exception e)
-                        {
-                            Constants.Logger?.LogError(e, "Failed to Load {dllName}", file.FullName);
-                        }
+                        LoadDll(dllPath, namespaceMatch);
+                        processedDlls.Add(dllName);
+                    }
+                    else
+                    {
+                        Constants.Logger?.LogError($"Failed to find {dllPath} dll");
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    Constants.Logger?.LogWarning("{folderPath} folder does not exist", directoryPath);
+                    Constants.Logger?.LogError(e, "Failed to Load {dllName}", dllPath);
                 }
+
             }
 
             return project;
@@ -81,7 +80,7 @@ namespace Igloo15.MarkdownApi.Core.Builders
 
                 try
                 {
-                    var types = x.GetTypes();
+                    var types = x.GetExportedTypes();
                     Constants.Logger?.LogDebug("Loaded {typeCount} Types Successfully", types.Count());
                     return types;
                 }
@@ -122,7 +121,9 @@ namespace Igloo15.MarkdownApi.Core.Builders
                 return IsPublic && !IsAssignableFromDelegate && !HaveObsoleteAttribute;
             }
 
-            var dllAssemblys = new[] { Assembly.LoadFrom(dllPath) };
+            
+
+            var dllAssemblys = new[] { Assembly.LoadFile(dllPath) };
 
             var markdownableTypes = dllAssemblys
                 .SelectMany(AssemblyTypesSelector)
@@ -137,6 +138,35 @@ namespace Igloo15.MarkdownApi.Core.Builders
             Constants.Logger?.LogDebug("Beginning Building of Markdown Items in {dllName}", dllName);
 
             return new MarkdownTypeBuilder().BuildTypes(markdownableTypes, commentsLookup).ToArray();
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            // Ignore missing resources
+            if (args.Name.Contains(".resources"))
+                return null;
+
+            // check for assemblies already loaded
+            Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName == args.Name);
+            if (assembly != null)
+                return assembly;
+
+            // Try to load by filename - split out the filename of the full assembly name
+            // and append the base path of the original assembly (ie. look in the same dir)
+            string filename = args.Name.Split(',')[0] + ".dll".ToLower();
+
+            var currentPath = Path.GetDirectoryName(args.RequestingAssembly.CodeBase).Replace("file://", "").Replace("file:\\", "");
+
+            string asmFile = Path.Combine(currentPath, filename);
+
+            try
+            {
+                return Assembly.LoadFrom(asmFile);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         static bool IsRequiredNamespace(Type type, Regex regex) {

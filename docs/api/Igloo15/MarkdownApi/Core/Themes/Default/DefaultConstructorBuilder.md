@@ -4,6 +4,8 @@ Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
+## Summary
+The default markdown constructor page builder - Warning this is not yet implemented
 
 ## Constructors
 
@@ -16,6 +18,6 @@ Assembly: igloo15.MarkdownApi.Core.dll
 
 | Return | Name | Summary | 
 | --- | --- | --- | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownConstructor`](./../../MarkdownItems/TypeParts/MarkdownConstructor.md) item ) |  | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownConstructor`](./../../MarkdownItems/TypeParts/MarkdownConstructor.md) item ) | Builds the page for a constructor item - Warning this is not yet implemented | 
 
 

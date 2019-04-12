@@ -8,6 +8,5 @@
 - [`DefaultOptions`](./DefaultOptions.md)
 - [`DefaultProjectBuilder`](./DefaultProjectBuilder.md)
 - [`DefaultResolver`](./DefaultResolver.md)
-- [`DefaultThemeExtensions`](./DefaultThemeExtensions.md)
 - [`DefaultTypeBuilder`](./DefaultTypeBuilder.md)
 

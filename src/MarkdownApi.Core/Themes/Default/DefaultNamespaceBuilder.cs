@@ -9,26 +9,26 @@ using System.Text;
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
-    /// 
+    /// The markdown namespace page builder
     /// </summary>
     public class DefaultNamespaceBuilder
     {
         private DefaultOptions _options;
 
         /// <summary>
-        /// 
+        /// Constructs a namespace page builder
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The default options for rendering</param>
         public DefaultNamespaceBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
         /// <summary>
-        /// 
+        /// Builds the markdown content for the namespace page
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
+        /// <param name="item">The markdown namespace item</param>
+        /// <returns>The markdown content</returns>
         public string BuildPage(MarkdownNamespace item)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Namespace Page");

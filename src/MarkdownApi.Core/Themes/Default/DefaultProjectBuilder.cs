@@ -7,26 +7,26 @@ using System.Linq;
 namespace Igloo15.MarkdownApi.Core.Themes.Default
 {
     /// <summary>
-    /// 
+    /// A markdown project page builder this is the root of all the markdown api content
     /// </summary>
     public class DefaultProjectBuilder
     {
         private DefaultOptions _options;
 
         /// <summary>
-        /// 
+        /// Constructs a markdown project page builder
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">The default options for page building</param>
         public DefaultProjectBuilder(DefaultOptions options)
         {
             _options = options;
         }
 
         /// <summary>
-        /// 
+        /// Builds the content for the markdown project page
         /// </summary>
-        /// <param name="project"></param>
-        /// <returns></returns>
+        /// <param name="project">The markdown project item to be rendered</param>
+        /// <returns>The markdown content</returns>
         public string BuildPage(MarkdownProject project)
         {
             DefaultTheme.ThemeLogger?.LogDebug("Building Main Api Page");

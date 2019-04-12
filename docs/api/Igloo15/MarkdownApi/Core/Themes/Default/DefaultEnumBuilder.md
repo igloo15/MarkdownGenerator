@@ -4,6 +4,8 @@ Namespace: [Igloo15]() > [MarkdownApi]() > [Core](./../../README.md) > [Themes](
 
 Assembly: igloo15.MarkdownApi.Core.dll
 
+## Summary
+The default enum page builder
 
 ## Constructors
 
@@ -16,6 +18,6 @@ Assembly: igloo15.MarkdownApi.Core.dll
 
 | Return | Name | Summary | 
 | --- | --- | --- | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownEnum`](./../../MarkdownItems/MarkdownEnum.md) item ) |  | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownEnum`](./../../MarkdownItems/MarkdownEnum.md) item ) | Builds the markdown for the markdown page | 
 
 

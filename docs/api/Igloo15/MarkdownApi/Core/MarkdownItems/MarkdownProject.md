@@ -6,12 +6,14 @@ Assembly: igloo15.MarkdownApi.Core.dll
 
 Implements [IMarkdownItem](./../Interfaces/IMarkdownItem.md), [IInternalMarkdownItem](./MarkdownProject.md)
 
+## Summary
+A markdown project used to produce markdown files
 
 ## Properties
 
 | Type | Name | Summary | 
 | --- | --- | --- | 
-| [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2)\<[String](https://docs.microsoft.com/en-us/dotnet/api/System.String), [IMarkdownItem](./../Interfaces/IMarkdownItem.md)> | AllItems |  | 
+| [Dictionary](https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Generic.Dictionary-2)\<[String](https://docs.microsoft.com/en-us/dotnet/api/System.String), [IMarkdownItem](./../Interfaces/IMarkdownItem.md)> | AllItems | All the renderable markdown items | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | FullName | The full name of the Markdown Item | 
 | [MarkdownItemTypes](./../MarkdownItemTypes.md) | ItemType | The type of markdown item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | Name | The Name of the Markdown item | 
