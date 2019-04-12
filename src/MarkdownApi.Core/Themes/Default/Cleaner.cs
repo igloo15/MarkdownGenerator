@@ -243,6 +243,11 @@ namespace Igloo15.MarkdownApi.Core.Themes.Default
             return name;
         }
 
+        /// <summary>
+        /// Remove generics from name basically the `1 text
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns>GenericLess string</returns>
         public static string RemoveGenerics(string name)
         {
             var indexDash = name.IndexOf('`');
