@@ -7,7 +7,7 @@
 [Dd]ist/
 Win32/
 LocalFeed/
-tools/
+tools/*
 !tools/packages.config
 packages.local/
 docs/codecoverage/coverage.json
