@@ -1,11 +1,23 @@
 # Changelog
+## Unreleased
+
+
 ## v1.0.1
+### Add
+*  link to release notes added to packages
+
+
 ### Changes
+*  Update build scripts
 *  make appveyor only build master branch
 
 
 ### Fixed
 *  multiple fixes related to getting summary information from comments when dealing with generics #issue-12 #issue-11 [12](https://github.com/igloo15/MarkdownGenerator/issues/12) [11](https://github.com/igloo15/MarkdownGenerator/issues/11)
+
+
+### Other Commits
+* Merge branch 'develop'
 
 
 

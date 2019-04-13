@@ -62,7 +62,7 @@
   },
   "ChangelogLocation": "./CHANGELOG.md",
   "GitRepoLocation": ".",
-  "UnreleasedTitle": "v1.0.1",
+  "UnreleasedTitle": "Unreleased",
   "GitRepoCommitLimit": -1,
   "AllCommits": true,
   "TestMode": false,
