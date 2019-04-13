@@ -23,7 +23,7 @@ namespace igloo15.MarkdownApi.Tester
 
             //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
             var project = MarkdownApiGenerator.GenerateProject("../../../MarkdownApi.Core/**/igloo15*.dll", "", factory);
-            //var project = MarkdownApiGenerator.GenerateProject("../../../../../Nuget.Searcher/dist/**/publish/igloo15*.dll", factory);
+            //var project = MarkdownApiGenerator.GenerateProject("../../../../../Cake.igloo15/dist/**/publish/Cake.igloo15*.dll", factory);
 
 
 

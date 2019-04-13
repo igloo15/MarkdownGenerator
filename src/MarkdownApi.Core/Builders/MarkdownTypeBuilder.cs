@@ -116,8 +116,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
         private bool MethodCommentFilter(XmlDocumentComment comment, MarkdownMethod method)
         {
-            var isCorrectType = comment.MemberName == method.Name
-                    || comment.MemberName.StartsWith(method.Name + "`");
+            var isCorrectType = comment.MemberName == method.InternalItem.GetCommentName();
 
             if (isCorrectType)
             {
