@@ -19,6 +19,7 @@
     <PackageTags>markdown;dotnet;cli;tool;netcore</PackageTags>
     <RepositoryUrl>https://github.com/igloo15/MarkdownGenerator.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>See $(PackageProjectUrl)/blob/master/CHANGELOG.md for release notes</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

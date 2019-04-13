@@ -1,9 +1,10 @@
-#l "nuget:?package=Cake.igloo15.Scripts.Bundle.CSharp&version=1.0.0"
+#l "nuget:?package=Cake.igloo15.Scripts.Bundle.CSharp&version=1.1.0"
 
 var target = Argument<string>("target", "Default");
 
 AddSetup((d) => {
     d.SetPrivateProperty("NuGetApiKey", EnvironmentVariable("apikey"));
+    d["Markdown-Generator-Filter"] = "./dist/**/publish/igloo15*.dll";
 });
 
 AddTeardown((d) => {
@@ -14,7 +15,7 @@ Task("Pack")
     .IsDependentOn("Standard-All")
     .IsDependentOn("CSharp-NetCore-Pack-All")
     .IsDependentOn("Changelog-Generate")
-    //.IsDependentOn("Markdown-Generate-Api")
+    .IsDependentOn("Markdown-Generate-Api")
     .CompleteTask();
 
 Task("Push")

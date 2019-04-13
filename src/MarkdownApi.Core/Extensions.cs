@@ -174,7 +174,22 @@ namespace igloo15.MarkdownApi.Core
                 typeName += $"{{{genericTypeString}}}";
             }
 
+            if (info.IsGenericParameter)
+            {
+                typeName = $"``{info.GenericParameterPosition}";
+            }
+
             return typeName;
+        }
+
+        public static string GetCommentName(this MethodBase info)
+        {
+            if (info.IsGenericMethod)
+            {
+                return $"{info.Name}``{info.GetGenericArguments().Count()}";
+            }
+
+            return $"{info.Name}";
         }
 
         #region GetTypeParts

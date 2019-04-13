@@ -127,9 +127,17 @@ namespace igloo15.MarkdownApi.Core.Builders
                         int index = 0;
                         Dictionary<string, string> methodParams = new Dictionary<string, string>();
                         var paramTypes = match.Groups[4].Value.Replace("(", "").Replace(")", "").Split(',');
+
+                        var newParamTypes = new List<string>();
+                        for(var i = 0; i < paramTypes.Length;)
+                        {
+                            var paramType = paramTypes[i];
+                            i = ParseParamType(paramType, paramTypes, i, newParamTypes);
+                        }
+
                         foreach(var paramElem in x.Elements("param"))
                         {
-                            methodParams.Add(paramElem.Attribute("name").Value + ":" + paramTypes[index], paramElem.Value);
+                            methodParams.Add(paramElem.Attribute("name").Value + ":" + newParamTypes[index], paramElem.Value);
                             index++;
                         }
                         parameters = methodParams;
@@ -154,6 +162,46 @@ namespace igloo15.MarkdownApi.Core.Builders
                 })
                 .Where(x => x != null)
                 .ToArray();
+        }
+
+        private static int ParseParamType(string value, string[] tokens, int currIndex, List<string> newTypes)
+        {
+            var paramType = value;
+            if (paramType.Contains("{"))
+            {
+                var index = paramType.IndexOf("{");
+                var newType = paramType.Substring(0, index);
+                var nextType = paramType.Substring(index + 1, paramType.Length - index - 1);
+
+                List<string> innerTypes = new List<string>();
+                currIndex = ParseParamType(nextType, tokens, currIndex, innerTypes);
+                if(currIndex < tokens.Length && !nextType.Contains("}"))
+                {
+                    do
+                    {
+                        paramType = tokens[currIndex];
+                        currIndex = ParseParamType(paramType, tokens, currIndex, innerTypes);
+                    }
+                    while (!paramType.Contains("}") && currIndex < tokens.Length);
+                }
+
+                var innerTypeValue = string.Join(",", innerTypes);
+
+                newTypes.Add($"{newType}{{{innerTypeValue}}}");
+
+            }
+            else if(paramType.Contains("}"))
+            {
+                newTypes.Add(paramType.Replace("}", ""));
+                currIndex++;
+            }
+            else
+            {
+                newTypes.Add(paramType);
+                currIndex++;
+            }
+
+            return currIndex;
         }
 
         private static string ResolveSeeElement(Match m, string ns) {

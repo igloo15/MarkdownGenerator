@@ -1,67 +1,68 @@
 {
+  "$schema": "https://raw.githubusercontent.com/igloo15/ChangelogGenerator/develop/src/ChangelogGenerator.Core/changelog.schema.json",
   "Categories": [
     {
-      "Keys": [
-        "#Add",
-        "#ADD",
-        "#add"
-      ],
-      "ReplaceTokens": [],
-      "ReplaceKey": true,
-      "IsSummary": false,
-      "IsDefault": false,
+      "Filter": {
+        "Keys": [ "#Summary" ]
+      },
+      "DisplayName": "",
+      "IsSummary": true
+    },
+    {
+      "Filter": {
+        "Keys": [ "#Commits" ]
+      },
+      "DisplayName": "Other Commits",
+      "IsDefault": true
+    },
+    {
+      "Filter": {
+        "Keys": [ "#Add", "#Added" ]
+      },
       "DisplayName": "Add"
     },
     {
-      "Keys": [
-        "#Changes"
-      ],
-      "ReplaceTokens": [],
-      "ReplaceKey": true,
-      "IsSummary": false,
-      "IsDefault": false,
-      "DisplayName": "Other Changes"
+      "Filter": {
+        "Keys": [ "#Change", "#Changes" ]
+      },
+      "DisplayName": "Changes",
+      "IsSummary": false
     },
     {
-      "Keys": [
-        "#Fix", "#Fixes"
-      ],
-      "ReplaceTokens": [],
-      "ReplaceKey": true,
-      "IsSummary": false,
-      "IsDefault": false,
-      "DisplayName": "Other Changes"
-    },
-    {
-      "Keys": [
-        "#Summary"
-      ],
-      "ReplaceTokens": [],
-      "ReplaceKey": true,
-      "IsSummary": true,
-      "IsDefault": false,
-      "DisplayName": "Summary"
+      "Filter": {
+        "Keys": [ "#FIXED", "#FIX", "#FIXES" ]
+      },
+      "DisplayName": "Fixed"
     }
   ],
-  "Links": [],
-  "VersionFilters": [
-    "v",
-    "V"
+  "Links": [
+    {
+      "Filter": {
+        "Keys": [ "#issue-" ],
+        "RemoveTokens": [ "#issue-" ],
+        "RemoveAllKey":  false
+      },      
+      "UrlTemplate": "https://github.com/igloo15/MarkdownGenerator/issues/{LinkCleanKey}"
+    }
   ],
+  "VersionFilter": {
+    "Keys":[ "v" ]
+  },
   "Templates": {
     "TitleTemplate": "# Changelog",
     "VersionTemplate": "## {Version}",
-    "SummarySentenceTemplate": "{Message}. ",
     "CategoryTemplate": "### {Category}",
     "IssueTemplate": "* {Message} {Links}",
     "LinkTemplate": "[{LinkCleanKey}]({Url})",
-    "NoIssuesTemplate": " N/A ",
+    "NoIssueTemplate": " N/A ",
+    "EndCategoryTemplate": "\n",
     "EndVersionTemplate": "\n",
-    "EndCategoryTemplate": "\n"
+    "EndChangelogTemplate": "",
+    "SummarySentenceTemplate": "{Message} "
   },
   "ChangelogLocation": "./CHANGELOG.md",
   "GitRepoLocation": ".",
-  "UnreleasedTitle": "Unreleased",
+  "UnreleasedTitle": "v1.0.1",
   "GitRepoCommitLimit": -1,
   "AllCommits": true,
   "TestMode": false,
