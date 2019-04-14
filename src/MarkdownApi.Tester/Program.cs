@@ -7,35 +7,29 @@ using Microsoft.Extensions.Logging.Console;
 
 namespace igloo15.MarkdownApi.Tester
 {
-    static class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-
-            
-
-
 
             var factory = new LoggerFactory();
 
             factory.AddConsole();
 
             //var project = MarkdownApiGenerator.GenerateProject(@"D:\Development\Projects\Nuget.Searcher\dist\NuGetSearcher\Release\netstandard2.0\publish\*.dll", "", "Api");
-            var project = MarkdownApiGenerator.GenerateProject("../../../MarkdownApi.Core/**/igloo15*.dll", "", factory);
-            //var project = MarkdownApiGenerator.GenerateProject("../../../../../Cake.igloo15/dist/**/publish/Cake.igloo15*.dll", factory);
-
-
+            //var project = MarkdownApiGenerator.GenerateProject("../../../MarkdownApi.Core/**/igloo15*.dll", "", factory);
+            var project = MarkdownApiGenerator.GenerateProject("../../../../../Nuget.Searcher/dist/NuGetSearcher/Release/netstandard2.0/publish/igloo15.NuGetSearcher.dll", factory);
 
             project.Build(new DefaultTheme(new DefaultOptions
-                    {
-                        BuildNamespacePages = true,
-                        BuildTypePages = true,
-                        RootFileName = "README.md",
-                        RootTitle = "API",
-                        RootSummary = "The Root Page Summary",
-                        ShowParameterNames = true
-                    }
+            {
+                BuildNamespacePages = true,
+                BuildTypePages = true,
+                RootFileName = "README.md",
+                RootTitle = "API",
+                RootSummary = "The Root Page Summary",
+                ShowParameterNames = true
+            }
                 ),
                 @"..\..\..\..\docs\api"
             );
@@ -46,7 +40,6 @@ namespace igloo15.MarkdownApi.Tester
             };
 
             Console.ReadLine();
-            
         }
     }
 }

@@ -17,28 +17,33 @@ namespace igloo15.MarkdownApi.Core.Builders
         /// Xml comment for field
         /// </summary>
         Field = 'F',
+
         /// <summary>
         /// Xml Comment for Property
         /// </summary>
         Property = 'P',
+
         /// <summary>
         /// Xml Comment for Type
         /// </summary>
         Type = 'T',
+
         /// <summary>
         /// Xml comment for Event
         /// </summary>
         Event = 'E',
+
         /// <summary>
         /// Xml comment for Method
         /// </summary>
         Method = 'M',
+
         /// <summary>
         /// Xml comment for none
         /// </summary>
         None = 0
     }
-    
+
     /// <summary>
     /// Xml Comment in Xml Document
     /// </summary>
@@ -48,26 +53,32 @@ namespace igloo15.MarkdownApi.Core.Builders
         /// The type of comment
         /// </summary>
         public MemberType MemberType { get; internal set; }
+
         /// <summary>
         /// The class name for the comment
         /// </summary>
         public string ClassName { get; internal set; }
+
         /// <summary>
         /// The Member Name for this comment
         /// </summary>
         public string MemberName { get; internal set; }
+
         /// <summary>
         /// The Summary comment
         /// </summary>
         public string Summary { get; internal set; }
+
         /// <summary>
         /// The Remarks of the comment
         /// </summary>
         public string Remarks { get; internal set; }
+
         /// <summary>
         /// Any parameter summaries of comment
         /// </summary>
         public Dictionary<string, string> Parameters { get; internal set; }
+
         /// <summary>
         /// The summary of the return
         /// </summary>
@@ -85,14 +96,17 @@ namespace igloo15.MarkdownApi.Core.Builders
 
     internal static class VSDocParser
     {
-        public static XmlDocumentComment[] ParseXmlComment(XDocument xDocument) {
+        public static XmlDocumentComment[] ParseXmlComment(XDocument xDocument)
+        {
             return ParseXmlComment(xDocument, null);
         }
 
         // cheap, quick hack parser:)
-        internal static XmlDocumentComment[] ParseXmlComment(XDocument xDocument, string namespaceMatch) {
+        internal static XmlDocumentComment[] ParseXmlComment(XDocument xDocument, string namespaceMatch)
+        {
             return xDocument.Descendants("member")
-                .Select(x => {
+                .Select(x =>
+                {
                     var match = Regex.Match(x.Attribute("name").Value, @"(.):(.+)\.([^.()]+)?(\(.+\)|$)");
                     if (!match.Groups[1].Success) return null;
 
@@ -110,7 +124,8 @@ namespace igloo15.MarkdownApi.Core.Builders
 
                     var summary = parsed;
 
-                    if (summary != "") {
+                    if (summary != "")
+                    {
                         summary = string.Join("  ", summary.Split(new[] { "\r", "\n", "\t" }, StringSplitOptions.RemoveEmptyEntries).Select(y => y.Trim()));
                     }
 
@@ -129,28 +144,32 @@ namespace igloo15.MarkdownApi.Core.Builders
                         var paramTypes = match.Groups[4].Value.Replace("(", "").Replace(")", "").Split(',');
 
                         var newParamTypes = new List<string>();
-                        for(var i = 0; i < paramTypes.Length;)
+                        for (var i = 0; i < paramTypes.Length;)
                         {
                             var paramType = paramTypes[i];
                             i = ParseParamType(paramType, paramTypes, i, newParamTypes);
                         }
 
-                        foreach(var paramElem in x.Elements("param"))
+                        foreach (var paramElem in x.Elements("param"))
                         {
-                            methodParams.Add(paramElem.Attribute("name").Value + ":" + newParamTypes[index], paramElem.Value);
+                            string newName = paramElem.Attribute("name").Value;
+
+                            if (index < newParamTypes.Count)
+                            {
+                                newName = newName + ":" + newParamTypes[index];
+                            }
+                            methodParams.Add(newName, paramElem.Value);
                             index++;
                         }
                         parameters = methodParams;
                     }
-                    
-
-                    
 
                     var className = (memberType == MemberType.Type)
                         ? match.Groups[2].Value + "." + match.Groups[3].Value
                         : match.Groups[2].Value;
 
-                    return new XmlDocumentComment {
+                    return new XmlDocumentComment
+                    {
                         MemberType = memberType,
                         ClassName = className,
                         MemberName = match.Groups[3].Value,
@@ -175,7 +194,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
                 List<string> innerTypes = new List<string>();
                 currIndex = ParseParamType(nextType, tokens, currIndex, innerTypes);
-                if(currIndex < tokens.Length && !nextType.Contains("}"))
+                if (currIndex < tokens.Length && !nextType.Contains("}"))
                 {
                     do
                     {
@@ -188,9 +207,8 @@ namespace igloo15.MarkdownApi.Core.Builders
                 var innerTypeValue = string.Join(",", innerTypes);
 
                 newTypes.Add($"{newType}{{{innerTypeValue}}}");
-
             }
-            else if(paramType.Contains("}"))
+            else if (paramType.Contains("}"))
             {
                 newTypes.Add(paramType.Replace("}", ""));
                 currIndex++;
@@ -204,17 +222,20 @@ namespace igloo15.MarkdownApi.Core.Builders
             return currIndex;
         }
 
-        private static string ResolveSeeElement(Match m, string ns) {
+        private static string ResolveSeeElement(Match m, string ns)
+        {
             var typeName = m.Groups[1].Value;
-            if (!string.IsNullOrWhiteSpace(ns)) {
-                if (typeName.StartsWith(ns)) {
+            if (!string.IsNullOrWhiteSpace(ns))
+            {
+                if (typeName.StartsWith(ns))
+                {
                     return $"[{typeName}]({Regex.Replace(typeName, $"\\.(?:.(?!\\.))+$", me => me.Groups[0].Value.Replace(".", "#").ToLower())})";
                 }
             }
             return $"`{typeName}`";
         }
 
-        class Item1EqualityCompaerer<T1, T2> : EqualityComparer<Tuple<T1, T2>>
+        private class Item1EqualityCompaerer<T1, T2> : EqualityComparer<Tuple<T1, T2>>
         {
             public override bool Equals(Tuple<T1, T2> x, Tuple<T1, T2> y)
             {

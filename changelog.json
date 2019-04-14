@@ -5,7 +5,7 @@
       "Filter": {
         "Keys": [ "#Summary" ]
       },
-      "DisplayName": "",
+      "DisplayName": "Summary",
       "IsSummary": true
     },
     {
@@ -54,7 +54,7 @@
     "CategoryTemplate": "### {Category}",
     "IssueTemplate": "* {Message} {Links}",
     "LinkTemplate": "[{LinkCleanKey}]({Url})",
-    "NoIssueTemplate": " N/A ",
+    "NoIssuesTemplate": " N/A ",
     "EndCategoryTemplate": "\n",
     "EndVersionTemplate": "\n",
     "EndChangelogTemplate": "",
@@ -62,7 +62,7 @@
   },
   "ChangelogLocation": "./CHANGELOG.md",
   "GitRepoLocation": ".",
-  "UnreleasedTitle": "v1.0.1",
+  "UnreleasedTitle": "Unreleased",
   "GitRepoCommitLimit": -1,
   "AllCommits": true,
   "TestMode": false,
