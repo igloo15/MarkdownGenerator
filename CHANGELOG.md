@@ -1,5 +1,20 @@
 # Changelog
-## Unreleased
+## v1.0.2
+### 
+
+
+### Add
+ N/A 
+
+
+### Changes
+ N/A 
+
+
+### Fixed
+*  There is an unchecked index on an array that may cause an error while parsing xml documentation it is now fixed this is in relation to  [13](https://github.com/igloo15/MarkdownGenerator/issues/13)
+
+
 ### Other Commits
 * changlog settings is back to normal
 
@@ -7,6 +22,9 @@
 
 
 ## v1.0.1
+### 
+
+
 ### Add
 *  link to release notes added to packages
 
@@ -17,7 +35,7 @@
 
 
 ### Fixed
-*  multiple fixes related to getting summary information from comments when dealing with generics #issue-12 #issue-11 [12](https://github.com/igloo15/MarkdownGenerator/issues/12) [11](https://github.com/igloo15/MarkdownGenerator/issues/11)
+*  multiple fixes related to getting summary information from comments when dealing with generics   [12](https://github.com/igloo15/MarkdownGenerator/issues/12) [11](https://github.com/igloo15/MarkdownGenerator/issues/11)
 
 
 ### Other Commits
@@ -27,6 +45,9 @@
 
 
 ## v1.0.0
+### 
+
+
 ### Add
 *  Tab function added to MarkdownBuilder that allows you to add a tab to line
 *  Summaries of types added to Namespace and Root pages
@@ -66,6 +87,9 @@
 
 
 ## v0.4.1
+### 
+
+
 ### Add
 *  Stub comments for all public types
 
@@ -74,9 +98,20 @@
 *  Update documentation
 
 
+### Fixed
+ N/A 
+
+
+### Other Commits
+ N/A 
+
+
 
 
 ## v0.4.0
+### 
+
+
 ### Add
 *  Create a Usage.txt and update readme with usage text
 *  Enums now properly show value
@@ -160,6 +195,21 @@
 
 
 ## v0.2.0
+### 
+
+
+### Add
+ N/A 
+
+
+### Changes
+ N/A 
+
+
+### Fixed
+ N/A 
+
+
 ### Other Commits
 * Fix up building process
 * Refactor Repo to include build scripts
