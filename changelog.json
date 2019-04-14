@@ -58,7 +58,7 @@
     "EndCategoryTemplate": "\n",
     "EndVersionTemplate": "\n",
     "EndChangelogTemplate": "",
-    "SummarySentenceTemplate": "{Message} "
+    "SummarySentenceTemplate": "{Message} {Links}"
   },
   "ChangelogLocation": "./CHANGELOG.md",
   "GitRepoLocation": ".",
