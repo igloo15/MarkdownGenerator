@@ -1,4 +1,26 @@
 # Changelog
+## v1.0.3
+### Summary
+another release to fix casing on api documentation. 
+
+### Add
+ N/A 
+
+
+### Changes
+*  add links to summary sentences
+
+
+### Fixed
+ N/A 
+
+
+### Other Commits
+* correct casing on folder name
+
+
+
+
 ## v1.0.2
 ### Summary
 just a minor update to fix  [13](https://github.com/igloo15/MarkdownGenerator/issues/13). 
@@ -16,6 +38,8 @@ just a minor update to fix  [13](https://github.com/igloo15/MarkdownGenerator/is
 
 
 ### Other Commits
+* Merge branch 'develop'
+* update changelog
 * changlog settings is back to normal
 
 
