@@ -1,7 +1,7 @@
 # Changelog
 ## v1.0.2
-### 
-
+### Summary
+just a minor update to fix  [13](https://github.com/igloo15/MarkdownGenerator/issues/13). 
 
 ### Add
  N/A 
@@ -22,7 +22,7 @@
 
 
 ## v1.0.1
-### 
+### Summary
 
 
 ### Add
@@ -45,7 +45,7 @@
 
 
 ## v1.0.0
-### 
+### Summary
 
 
 ### Add
@@ -87,7 +87,7 @@
 
 
 ## v0.4.1
-### 
+### Summary
 
 
 ### Add
@@ -109,7 +109,7 @@
 
 
 ## v0.4.0
-### 
+### Summary
 
 
 ### Add
@@ -195,7 +195,7 @@
 
 
 ## v0.2.0
-### 
+### Summary
 
 
 ### Add
