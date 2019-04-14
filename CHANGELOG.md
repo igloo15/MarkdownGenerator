@@ -1,5 +1,9 @@
 # Changelog
 ## Unreleased
+### Other Commits
+* changlog settings is back to normal
+
+
 
 
 ## v1.0.1
