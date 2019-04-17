@@ -11,8 +11,8 @@
   <PropertyGroup>
     <IsPackable>true</IsPackable>
     <PackageVersion>$(Version)</PackageVersion>
-    <PackageIconUrl>igloo15.MarkdownApi.Core</PackageIconUrl>
-    <Title>igloo15.MarkdownApi.Core</Title>
+    <PackageIconUrl></PackageIconUrl>
+    <Title>$(AssemblyName)</Title>
     <Authors>igloo15, jyasuu, neuecc</Authors>
     <Description>Core library for the MarkdownApi.Tool cli packages</Description>
     <PackageProjectUrl>https://github.com/igloo15/MarkdownGenerator</PackageProjectUrl>
@@ -27,5 +27,4 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
     <PackageReference Include="System.Json" Version="4.5.0" />
   </ItemGroup>
-
 </Project>

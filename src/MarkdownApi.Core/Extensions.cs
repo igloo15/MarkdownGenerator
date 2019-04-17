@@ -1,4 +1,5 @@
-﻿using igloo15.MarkdownApi.Core.Interfaces;
+﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Interfaces;
 using igloo15.MarkdownApi.Core.MarkdownItems;
 using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Xml;
 
 namespace igloo15.MarkdownApi.Core
 {
@@ -71,7 +73,7 @@ namespace igloo15.MarkdownApi.Core
             int index = 0;
             int lastCommonRoot = -1;
 
-            for(index = 0; index < len; index++)
+            for (index = 0; index < len; index++)
             {
                 if (fromDirs[index] == toDirs[index]) lastCommonRoot = index;
                 else break;
@@ -87,12 +89,12 @@ namespace igloo15.MarkdownApi.Core
             var fromDelta = fromDirs.Length - lastCommonRoot;
             var toDelta = toDirs.Length - lastCommonRoot;
 
-            for(var i = 1; i < fromDelta; i++)
+            for (var i = 1; i < fromDelta; i++)
             {
                 sb.Append($"..{Constants.PathSeparator}");
             }
 
-            for(var i = 1; i < toDelta; i++)
+            for (var i = 1; i < toDelta; i++)
             {
                 sb.Append(toDirs[lastCommonRoot + i]).Append(Constants.PathSeparator);
             }
@@ -119,8 +121,6 @@ namespace igloo15.MarkdownApi.Core
             // Find common root
             for (index = 0; index < len; index++)
             {
-                
-
                 if (absDirs[index] == relDirs[index]) lastCommonRoot = index;
                 else break;
             }
@@ -150,7 +150,6 @@ namespace igloo15.MarkdownApi.Core
             return relativePath.ToString();
         }
 
-
         public static string GetId(this MemberInfo info)
         {
             return $"{info.Module.MetadataToken}-{info.MetadataToken}";
@@ -178,7 +177,23 @@ namespace igloo15.MarkdownApi.Core
             {
                 typeName = $"``{info.GenericParameterPosition}";
             }
+            else if (info.IsArray)
+            {
+                var elementType = info.GetElementType();
+                if (elementType.IsGenericParameter)
+                {
+                    typeName = typeName.Replace(elementType.ToString(), $"``{elementType.GenericParameterPosition}");
+                    //typeName = $"``{info.GetElementType().GenericParameterPosition}[]";
+                }
+            }
 
+            return typeName;
+        }
+
+        public static string GetGenericType(this string typeName)
+        {
+            var indexDash = typeName.IndexOf('`');
+            typeName = typeName.Substring(0, indexDash);
             return typeName;
         }
 
@@ -189,7 +204,30 @@ namespace igloo15.MarkdownApi.Core
                 return $"{info.Name}``{info.GetGenericArguments().Count()}";
             }
 
+            if (info.Name.StartsWith("."))
+                return info.Name.Replace(".", "#");
+
             return $"{info.Name}";
+        }
+
+        public static bool IsMatchOnMethod(this MethodBase methodInfo, XmlDocumentComment comment)
+        {
+            var isCorrectType = comment.MemberName == methodInfo.GetCommentName();
+
+            if (isCorrectType)
+            {
+                if (methodInfo.GetParameters().Count() == comment.Parameters.Count())
+                {
+                    var result = methodInfo.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
+                    if (result)
+                        return result;
+
+                    return methodInfo.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name));
+                }
+            }
+
+            return false;
+            return false;
         }
 
         #region GetTypeParts
@@ -303,6 +341,6 @@ namespace igloo15.MarkdownApi.Core
             }
         }
 
-        #endregion
+        #endregion GetTypeParts
     }
 }
