@@ -9,24 +9,20 @@ namespace igloo15.MarkdownApi.Core.Builders
 {
     internal class MarkdownTypeBuilder
     {
-
         public List<MarkdownNamespace> BuildTypes(MarkdownType[] types, ILookup<string, XmlDocumentComment> comments)
         {
             List<MarkdownNamespace> namespaces = new List<MarkdownNamespace>();
 
-            foreach(var type in types)
+            foreach (var type in types)
             {
-                
                 var tempNamespace = new MarkdownNamespace(type.InternalType.Namespace);
 
                 var myNamespace = MarkdownRepo.TryGetOrAdd(type.InternalType.Namespace, tempNamespace);
 
                 var typeComments = comments[type.FullName];
 
-
-                if(!type.InternalType.IsEnum)
+                if (!type.InternalType.IsEnum)
                 {
-                    
                     var builtType = BuildType(type, myNamespace, typeComments);
 
                     myNamespace.Types.Add(builtType);
@@ -40,7 +36,6 @@ namespace igloo15.MarkdownApi.Core.Builders
 
                 namespaces.Add(myNamespace);
             }
-            
 
             return namespaces;
         }
@@ -84,7 +79,6 @@ namespace igloo15.MarkdownApi.Core.Builders
                 MarkdownRepo.TryAdd(item);
                 item.Summary = comments.FirstOrDefault(x => x.MemberName == item.Name
                     || x.MemberName.StartsWith(item.Name + "`"))?.Summary ?? "";
-
             }
         }
 
@@ -116,17 +110,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
         private bool MethodCommentFilter(XmlDocumentComment comment, MarkdownMethod method)
         {
-            var isCorrectType = comment.MemberName == method.InternalItem.GetCommentName();
-
-            if (isCorrectType)
-            {
-                if (method.InternalItem.GetParameters().Count() == comment.Parameters.Count())
-                {
-                    return method.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
-                }
-            }
-
-            return false;
+            return method.InternalItem.IsMatchOnMethod(comment);
         }
 
         public void BuildEvents(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownEvent[] infos)
@@ -156,18 +140,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
         private bool ConstructorCommentFilter(XmlDocumentComment comment, MarkdownConstructor constructor)
         {
-            var isCorrectType = comment.MemberName == constructor.Name.Replace('.', '#')
-                    || comment.MemberName.StartsWith(constructor.Name.Replace('.', '#') + "`");
-
-            if(isCorrectType)
-            {
-                if(constructor.InternalItem.GetParameters().Count() == comment.Parameters.Count())
-                {
-                    return constructor.InternalItem.GetParameters().All(b => comment.Parameters.ContainsKey(b.Name + ":" + b.ParameterType.GetCommentTypeString()));
-                }
-            }
-
-            return false;
+            return constructor.InternalItem.IsMatchOnMethod(comment);
         }
 
         public MarkdownEnum BuildEnum(MarkdownType type, MarkdownNamespace namespaceItem, IEnumerable<XmlDocumentComment> comments)

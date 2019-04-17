@@ -141,22 +141,15 @@ namespace igloo15.MarkdownApi.Core.Builders
                     {
                         int index = 0;
                         Dictionary<string, string> methodParams = new Dictionary<string, string>();
-                        var paramTypes = match.Groups[4].Value.Replace("(", "").Replace(")", "").Split(',');
-
-                        var newParamTypes = new List<string>();
-                        for (var i = 0; i < paramTypes.Length;)
-                        {
-                            var paramType = paramTypes[i];
-                            i = ParseParamType(paramType, paramTypes, i, newParamTypes);
-                        }
+                        var paramTypes = ParseXmlParameters(match.Groups[4].Value.Replace("(", "").Replace(")", ""));
 
                         foreach (var paramElem in x.Elements("param"))
                         {
                             string newName = paramElem.Attribute("name").Value;
 
-                            if (index < newParamTypes.Count)
+                            if (index < paramTypes.Length)
                             {
-                                newName = newName + ":" + newParamTypes[index];
+                                newName = newName + ":" + paramTypes[index].Replace("0:", "");
                             }
                             methodParams.Add(newName, paramElem.Value);
                             index++;
@@ -246,6 +239,40 @@ namespace igloo15.MarkdownApi.Core.Builders
             {
                 return obj.Item1.GetHashCode();
             }
+        }
+
+        /// <summary>
+        /// Parse Xml Parameters with support from C# Discord and Nox#8248
+        /// </summary>
+        /// <param name="parameterString"></param>
+        /// <returns>an array of parsed parameters</returns>
+        private static string[] ParseXmlParameters(string parameterString)
+        {
+            var newParameterList = new List<string>();
+            var nestCount = 0;
+            var startIdx = 0;
+            for (int i = 0; i < parameterString.Length; i++)
+            {
+                if (parameterString[i] == ',' && nestCount == 0)
+                {
+                    newParameterList.Add(parameterString.Substring(startIdx, i - startIdx));
+                    startIdx = i + 1;
+                }
+                else if (i == parameterString.Length - 1)
+                {
+                    newParameterList.Add(parameterString.Substring(startIdx, parameterString.Length - startIdx));
+                }
+                else if (parameterString[i] == '[' || parameterString[i] == '{')
+                {
+                    nestCount++;
+                }
+                else if (parameterString[i] == ']' || parameterString[i] == '}')
+                {
+                    nestCount--;
+                }
+            }
+
+            return newParameterList.ToArray();
         }
     }
 }

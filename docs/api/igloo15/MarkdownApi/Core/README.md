@@ -1,5 +1,8 @@
 # [igloo15.MarkdownApi.Core](./README.md)
 
+## Summary
+This is the core namespace with root level types
+
 ## Types
 
 - [`MarkdownApiGenerator`](./MarkdownApiGenerator.md)

@@ -1,5 +1,8 @@
 # [API](./README.md)
 
+## Summary
+This is the root summary
+
 ## Namespaces
 
 ### [igloo15.MarkdownApi.Core](./igloo15/MarkdownApi/Core/README.md)
