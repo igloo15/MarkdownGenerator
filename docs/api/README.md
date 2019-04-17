@@ -1,8 +1,5 @@
 # [API](./README.md)
 
-## Summary
-This is the root summary
-
 ## Namespaces
 
 ### [igloo15.MarkdownApi.Core](./igloo15/MarkdownApi/Core/README.md)
@@ -81,4 +78,12 @@ This is the root summary
 	- Builds Markdown strings
 - [`XmlDocumentComment`](./igloo15/MarkdownApi/Core/Builders/XmlDocumentComment.md)
 	- Xml Comment in Xml Document
+### [igloo15.MarkdownApi.Tests](./igloo15/MarkdownApi/Tests/README.md)
+
+- [`MarkdownParsingTest`](./igloo15/MarkdownApi/Tests/MarkdownParsingTest.md)
+	- The Test Class
+- [`MarkdownTestClass`](./igloo15/MarkdownApi/Tests/MarkdownTestClass.md)
+	- Test Class Summary
+- [`MarkdownTestGenericClass`](./igloo15/MarkdownApi/Tests/MarkdownTestGenericClass-3.md)\<[`T`](./README.md), [`K`](./README.md), [`J`](./README.md)>
+	- Markdown Generic Class
 

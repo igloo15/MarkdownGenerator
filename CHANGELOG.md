@@ -1,4 +1,27 @@
 # Changelog
+## v1.0.4
+### Summary
+
+
+### Add
+*  New Method for parsing XmlDoc parameter type string. This is thanks to C# discord and user Nox#8248
+*  unit tests were added to ensure I can check all different types of methods, classes, events, properties, etc.
+
+
+### Changes
+*  refactored some methods to be extension methods to reduce duplication and streamline some code
+
+
+### Fixed
+*  multiple fixes for matching summaries to parameters like T[] T[,] this should fix  [13](https://github.com/igloo15/MarkdownGenerator/issues/13)
+
+
+### Other Commits
+ N/A 
+
+
+
+
 ## v1.0.3
 ### Summary
 another release to fix casing on api documentation. 
@@ -16,6 +39,8 @@ another release to fix casing on api documentation.
 
 
 ### Other Commits
+* Merge branch 'develop'
+* changelog update
 * correct casing on folder name
 
 
