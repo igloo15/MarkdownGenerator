@@ -1,7 +1,7 @@
 # Changelog
 ## v1.0.4
 ### Summary
-
+Another Bug Fix release that will fix the ultimate issue of  [13](https://github.com/igloo15/MarkdownGenerator/issues/13). 
 
 ### Add
 *  New Method for parsing XmlDoc parameter type string. This is thanks to C# discord and user Nox#8248
