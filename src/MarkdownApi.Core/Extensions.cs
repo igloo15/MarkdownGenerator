@@ -182,8 +182,12 @@ namespace igloo15.MarkdownApi.Core
                 var elementType = info.GetElementType();
                 if (elementType.IsGenericParameter)
                 {
-                    typeName = typeName.Replace(elementType.ToString(), $"``{elementType.GenericParameterPosition}");
+                    typeName = typeName.Replace(elementType.ToString(), elementType.GetCommentTypeString());
                     //typeName = $"``{info.GetElementType().GenericParameterPosition}[]";
+                }
+                else if (IsNullableType(elementType))
+                {
+                    typeName = typeName.Replace(elementType.ToString(), elementType.GetCommentTypeString());
                 }
             }
 
@@ -195,6 +199,11 @@ namespace igloo15.MarkdownApi.Core
             var indexDash = typeName.IndexOf('`');
             typeName = typeName.Substring(0, indexDash);
             return typeName;
+        }
+
+        public static bool IsNullableType(this Type info)
+        {
+            return Nullable.GetUnderlyingType(info) != null;
         }
 
         public static string GetCommentName(this MethodBase info)

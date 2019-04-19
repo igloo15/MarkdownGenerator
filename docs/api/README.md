@@ -80,6 +80,14 @@
 	- Xml Comment in Xml Document
 ### [igloo15.MarkdownApi.Tests](./igloo15/MarkdownApi/Tests/README.md)
 
+- [`MarkdownConstructorTestClass1`](./igloo15/MarkdownApi/Tests/MarkdownConstructorTestClass1.md)
+	- Constructor Class Test 1
+- [`MarkdownConstructorTestClass2`](./igloo15/MarkdownApi/Tests/MarkdownConstructorTestClass2.md)
+	- Constructor Class Test 2
+- [`MarkdownConstructorTestClass3`](./igloo15/MarkdownApi/Tests/MarkdownConstructorTestClass3.md)
+	- Constructor Class Test 3
+- [`MarkdownConstructorTestClass4`](./igloo15/MarkdownApi/Tests/MarkdownConstructorTestClass4.md)
+	- Constructor Class Test 4
 - [`MarkdownParsingTest`](./igloo15/MarkdownApi/Tests/MarkdownParsingTest.md)
 	- The Test Class
 - [`MarkdownTestClass`](./igloo15/MarkdownApi/Tests/MarkdownTestClass.md)

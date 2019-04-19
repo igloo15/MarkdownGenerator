@@ -1,4 +1,28 @@
 # Changelog
+## v1.0.5
+### Summary
+small release to fix bug  [14](https://github.com/igloo15/MarkdownGenerator/issues/14). 
+
+### Add
+*  new test cases for unit tests
+
+
+### Changes
+*  update tool usage statements
+*  update readme text
+*  update build script to latest version
+
+
+### Fixed
+*  Nullable types now parse correctly and show summaries
+
+
+### Other Commits
+ N/A 
+
+
+
+
 ## v1.0.4
 ### Summary
 Another Bug Fix release that will fix the ultimate issue of  [13](https://github.com/igloo15/MarkdownGenerator/issues/13). 
@@ -17,7 +41,8 @@ Another Bug Fix release that will fix the ultimate issue of  [13](https://github
 
 
 ### Other Commits
- N/A 
+* Merge branch 'develop'
+* changelog entry
 
 
 
