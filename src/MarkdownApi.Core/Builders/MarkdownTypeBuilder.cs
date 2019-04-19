@@ -98,13 +98,14 @@ namespace igloo15.MarkdownApi.Core.Builders
         public void BuildMethods(MarkdownType type, IEnumerable<XmlDocumentComment> comments, MarkdownMethod[] infos)
         {
             Constants.Logger?.LogTrace("Found {itemCount} Markdown Comments for Type {typeName}", infos.Length, type.Name);
+            var memberComments = comments.Where(c => c.MemberType == MemberType.Method);
             foreach (var item in infos)
             {
                 item.ParentType = type;
                 type.Methods.Add(item);
                 MarkdownRepo.TryAdd(item);
 
-                item.Summary = comments.FirstOrDefault(a => MethodCommentFilter(a, item))?.Summary ?? "";
+                item.Summary = memberComments.Where(mc => mc.MemberName == item.InternalItem.GetCommentName()).FirstOrDefault(a => MethodCommentFilter(a, item))?.Summary ?? "";
             }
         }
 

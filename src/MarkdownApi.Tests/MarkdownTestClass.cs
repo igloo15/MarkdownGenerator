@@ -150,6 +150,33 @@ namespace igloo15.MarkdownApi.Tests
         public void TestGenericMethod7<T>(MarkdownTestGenericClass<MarkdownTestGenericClass<string[,], List<string[,]>, string>, string, string[,]> normalParam, MarkdownTestGenericClass<T, string, string[,]> normalParam2)
         {
         }
+
+        /// <summary>
+        /// TestNullableMethod1
+        /// </summary>
+        /// <param name="test1">test1</param>
+        public void TestNullableMethod1(int? test1)
+        {
+        }
+
+        /// <summary>
+        /// TestNullableMethod2
+        /// </summary>
+        /// <param name="test1">test1</param>
+        /// <param name="test2">test2</param>
+        public void TestNullableMethod2(int? test1, int?[] test2)
+        {
+        }
+
+        /// <summary>
+        /// TestNullableMethod3
+        /// </summary>
+        /// <param name="test1">test1</param>
+        /// <param name="test2">test2</param>
+        /// <param name="test3">test3</param>
+        public void TestNullableMethod3(int? test1, int?[] test2, int?[,] test3)
+        {
+        }
     }
 
     /// <summary>
@@ -164,6 +191,68 @@ namespace igloo15.MarkdownApi.Tests
         /// Test Construct Generic Class
         /// </summary>
         public MarkdownTestGenericClass()
+        {
+        }
+    }
+
+    /// <summary>
+    /// Constructor Class Test 1
+    /// </summary>
+    public class MarkdownConstructorTestClass1
+    {
+        /// <summary>
+        /// Constructor Test 1 Param
+        /// </summary>
+        /// <param name="test1">Test1</param>
+        public MarkdownConstructorTestClass1(int test1)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Constructor Class Test 2
+    /// </summary>
+    public class MarkdownConstructorTestClass2
+    {
+        /// <summary>
+        /// Constructor Test 2 Param
+        /// </summary>
+        /// <param name="test1">Test1</param>
+        /// <param name="test2">Test2</param>
+        public MarkdownConstructorTestClass2(int test1, List<int> test2)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Constructor Class Test 3
+    /// </summary>
+    public class MarkdownConstructorTestClass3
+    {
+        /// <summary>
+        /// Constructor Test 3 Param
+        /// </summary>
+        /// <param name="test1">Test1</param>
+        /// <param name="test2">Test2</param>
+        /// <param name="test3">Test3</param>
+        public MarkdownConstructorTestClass3(int test1, List<int> test2, int[] test3)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Constructor Class Test 4
+    /// </summary>
+    public class MarkdownConstructorTestClass4
+    {
+        /// <summary>
+        /// Constructor Test 4 Param
+        /// </summary>
+        /// <param name="test1">Test1</param>
+        /// <param name="test2">Test2</param>
+        /// <param name="test3">Test3</param>
+        /// <param name="test4">Test4</param>
+        public MarkdownConstructorTestClass4(int test1, List<int> test2, int[] test3, int[,] test4)
         {
         }
     }

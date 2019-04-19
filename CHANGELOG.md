@@ -1,4 +1,26 @@
 # Changelog
+## Unreleased
+### Summary
+
+
+### Add
+ N/A 
+
+
+### Changes
+ N/A 
+
+
+### Fixed
+ N/A 
+
+
+### Other Commits
+ N/A 
+
+
+
+
 ## v1.0.4
 ### Summary
 Another Bug Fix release that will fix the ultimate issue of  [13](https://github.com/igloo15/MarkdownGenerator/issues/13). 
@@ -17,7 +39,8 @@ Another Bug Fix release that will fix the ultimate issue of  [13](https://github
 
 
 ### Other Commits
- N/A 
+* Merge branch 'develop'
+* changelog entry
 
 
 

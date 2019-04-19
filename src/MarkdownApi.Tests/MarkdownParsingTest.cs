@@ -50,7 +50,7 @@ namespace igloo15.MarkdownApi.Tests
         [TestMethod]
         public void ParseCountTest()
         {
-            Assert.AreEqual(26, _project.AllItems.Count);
+            Assert.AreEqual(37, _project.AllItems.Count);
         }
 
         /// <summary>
