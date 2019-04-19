@@ -25,8 +25,10 @@ nuget install igloo15.MarkdownApi.Core
 ```
 markdownapi --help
 
-markdownapi 0.5.0-dev0011
-Copyright (C) 2019 Igloo15, jyasuu, neuecc
+markdownapi 1.0.0
+Copyright (C) 2019 igloo15, jyasuu, neuecc
+ERROR(S):
+A required value not bound to option name is missing.
 USAGE:
 Normal Usage:
 markdownapi ./MyDll.dll ./Api
@@ -67,7 +69,8 @@ markdownapi ./bin/*.dll;./dist/myapp/myApp.dll ../../..docs/Api
 
   --event-folder               (Default: Events) The folder to store event pages in
 
-  --theme                      (Default: Default) The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined
+  --theme                      (Default: Default) The theme you wish to use. Selecting a theme will potentially
+                               override the commandline arguments you have defined
 
   --default-theme-file         (Default: default.settings.json) File containing settings for the default theme
 
@@ -75,7 +78,8 @@ markdownapi ./bin/*.dll;./dist/myapp/myApp.dll ../../..docs/Api
 
   --version                    Display version information.
 
-  Dll Path (pos. 0)            Required. The path to the dll to create documentation for. May include wildcards on file name. Use ';' to search multiple areas
+  Dll Path (pos. 0)            Required. The path to the dll to create documentation for. May include wildcards on file
+                               name. Use ';' to search multiple areas
 
   Output Directory (pos. 1)    (Default: md) The root folder to put documentation in
 ```

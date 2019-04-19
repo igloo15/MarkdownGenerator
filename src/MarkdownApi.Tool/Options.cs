@@ -26,7 +26,7 @@ namespace igloo15.MarkdownApi.Tool
 
         [Option("summary", Default = "", HelpText = "A summary you want to appear on root page")]
         public string Summary { get; set; }
-        
+
         [Option("namespace-page", Default = false, HelpText = "Create pages for each namespace")]
         public bool NamespacePages { get; set; }
 
@@ -66,17 +66,17 @@ namespace igloo15.MarkdownApi.Tool
         [Option("theme", Default = "Default", HelpText = "The theme you wish to use. Selecting a theme will potentially override the commandline arguments you have defined")]
         public string ThemeName { get; set; }
 
-        [Option("default-theme-file", Default ="default.settings.json", HelpText = "File containing settings for the default theme")]
+        [Option("default-theme-file", Default = "default.settings.json", HelpText = "File containing settings for the default theme")]
         public string DefaultThemeSettingsFile { get; set; }
-        
+
         [Usage(ApplicationAlias = "markdownapi")]
         public static IEnumerable<Example> Examples
         {
             get
             {
                 yield return new Example("Normal Usage", new Options { DllPath = "./MyDll.dll", Destination = "./Api" });
-                yield return new Example("Wildcard Usage", new Options { DllPath = "./bin/*.dll", Destination = "./Api" });
-                yield return new Example("Multiple Search Locations", new Options { DllPath = "./bin/*.dll;./dist/myapp/myApp.dll", Destination = "../../..docs/Api" });
+                yield return new Example("Wildcard Usage", new Options { DllPath = "./bin/**/myLib/myLib*.dll", Destination = "./Api" });
+                yield return new Example("Multiple Search Locations", new Options { DllPath = "./bin/*.dll;./dist/myapp/myApp*.dll", Destination = "../../..docs/Api" });
             }
         }
 
