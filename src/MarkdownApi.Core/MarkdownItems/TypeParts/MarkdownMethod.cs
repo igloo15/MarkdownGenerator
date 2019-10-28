@@ -1,4 +1,4 @@
-﻿using igloo15.MarkdownApi.Core.Interfaces;
+using igloo15.MarkdownApi.Core.Interfaces;
 using System;
 using System.Reflection;
 
@@ -54,6 +54,11 @@ namespace igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
         /// </summary>
         public bool IsOverriden => BaseDefinition != InternalItem.DeclaringType;
 
+        /// <summary>
+        /// Gets the parameters of this method
+        /// </summary>
+        public ParameterInfo[] Parameters => InternalItem.GetParameters();
+
         internal MarkdownMethod(MethodInfo info, bool isStatic)
         {
             InternalItem = info;
@@ -69,6 +74,7 @@ namespace igloo15.MarkdownApi.Core.MarkdownItems.TypeParts
         {
             return theme.BuildPage(this);
         }
+
 
         /// <summary>
         /// The type info of the MarkdownItem used to find references to it from other MarkdownItems

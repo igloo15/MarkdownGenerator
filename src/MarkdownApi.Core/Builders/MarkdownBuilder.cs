@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
 
 namespace igloo15.MarkdownApi.Core.Builders
 {
-    /// <summary>
-    /// Builds Markdown strings
-    /// </summary>
-    public class MarkdownBuilder
+  /// <summary>
+  /// Builds Markdown strings
+  /// </summary>
+  public class MarkdownBuilder
     {
-        
+
         /// <summary>
         /// Places code in a markdown codeblock
         /// </summary>
@@ -18,7 +18,6 @@ namespace igloo15.MarkdownApi.Core.Builders
         {
             return "`" + code + "`";
         }
-
 
         StringBuilder sb = new StringBuilder();
 
@@ -44,7 +43,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
             return this;
         }
-        
+
         /// <summary>
         /// Appends a new line to the internal string builder
         /// </summary>
@@ -94,8 +93,6 @@ namespace igloo15.MarkdownApi.Core.Builders
         /// <returns>The MarkdownBuilder</returns>
         public MarkdownBuilder HeaderWithCode(int level, string code)
         {
-            
-
             for (int i = 0; i < level; i++)
             {
                 sb.Append("#");
@@ -190,18 +187,40 @@ namespace igloo15.MarkdownApi.Core.Builders
         }
 
         /// <summary>
-        /// Create a table with the header and given items
+        /// Create a table with the header and the given items and size
         /// </summary>
         /// <param name="headers">The header of table</param>
         /// <param name="items">The items on each row</param>
+        /// <param name="diffSizeCells">True, if cells next to each other have different width.</param>
         /// <returns>The MarkdownBuilder</returns>
-        public MarkdownBuilder Table(string[] headers, IEnumerable<string[]> items)
+        public MarkdownBuilder Table(string[] headers, IEnumerable<string[]> items, bool diffSizeCells)
         {
+            bool flag = false;
             sb.Append("| ");
             foreach (var item in headers)
             {
-                sb.Append(item);
-                sb.Append(" | ");
+                if (diffSizeCells)
+                {
+                    if (!flag)
+                    {
+                        sb.Append(item + "<div><a href=\"#\"><img width=225></a></div>");
+                        sb.Append(" | ");
+                        flag = true;
+                    }
+
+                    else
+                    {
+                        sb.Append(item + "<div><a href=\"#\"><img width=525></a></div>");
+                        sb.Append(" | ");
+                        flag = false;
+                    }
+                }
+
+                else
+                {
+                    sb.Append(item);
+                    sb.Append(" | ");
+                }
             }
             sb.AppendLine();
 
@@ -222,6 +241,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                     sb.Append(item2);
                     sb.Append(" | ");
                 }
+
                 sb.AppendLine();
             }
             sb.AppendLine();
