@@ -1,6 +1,4 @@
-﻿
-using igloo15.MarkdownApi.Core;
-using igloo15.MarkdownApi.Core.MarkdownItems;
+﻿using igloo15.MarkdownApi.Core.MarkdownItems;
 using Microsoft.Extensions.FileSystemGlobbing;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,16 +6,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace igloo15.MarkdownApi.Core.Builders
 {
-    
+
     internal static class MarkdownItemBuilder
     {
+        public static string xmlPath;
         public static MarkdownProject Load(string searchArea, string namespaceMatch)
         {
             List<MarkdownType> types = new List<MarkdownType>();
@@ -27,7 +24,7 @@ namespace igloo15.MarkdownApi.Core.Builders
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             var matcher = new Matcher();
-            foreach(var searchPath in searchArea.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var searchPath in searchArea.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 matcher.AddInclude(searchPath);
             }
@@ -40,7 +37,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                 var dllName = Path.GetFileName(dllPath);
                 Constants.Logger?.LogInformation("Loading Dll: {dllName}", dllPath);
 
-                if(processedDlls.Contains(dllName))
+                if (processedDlls.Contains(dllName))
                 {
                     Constants.Logger?.LogWarning("Duplicate Dll: {dllName}", dllName);
                     continue;
@@ -48,7 +45,7 @@ namespace igloo15.MarkdownApi.Core.Builders
 
                 try
                 {
-                    if(File.Exists(dllPath) && Path.GetExtension(dllPath) == ".dll")
+                    if (File.Exists(dllPath) && Path.GetExtension(dllPath) == ".dll")
                     {
                         LoadDll(dllPath, namespaceMatch);
                         processedDlls.Add(dllName);
@@ -73,10 +70,11 @@ namespace igloo15.MarkdownApi.Core.Builders
             var dllName = Path.GetFileNameWithoutExtension(dllPath);
             var commentsLookup = GetComments(dllPath, namespaceMatch);
 
-            var namespaceRegex = 
+            var namespaceRegex =
                 !string.IsNullOrEmpty(namespaceMatch) ? new Regex(namespaceMatch) : null;
 
-            IEnumerable<Type> AssemblyTypesSelector(Assembly x) {
+            IEnumerable<Type> AssemblyTypesSelector(Assembly x)
+            {
 
                 try
                 {
@@ -96,7 +94,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                 }
             }
 
-            bool NotNullPredicate(Type x )
+            bool NotNullPredicate(Type x)
             {
                 return x != null;
             }
@@ -121,7 +119,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                 return IsPublic && !IsAssignableFromDelegate && !HaveObsoleteAttribute;
             }
 
-            
+
 
             var dllAssemblys = new[] { Assembly.LoadFile(dllPath) };
 
@@ -169,19 +167,22 @@ namespace igloo15.MarkdownApi.Core.Builders
             }
         }
 
-        static bool IsRequiredNamespace(Type type, Regex regex) {
-            if ( regex == null ) {
+        static bool IsRequiredNamespace(Type type, Regex regex)
+        {
+            if (regex == null)
+            {
                 return true;
             }
             return regex.IsMatch(type.Namespace != null ? type.Namespace : string.Empty);
         }
 
-        static ILookup<string, XmlDocumentComment> GetComments(string dllPath, string namespaceMatch)
+       static ILookup<string, XmlDocumentComment> GetComments(string dllPath, string namespaceMatch)
         {
             var dllName = Path.GetFileNameWithoutExtension(dllPath);
-            var xmlPath = Path.Combine(Directory.GetParent(dllPath).FullName, dllName + ".xml");
+            xmlPath = Path.Combine(Directory.GetParent(dllPath).FullName, dllName + ".xml");
 
             XmlDocumentComment[] comments = new XmlDocumentComment[0];
+
             if (File.Exists(xmlPath))
             {
                 comments = VSDocParser.ParseXmlComment(XDocument.Parse(File.ReadAllText(xmlPath)), namespaceMatch);

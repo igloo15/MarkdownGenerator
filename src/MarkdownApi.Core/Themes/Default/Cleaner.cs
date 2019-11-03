@@ -1,4 +1,4 @@
-﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Builders;
 using igloo15.MarkdownApi.Core.Interfaces;
 using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
 using System;
@@ -24,7 +24,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
         {
             StringBuilder sb = new StringBuilder();
             var genericArray = target.GetGenericArguments();
-            for(var i = 0; i < genericArray.Length; i++)
+            for (var i = 0; i < genericArray.Length; i++)
             {
                 var link = CreateFullTypeWithLinks(currentItem, genericArray[i], useFullName, useSpecialText);
                 sb.Append(link);
@@ -35,7 +35,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
             var actualName = currentItem.GetNameOrNameLink(target, useFullName, useSpecialText);
 
-            if(genericArray.Length > 0)
+            if (genericArray.Length > 0)
                 return $"{actualName}\\<{sb.ToString()}>";
             return actualName;
         }
@@ -89,21 +89,27 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
         /// <param name="method">The method to be cleaned</param>
         /// <param name="useFullName">Determine if full name of method should be shown</param>
         /// <param name="useParameterNames">Determines if parameter names should be shown</param>
+        /// <param name="parameterList">Determines if parameter names should be listed vertically</param>
         /// <returns>The cleaned string</returns>
-        public static string CreateFullMethodWithLinks(IMarkdownItem currentItem, MarkdownMethod method, bool useFullName, bool useParameterNames)
+        public static string CreateFullMethodWithLinks(IMarkdownItem currentItem, MarkdownMethod method, bool useFullName, bool useParameterNames, bool parameterList)
         {
             var parameters = method.InternalItem.GetParameters();
+           
             MarkdownBuilder mb = new MarkdownBuilder();
-            if (method.FileName != null)
-                mb.Link(method.Name, currentItem.To(method));
-            else
-                mb.Append(method.Name);
-            mb.Append(" ( ");
+
+            if (!parameterList)
+            {
+                if (method.FileName != null)
+                    mb.Link(method.Name, currentItem.To(method));
+                else
+                    mb.Append(method.Name);
+                mb.Append(" ( ");
+            }
             if (parameters.Length > 0)
             {
-                
+
                 StringBuilder sb = new StringBuilder();
-                for(var i = 0; i < parameters.Length; i++)
+                for (var i = 0; i < parameters.Length; i++)
                 {
                     var type = parameters[i].ParameterType;
                     var link = CreateFullTypeWithLinks(currentItem, type, useFullName, true);
@@ -113,21 +119,42 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
                         link = link.Replace("&", "");
                         sb.Append("out ");
                     }
+                   
 
-                    sb.Append(link);
+                    if (!parameterList)
+                    {
+                        sb.Append(link);
 
-                    if(useParameterNames)
-                        sb.Append($" {parameters[i].Name}");
+                        if (useParameterNames)
+                            sb.Append($" {parameters[i].Name}");
+                    }
+                    else
+                    {
+                        if (useParameterNames)
+                            sb.Append($" {parameters[i].Name}");
 
-                    
-                        
+                        sb.Append(link);
+                    }
 
-                    if (i + 1 != parameters.Length)
-                        sb.Append(", ");
+                    if (!parameterList)
+                    {
+                        if (i + 1 != parameters.Length)
+                        {
+                            sb.Append(", ");
+                        }
+                    }
+                    else
+                    {
+                        if (i + 1 != parameters.Length)
+                        {
+                            sb.Append("<br>");
+                        }
+                    }
                 }
                 mb.Append(sb.ToString());
             }
-            mb.Append(" )");
+            if (!parameterList)
+                mb.Append(" )");
             return mb.ToString();
         }
 
@@ -165,7 +192,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
                 mb.Append(" ]");
             }
-            
+
             return mb.ToString();
         }
 
@@ -180,7 +207,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
                     {
                         return (param.ParameterType, param.Name);
                     }
-                        
+
                 }
 
             }
@@ -204,7 +231,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
             var name = t.FullName;
 
-            return CleanName(t.FullName, keepGenericNumber, specialText);            
+            return CleanName(t.FullName, keepGenericNumber, specialText);
         }
 
         /// <summary>
@@ -266,5 +293,16 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
             return RemoveGenerics(name);
         }
 
+        /// <summary>
+        /// Display the bold version of the string
+        /// </summary>
+        /// <param name="name">The name</param>
+        /// <returns></returns>
+        public static string BoldName(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+                return name;
+            return $"**`{ name }`**";
+        }
     }
 }

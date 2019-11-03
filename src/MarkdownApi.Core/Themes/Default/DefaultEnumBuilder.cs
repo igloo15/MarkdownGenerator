@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace igloo15.MarkdownApi.Core.Themes.Default
 {
@@ -92,7 +91,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
                     };
                 });
 
-                mb.Table(head, data);
+                mb.Table(head, data, true);
                 mb.AppendLine();
             }
         }

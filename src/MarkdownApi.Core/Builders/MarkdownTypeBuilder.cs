@@ -1,13 +1,12 @@
 ﻿using igloo15.MarkdownApi.Core.MarkdownItems;
 using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
-using igloo15.MarkdownApi.Core.Themes.Default;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace igloo15.MarkdownApi.Core.Builders
 {
-    internal class MarkdownTypeBuilder
+  internal class MarkdownTypeBuilder
     {
         public List<MarkdownNamespace> BuildTypes(MarkdownType[] types, ILookup<string, XmlDocumentComment> comments)
         {
@@ -20,6 +19,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                 var myNamespace = MarkdownRepo.TryGetOrAdd(type.InternalType.Namespace, tempNamespace);
 
                 var typeComments = comments[type.FullName];
+
 
                 if (!type.InternalType.IsEnum)
                 {
@@ -48,7 +48,7 @@ namespace igloo15.MarkdownApi.Core.Builders
             type.NamespaceItem = namespaceItem;
 
             type.Summary = comments.FirstOrDefault(x => x.MemberName == type.Name
-                    || x.MemberName.StartsWith(type.Name + "`"))?.Summary ?? "";
+                    || x.MemberName.StartsWith(type.Name))?.Summary ?? "";
 
             Constants.Logger?.LogTrace("Getting Markdown Fields for Type {typeName}", type.Name);
             BuildFields(type, comments, type.GetFields().Together(type.GetStaticFields()).ToArray());
@@ -105,7 +105,7 @@ namespace igloo15.MarkdownApi.Core.Builders
                 type.Methods.Add(item);
                 MarkdownRepo.TryAdd(item);
 
-                item.Summary = memberComments.Where(mc => mc.MemberName == item.InternalItem.GetCommentName()).FirstOrDefault(a => MethodCommentFilter(a, item))?.Summary ?? "";
+               item.Summary = memberComments.Where(mc => mc.MemberName == item.InternalItem.GetCommentName()).FirstOrDefault(a => MethodCommentFilter(a, item))?.Summary ?? "";
             }
         }
 

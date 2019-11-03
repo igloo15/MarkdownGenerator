@@ -1,4 +1,4 @@
-﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Builders;
 using igloo15.MarkdownApi.Core.Interfaces;
 using igloo15.MarkdownApi.Core.MarkdownItems;
 using igloo15.MarkdownApi.Core.MarkdownItems.TypeParts;
@@ -85,16 +85,15 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
             BuildTable(mb, "Static Constructors", item.GetConstructors(true), typeZeroHeaders, item);
             BuildTable(mb, "Constructors", item.GetConstructors(false), typeZeroHeaders, item);
 
-            BuildTable(mb, "Fields", item.GetFields(false), typeOneHeaders, item);
-            BuildTable(mb, "Properties", item.GetProperties(false), typeOneHeaders, item);
-            BuildTable(mb, "Methods", item.GetMethods(false), typeTwoHeaders, item);
-            BuildTable(mb, "Events", item.GetEvents(false), typeOneHeaders, item);
+            BuildTable(mb, "Fields", item.GetFields(false), typeZeroHeaders, item);
+            BuildTable(mb, "Properties", item.GetProperties(false), typeZeroHeaders, item);
+            BuildTable(mb, "Methods", item.GetMethods(false), typeZeroHeaders, item);
+            BuildTable(mb, "Events", item.GetEvents(false), typeZeroHeaders, item);
 
-            BuildTable(mb, "Static Fields", item.GetFields(true), typeOneHeaders, item);
-            BuildTable(mb, "Static Properties", item.GetProperties(true), typeOneHeaders, item);
-            BuildTable(mb, "Static Methods", item.GetMethods(true), typeTwoHeaders, item);
-            BuildTable(mb, "Static Events", item.GetEvents(true), typeOneHeaders, item);
-
+            BuildTable(mb, "Static Fields", item.GetFields(true), typeZeroHeaders, item);
+            BuildTable(mb, "Static Properties", item.GetProperties(true), typeZeroHeaders, item);
+            BuildTable(mb, "Static Methods", item.GetMethods(true), typeZeroHeaders, item);
+            BuildTable(mb, "Static Events", item.GetEvents(true), typeZeroHeaders, item);
 
             return mb.ToString();
         }
@@ -132,13 +131,18 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
                     if (item.ItemType == MarkdownItemTypes.Constructor)
                         dataValues[0] = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, _options.ShowParameterNames);
                     else
+                    {
                         dataValues[0] = Cleaner.CreateFullTypeWithLinks(mdType, lookUpType, false, false);
-
+                    }
 
                     string name = item.FullName;
+                    string summary = item.Summary;
+
+                   
+
                     if (item.ItemType == MarkdownItemTypes.Method)
                     {
-                        name = Cleaner.CreateFullMethodWithLinks(mdType, item.As<MarkdownMethod>(), false, _options.ShowParameterNames);
+                        name = Cleaner.CreateFullMethodWithLinks(mdType, item.As<MarkdownMethod>(), false, _options.ShowParameterNames, false);
                     }
                     else if(item.ItemType == MarkdownItemTypes.Property)
                     {
@@ -146,19 +150,18 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
                     }
                     else if(item.ItemType == MarkdownItemTypes.Constructor)
                     {
-                        name = item.Summary;
+                        name = Cleaner.CreateFullConstructorsWithLinks(mdType, item.As<MarkdownConstructor>(), false, _options.BuildConstructorPages);
                     }
 
+                    dataValues[0] = name;
 
-                    dataValues[1] = name;
-
-                    if(headers.Length > 2)
-                        dataValues[2] = item.Summary;
+                    if(headers.Length > 1)
+                        dataValues[1] = item.Summary;
 
                     data.Add(dataValues);
                 }
 
-                mb.Table(headers, data);
+                mb.Table(headers, data, true);
                 mb.AppendLine();
             }
         }
