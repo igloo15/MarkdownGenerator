@@ -11,13 +11,13 @@ Default markdown method page builder - Warning this is not yet implemented
 
 | Name | Summary | 
 | --- | --- | 
-| DefaultMethodBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a markdown method page builder  - Warning this is not yet implemented | 
+| DefaultMethodBuilder ( [`DefaultOptions`](./DefaultOptions.md) options ) | Constructs a markdown method page builder | 
 
 
 ## Methods
 
 | Return | Name | Summary | 
 | --- | --- | --- | 
-| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownMethod`](./../../MarkdownItems/TypeParts/MarkdownMethod.md) item ) | Builds the markdown method page content - Warning this is not yet implemented | 
+| [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | BuildPage ( [`MarkdownMethod`](./../../MarkdownItems/TypeParts/MarkdownMethod.md) item ) | Builds the markdown method page content | 
 
 
