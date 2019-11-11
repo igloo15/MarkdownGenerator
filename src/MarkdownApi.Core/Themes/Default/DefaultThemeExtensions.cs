@@ -1,17 +1,14 @@
-﻿using igloo15.MarkdownApi.Core.Builders;
+using igloo15.MarkdownApi.Core.Builders;
 using igloo15.MarkdownApi.Core.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using System.Reflection;
 
 namespace igloo15.MarkdownApi.Core.Themes.Default
 {
 
     internal static class DefaultThemeExtensions
     {
-        
+
         public static void BuildNamespaceLinks(this IMarkdownItem item, string namespaceValue, MarkdownBuilder mb)
         {
             var namespaceItems = namespaceValue.Split('.');
@@ -22,6 +19,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
             foreach (var namespaceItem in namespaceItems)
             {
+
                 if (!String.IsNullOrEmpty(globalNamespace))
                 {
                     globalNamespace += ".";
@@ -50,11 +48,22 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
             if (targetType == null)
                 return "";
             if (targetType == typeof(void))
-                return "void";
+                return "[Void]" + "(https://docs.microsoft.com/en-us/dotnet/api/System.Void)";
 
-            if (targetType.FullName == null && targetType.Name == null) 
+            if (targetType.FullName == null && targetType.Name == null)
                 return "";
-            
+
+            // exceptions
+            if (targetType.ToString().Equals("System.Collections.Generic.IEnumerable`1[T]") || targetType.ToString().Equals("System.Collections.Generic.IEnumerable`1[P]"))
+            {
+                return "[IEnumerable]" + "(https://docs.microsoft.com/en-us/dotnet/api/System.Collections.Ienumerable)";
+            }
+
+            if (targetType.ToString().Contains("System.Func`3"))
+            {
+                return "[Func]" + "(https://docs.microsoft.com/en-us/dotnet/api/System.Func-3)";
+            }
+
             string name = targetType.Name;
             string fullName = targetType.ToString();
 
@@ -67,7 +76,7 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
             var link = currentType.GetLink(new TypeWrapper(targetType));
 
-            if(link != null)
+            if (link != null)
             {
                 tempMB.Link(name, link);
             }
@@ -78,18 +87,20 @@ namespace igloo15.MarkdownApi.Core.Themes.Default
 
             if (targetType.IsArray)
                 tempMB.Append("[]");
-            
+
             return tempMB.ToString();
         }
 
         public static string GetLink(this IMarkdownItem currentItem, TypeWrapper info)
         {
+
             if (currentItem.Project.TryGetValue(info, out IMarkdownItem lookupItem))
             {
                 return currentItem.To(lookupItem);
             }
-            else if (info.FullName.StartsWith("System"))
-            {
+            
+            else if (info.FullName.StartsWith("System") || info.FullName.StartsWith("Microsoft"))
+            {            
                 return "https://docs.microsoft.com/en-us/dotnet/api/" + Cleaner.CleanName(info.FullName, true, false);
             }
             return null;

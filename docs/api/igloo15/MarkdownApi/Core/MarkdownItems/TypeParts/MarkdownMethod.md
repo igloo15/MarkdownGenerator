@@ -20,6 +20,7 @@ MarkdownMethod represents the method info of a MarkdownType
 | [Boolean](https://docs.microsoft.com/en-us/dotnet/api/System.Boolean) | IsOverriden | Determines if method is overriden | 
 | [MarkdownItemTypes](./../../MarkdownItemTypes.md) | ItemType | The type of markdown item | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | Name | The Name of the Markdown item | 
+| [ParameterInfo](https://docs.microsoft.com/en-us/dotnet/api/System.Reflection.ParameterInfo)[] | Parameters | Gets the parameters of this method | 
 | [Type](https://docs.microsoft.com/en-us/dotnet/api/System.Type) | ReturnType | Determines what the return type is for this method | 
 | [String](https://docs.microsoft.com/en-us/dotnet/api/System.String) | ReturnTypeName | The name of the return type for this method | 
 | [TypeWrapper](./../../TypeWrapper.md) | TypeInfo | The type info of the MarkdownItem used to find references to it from other MarkdownItems | 

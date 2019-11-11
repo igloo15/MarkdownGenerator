@@ -1,4 +1,28 @@
 # Changelog
+## Unreleased
+### Summary
+
+
+### Add
+ N/A 
+
+
+### Changes
+ N/A 
+
+
+### Fixed
+ N/A 
+
+
+### Other Commits
+* Merge pull request #16 from hargitomi97/develop
+* Adding updated features
+* Adding updated features
+
+
+
+
 ## v1.0.5
 ### Summary
 small release to fix bug  [14](https://github.com/igloo15/MarkdownGenerator/issues/14). 
@@ -18,7 +42,8 @@ small release to fix bug  [14](https://github.com/igloo15/MarkdownGenerator/issu
 
 
 ### Other Commits
- N/A 
+* Merge branch 'develop'
+* changelog update
 
 
 
